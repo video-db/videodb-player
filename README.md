@@ -17,29 +17,21 @@ npm install videodb-player
 To use the VideoDB Player in your Vue.js application, import the necessary components and styles:
 
 ```html
-<script setup lang="ts">
-  import {
-    VideoDBPlayer,
-    BigCenterButton,
-    ProgressBar,
-    PlayPauseButton,
-    VolumeControlButton,
-    TimeCode,
-    SpeedControlButton,
-    CaptionButton,
-    FullScreenButton,
-  } from "videodb-player";
-  import "videodb-player/dist/style.css";
+<script setup>
+  import { VideoDBPlayer } from "videodb-player";
 </script>
 
 <template>
   <div class="player-wrapper">
-    <VideoDBPlayer class="player" streamUrl="https://example.com/video.m3u8">
-      <template v-slot:overlay>
+    <VideoDBPlayer 
+      class="player" 
+      streamUrl="https://stream.videodb.io/v3/published/manifests/12df6498-e955-4249-84b8-7568aaf72160.m3u8"
+    >
+      <template #overlay>
         <!-- Custom overlay can be added here -->
       </template>
 
-      <template v-slot:controls>
+      <template #controls>
         <!-- Custom controls can be added here -->
       </template>
     </VideoDBPlayer>
@@ -70,6 +62,10 @@ The main component for rendering the video player.
 - `streamUrl` (String, required): The URL of the video stream.
 - `thumbnailUrl` (String, optional): URL of the video thumbnail.
 - `subtitlesConfig` (Object, optional): Configuration for subtitles.
+  - `src` (String, default: ""): The URL of the subtitles file.
+  - `kind` (String, default: "captions"): The kind of text track.
+  - `lang` (String, default: "en"): The language of the subtitles.
+  - `label` (String, default: "English"): The label for the subtitles.
 - `startAt` (Number, default: 0): Time in seconds to start the video.
 - `autoPlay` (Boolean, default: false): Whether to start playing automatically.
 - `autoHideDuration` (Number, default: 5000): Duration in milliseconds before controls are hidden.
@@ -138,6 +134,7 @@ The player state and methods are provided through the Vue composition API. You c
   } = useVideoDBPlayer();
 </script>
 ```
+> Checkout [refernce](#reference) for more details
 
 ### Accessing Player Instance 
 
@@ -164,6 +161,8 @@ onMounted(() => {
 });
 </script>
 ```
+
+> Checkout [reference](#reference) for more details
 
 
 ### Events
@@ -223,3 +222,42 @@ const onFullScreenChange = (isFullScreen) => {
 </script>
 ```
 
+# Reference
+
+## Exposed and Injected Variables
+
+The following variables are both exposed (via `defineExpose`) and injected (via `provide`) under the key "videodb-player":
+
+### State Variables
+
+- `showElements`: Boolean indicating whether control elements are visible.
+- `playing`: Boolean indicating if the video is currently playing.
+- `volume`: Number representing the current volume level.
+- `videoMuted`: Boolean indicating if the video is muted.
+- `duration`: Number representing the total duration of the video.
+- `time`: Number representing the current playback time.
+- `percentagePlayed`: Number representing the percentage of the video that has been played.
+- `playBackRate`: Number representing the current playback speed.
+- `showSubtitles`: Boolean indicating if subtitles are currently displayed.
+- `subtitlesConfig`: Object containing subtitle configuration (src, kind, lang, label).
+- `isFullScreen`: Boolean indicating if the player is in fullscreen mode.
+
+### Methods
+
+- `play()`: Start playing the video.
+- `pause()`: Pause the video.
+- `togglePlay()`: Toggle between play and pause.
+- `toggleMute()`: Toggle audio mute.
+- `seekTo(time)`: Seek to a specific time in the video.
+- `seekToPercentage(percentage)`: Seek to a specific percentage of the video.
+- `setPlayBackRate(rate)`: Set the playback speed.
+- `setVolume(level)`: Set the volume level.
+- `toggleFullScreen(value)`: Toggle fullscreen mode.
+- `toggleSubtitles(value)`: Toggle subtitle display.
+
+
+
+## Know Issues
+-  Optimization for ProgressBar 
+-  Search Component improvements 
+-  Improve tailwind.config.js; use default values for spacing
