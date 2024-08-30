@@ -1,0 +1,16 @@
+import type { App } from "vue";
+import VideoDBPlayer from "./components/video/VideoDBPlayer.vue";
+import SearchInsideMedia from "./components/search/SearchInsideMedia.vue";
+import ProgressBar from "./components/video/ProgressBar.vue";
+import BigCenterButton from "./components/buttons/BigCenterButton.vue";
+import PlayPauseButton from "./components/buttons/PlayPauseButton.vue";
+import VolumeControlButton from "./components/buttons/VolumeControlButton.vue";
+import TimeCode from "./components/atoms/TimeCode.vue";
+import SpeedControlButton from "./components/buttons/SpeedControlButton.vue";
+import CaptionButton from "./components/buttons/CaptionButton.vue";
+import FullScreenButton from "./components/buttons/FullScreenButton.vue";
+import { useVideoDBPlayer } from "./context";
+import "./style.css";
+import "./videojs.css";
+declare function install(app: App): void;
+export { install, useVideoDBPlayer, VideoDBPlayer, TimeCode, SearchInsideMedia, BigCenterButton, ProgressBar, PlayPauseButton, VolumeControlButton, SpeedControlButton, CaptionButton, FullScreenButton, };
