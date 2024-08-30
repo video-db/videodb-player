@@ -19,6 +19,7 @@ To use the VideoDB Player in your Vue.js application, import the necessary compo
 ```html
 <script setup>
   import { VideoDBPlayer } from "videodb-player";
+  import "videodb-player/dist/style.css";
 </script>
 
 <template>
