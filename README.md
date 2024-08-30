@@ -134,7 +134,7 @@ The player state and methods are provided through the Vue composition API. You c
   } = useVideoDBPlayer();
 </script>
 ```
-> Checkout [refernce](#reference) for more details
+> Checkout [reference](#reference) for more details
 
 ### Accessing Player Instance 
 
