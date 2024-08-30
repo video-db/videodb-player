@@ -15,50 +15,44 @@
   </button>
 </template>
 
-<script>
-export default {
-  name: 'TransparentButton',
-  props: {
-    buttonState: {
-      type: String,
-      default: 'default',
-    },
-    defaultStateCss: {
-      type: String,
-      default:
-        'bg-black-45 border border-yellow backdrop-blur hover:bg-random-313131 hover:border-random-8e6200',
-    },
-    activeStateCss: {
-      type: String,
-      default: 'chapter-button-active-lg border border-yellow pale-yellow',
-    },
-    disabledStateCss: {
-      type: String,
-      default:
-        'bg-black-45 opacity-20 border border-yellow backdrop-blur cursor-not-allowed pointer-events-none',
-    },
+<script setup>
+import { computed } from 'vue';
+
+const props = defineProps({
+  buttonState: {
+    type: String,
+    default: 'default',
   },
-  computed: {
-    customCss() {
-      let _customCss
-      switch (this.buttonState) {
-        case 'active':
-          _customCss = this.activeStateCss
-          break
-        case 'disabled':
-          _customCss = this.disabledStateCss
-          break
-        case 'hidden':
-          _customCss = 'hidden'
-          break
-        default:
-          _customCss = this.defaultStateCss
-          break
-      }
-      return _customCss
-    },
+  defaultStateCss: {
+    type: String,
+    default:
+      'bg-black-45 border border-yellow backdrop-blur hover:bg-random-313131 hover:border-random-8e6200',
   },
-}
+  activeStateCss: {
+    type: String,
+    default: 'chapter-button-active-lg border border-yellow pale-yellow',
+  },
+  disabledStateCss: {
+    type: String,
+    default:
+      'bg-black-45 opacity-20 border border-yellow backdrop-blur cursor-not-allowed pointer-events-none',
+  },
+});
+
+const customCss = computed(() => {
+  switch (props.buttonState) {
+    case 'active':
+      return props.activeStateCss;
+    case 'disabled':
+      return props.disabledStateCss;
+    case 'hidden':
+      return 'hidden';
+    default:
+      return props.defaultStateCss;
+  }
+});
+
+defineEmits(['clickAction']);
 </script>
 
 <style scoped>

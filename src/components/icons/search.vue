@@ -22,16 +22,13 @@
   </svg>
 </template>
 
-<script>
-export default {
-  name: 'Search',
-  props: {
-    className: {
-      type: String,
-      default: '',
-    },
+<script setup>
+defineProps({
+  className: {
+    type: String,
+    default: '',
   },
-}
+});
 </script>
 
 <style scoped>

@@ -26,16 +26,13 @@
   </svg>
 </template>
 
-<script>
-export default {
-  name: "FullScreenExit",
-  props: {
-    className: {
-      type: String,
-      default: "",
-    },
+<script setup>
+defineProps({
+  className: {
+    type: String,
+    default: "",
   },
-};
+});
 </script>
 
 <style scoped>

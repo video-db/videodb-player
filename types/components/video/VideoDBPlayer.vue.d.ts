@@ -13,6 +13,8 @@ declare const __VLS_component: import("vue").DefineComponent<{}, {
     time: import("vue").Ref<any>;
     percentagePlayed: import("vue").Ref<number>;
     playBackRate: import("vue").Ref<any>;
+    showSubtitles: import("vue").Ref<boolean>;
+    subtitlesConfig: Record<string, any>;
     isFullScreen: import("vue").Ref<boolean>;
     play: () => void;
     pause: () => void;
@@ -24,23 +26,29 @@ declare const __VLS_component: import("vue").DefineComponent<{}, {
     setVolume: (percentAsDecimal: any) => void;
     convertTimeToDuration: (seconds: any) => string;
     toggleFullScreen: (value: any) => void;
+    toggleSubtitles: (value: any) => void;
     togglePictureInPicture: () => void;
-    $emit: (event: "play" | "pause" | "ended" | "loadeddata" | "waiting" | "playing" | "timeupdate" | "canplay" | "canplaythrough" | "videoerrror" | "fullscreenchange", ...args: any[]) => void;
+    $emit: (event: "play" | "pause" | "playing" | "ended" | "loadeddata" | "waiting" | "timeupdate" | "canplay" | "canplaythrough" | "videoerrror" | "toggleSubtitles" | "fullScreenChange", ...args: any[]) => void;
     streamUrl: string;
     thumbnailUrl: string;
-    subtitle: string;
     startAt: number;
     autoPlay: boolean;
+    autoHideDuration: number;
+    defaultControls: boolean;
+    defaultOverlay: boolean;
     defaultPlayBackRate: number;
-    autoHideDuration?: number | undefined;
+    debug: boolean;
     $props: {
         readonly streamUrl?: string | undefined;
         readonly thumbnailUrl?: string | undefined;
-        readonly subtitle?: string | undefined;
+        readonly subtitlesConfig?: Record<string, any> | undefined;
         readonly startAt?: number | undefined;
         readonly autoPlay?: boolean | undefined;
-        readonly defaultPlayBackRate?: number | undefined;
         readonly autoHideDuration?: number | undefined;
+        readonly defaultControls?: boolean | undefined;
+        readonly defaultOverlay?: boolean | undefined;
+        readonly defaultPlayBackRate?: number | undefined;
+        readonly debug?: boolean | undefined;
     };
 }, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<{}>>, {}, {}>;
 declare function __VLS_template(): {

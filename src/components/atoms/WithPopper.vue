@@ -20,23 +20,17 @@
   </popper>
 </template>
 
-<script>
+<script setup>
 import Popper from "vue3-popper";
 
-export default {
-  name: "WithPopper",
-  components: {
-    Popper,
+defineProps({
+  popperText: {
+    type: String,
+    default: "",
   },
-  props: {
-    popperText: {
-      type: String,
-      default: "",
-    },
-    isPopperActive: {
-      type: Boolean,
-      default: false,
-    },
+  isPopperActive: {
+    type: Boolean,
+    default: false,
   },
-};
+});
 </script>

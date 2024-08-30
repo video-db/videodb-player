@@ -9,12 +9,6 @@
   </span>
 </template>
 
-<script>
-export default {
-  name: 'EllipsesLoading',
-}
-</script>
-
 <style scoped>
 .ellipses_container {
   letter-spacing: -0.1em;

@@ -15,10 +15,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Loading',
-}
+<script setup>
+// No setup logic needed for this component
 </script>
 
 <style scoped>

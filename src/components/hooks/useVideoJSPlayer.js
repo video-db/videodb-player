@@ -44,18 +44,18 @@ export function usePlayer(emit, props) {
         player.value = videojs(playerRef.value, {
           autoplay: props.autoPlay,
           controls: false,
-          currentTime: props.startAt,
           html5: {
             nativeTextTracks: false,
           },
           preload: true,
           poster: props.thumbnailUrl,
           sources: [source],
+          crossorigin: "anonymous",
         });
         bindEvents(events, emit);
       } catch (err) {
         if (err) emit("videoerror", true);
-        console.log("Error in initializing player ", err);
+        console.error("Error in initializing player ", err);
         return;
       }
     }
@@ -140,15 +140,15 @@ export function usePlayer(emit, props) {
   };
 
   const bindEvents = (events, emit) => {
-    console.log("bindEvents#1", events, emit)
     if (player.value) {
-      console.log("bindEvents#2", events, emit)
       events.forEach((customEvent) => {
         (function () {
           player.value.on(customEvent, (event) => {
+            if (props.debug) console.log("Player event ", customEvent, event);
             switch (customEvent) {
               case "loadeddata":
                 playerState.duration = player.value.duration();
+                seekTo(props.startAt);
                 break;
               case "canplay":
                 playerState.duration = player.value.duration();
@@ -159,8 +159,9 @@ export function usePlayer(emit, props) {
                   (_time / player.value.duration()) * 100;
                 playerState.time = _time;
                 break;
+              case "play":
+                playerState.playing = true;
             }
-            console.log("Triggered", customEvent);
             emit(customEvent, { event });
           });
         })();

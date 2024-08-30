@@ -2,9 +2,10 @@
   <div class="absolute inset-0 h-full w-full overflow-hidden bg-kilvish-200">
     <div
       ref="videoWrapper"
-      class="outline-16 relative h-full select-none outline-kilvish-200"
+      class="video-wrapper outline-16 relative h-full select-none outline-kilvish-200"
       :class="{
-        'hide-subtitles': !showSubtitles
+        'show-elements': showElements,
+        'hide-subtitles': !showSubtitles,
       }"
     >
       <!-- Video -->
@@ -14,11 +15,11 @@
         playsinline
       >
         <track
-          v-if="subtitle"
-          kind="captions"
-          :src="subtitle"
-          srclang="en"
-          label="English"
+          v-if="subtitlesConfig?.src"
+          :kind="subtitlesConfig?.kind || 'captions'"
+          :src="subtitlesConfig?.src"
+          :srclang="subtitlesConfig?.lang || 'en'"
+          :label="subtitlesConfig?.label || 'English'"
           default
         />
       </video>
@@ -28,326 +29,352 @@
         <div
           :class="[
             'duration-400 absolute bottom-0 left-0 right-0 top-0 block cursor-pointer bg-gradient-to-b from-black to-transparent transition-opacity ease-in-out',
-            !playing || showElements ? 'opacity-40' : 'opacity-0'
+            !playing || showElements ? 'opacity-40' : 'opacity-0',
           ]"
           @click="togglePlay"
         />
-        <slot name="overlay"></slot>
+        <slot v-if="!defaultOverlay" name="overlay"></slot>
+        <BigCenterButton v-else class="absolute left-1/2 top-1/2" />
       </div>
       <div
         :class="[
           'absolute bottom-0 w-full',
-          showElements ? 'lg-black-40' : 'lg-transparent'
+          showElements ? 'lg-black-40' : 'lg-transparent',
         ]"
       >
-        <slot name="controls"></slot>
+        <slot v-if="!defaultControls" name="controls"> </slot>
+        <div v-else class="p-20">
+          <div class="mx-28 mb-12 sm:mx-8">
+            <ProgressBar :stream-url="streamUrl" />
+          </div>
+          <div class="flex w-full justify-between">
+            <div class="z-10 ml-0 flex items-center">
+              <PlayPauseButton />
+              <VolumeControlButton />
+              <TimeCode />
+            </div>
+
+            <div class="flex w-auto flex-row items-center">
+              <CaptionButton />
+              <SpeedControlButton :speed-options="[1, 1.2, 1.5, 1.8, 2]" />
+              <FullScreenButton />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-  import {
-    ref,
-    onMounted,
-    onBeforeUnmount,
-    defineExpose,
-    provide
-  } from 'vue'
-  import { usePlayer } from '../hooks/useVideoJSPlayer.js'
+import { ref, onMounted, onBeforeUnmount, defineExpose, provide } from "vue";
+import { usePlayer } from "../hooks/useVideoJSPlayer.js";
+import BigCenterButton from "../buttons/BigCenterButton.vue";
+import ProgressBar from "./ProgressBar.vue";
+import PlayPauseButton from "../buttons/PlayPauseButton.vue";
+import VolumeControlButton from "../buttons/VolumeControlButton.vue";
+import TimeCode from "../atoms/TimeCode.vue";
+import SpeedControlButton from "../buttons/SpeedControlButton.vue";
+import CaptionButton from "../buttons/CaptionButton.vue";
+import FullScreenButton from "../buttons/FullScreenButton.vue";
 
-  const props = defineProps({
-    streamUrl: {
-      type: String,
-      required: true
+const props = defineProps({
+  streamUrl: {
+    type: String,
+    required: true,
+  },
+  thumbnailUrl: {
+    type: String,
+    default: "",
+  },
+  subtitlesConfig: {
+    type: Object,
+    default: () => {
+      return {
+        src: "",
+        kind: "captions",
+        lang: "en",
+        label: "English",
+      };
     },
-    thumbnailUrl: {
-      type: String,
-      required: true
-    },
-    subtitle: {
-      type: String,
-      default: ''
-    },
-    startAt: {
-      type: Number,
-      default: 0
-    },
-    autoPlay: {
-      type: Boolean,
-      default: false
-    },
-    autoHideDuration: {
-      type: Number,
-      defualt: 5000
-    },
-    defaultPlayBackRate: {
-      type: Number,
-      default: 1
+  },
+  startAt: {
+    type: Number,
+    default: 0,
+  },
+  autoPlay: {
+    type: Boolean,
+    default: false,
+  },
+  autoHideDuration: {
+    type: Number,
+    default: 5000,
+  },
+  defaultControls: {
+    type: Boolean,
+    default: true,
+  },
+  defaultOverlay: {
+    type: Boolean,
+    default: true,
+  },
+  defaultPlayBackRate: {
+    type: Number,
+    default: 1,
+  },
+  debug: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const videoWrapper = ref(null);
+const videoElement = ref(null);
+
+const emit = defineEmits([
+  "play",
+  "pause",
+  "ended",
+  "loadeddata",
+  "waiting",
+  "playing",
+  "timeupdate",
+  "canplay",
+  "canplaythrough",
+  "videoerrror",
+  "toggleSubtitles",
+  "fullScreenChange",
+]);
+
+const {
+  events,
+  playing,
+  volume,
+  videoMuted,
+  duration,
+  time,
+  percentagePlayed,
+  playBackRate,
+  play,
+  pause,
+  togglePlay,
+  toggleMute,
+  seekTo,
+  seekToPercentage,
+  setVolume,
+  setPlayBackRate,
+  convertTimeToDuration,
+  togglePictureInPicture,
+  initializePlayer,
+} = usePlayer(emit, props);
+
+const showElements = ref(true);
+const showElementsMouseMoveInterval = ref(null);
+
+const isFullScreen = ref(false);
+const showSubtitles = ref(false);
+
+
+onMounted(() => {
+  window.addEventListener("keypress", (e) => {
+    if (isFullScreen.value && e.code === "Escape") {
+      toggleFullScreen(false);
     }
-  })
+  });
 
-  const videoWrapper = ref(null)
-  const videoElement = ref(null)
+  initializePlayer(videoElement);
+  addVideoInteractions();
+  addKeyboardKeyFunctions();
+});
 
-  const emit = defineEmits([
-    'play',
-    'pause',
-    'ended',
-    'loadeddata',
-    'waiting',
-    'playing',
-    'timeupdate',
-    'canplay',
-    'canplaythrough',
-    'videoerrror',
-    'fullscreenchange'
-  ])
+onBeforeUnmount(() => {
+  removeKeyboardKeyFunctions();
+});
 
-  const {
-    events,
-    playing,
-    volume,
-    videoMuted,
-    duration,
-    time,
-    percentagePlayed,
-    playBackRate,
-    play,
-    pause,
-    togglePlay,
-    toggleMute,
-    seekTo,
-    seekToPercentage,
-    setVolume,
-    setPlayBackRate,
-    convertTimeToDuration,
-    togglePictureInPicture,
-    initializePlayer,
-    bindEvents
-  } = usePlayer(emit, props)
+const addKeyboardKeyFunctions = () => {
+  document.addEventListener("keydown", keyDown);
+};
 
-  const showElements = ref(true)
-  const showElementsMouseMoveInterval = ref(null)
+const removeKeyboardKeyFunctions = () => {
+  document.removeEventListener("keydown", keyDown);
+};
 
-  const isFullScreen = ref(false)
-  // const showSubtitles = ref(false);
+const toggleSubtitles = (value) => {
+  showSubtitles.value = value;
+  emit("toggleSubtitles", value);
+};
 
-  const orientation = ref('portrait')
+const toggleFullScreen = (value) => {
+  isFullScreen.value = value;
+  emit("fullScreenChange", value);
+};
 
-  onMounted(() => {
-    if (window.innerHeight > window.innerWidth) {
-      orientation.value = 'portrait'
-    } else {
-      orientation.value = 'landscape'
-    }
-
-    //#TODO: can these event listeners be moved somewhere ?
-    window.addEventListener('resize', () => {
-      if (window.innerHeight > window.innerWidth) {
-        orientation.value = 'portrait'
-      } else {
-        orientation.value = 'landscape'
-      }
-    })
-
-    window.addEventListener('keypress', (e) => {
-      if (isFullScreen.value && e.code === 'Escape') {
-        toggleFullScreen(false)
-      }
-    })
-
-    initializePlayer(videoElement)
-    addVideoInteractions()
-    addKeyboardKeyFunctions()
-  })
-
-  onBeforeUnmount(() => {
-    removeKeyboardKeyFunctions()
-  })
-
-  const addKeyboardKeyFunctions = () => {
-    document.addEventListener('keydown', keyDown)
+const keyDown = (e) => {
+  const currentElement = document.activeElement.tagName;
+  if (currentElement === "TEXTAREA" || currentElement === "INPUT") {
+    return;
   }
-
-  const removeKeyboardKeyFunctions = () => {
-    document.removeEventListener('keydown', keyDown)
+  switch (e.code) {
+    case "Space":
+      e.preventDefault();
+      togglePlay();
+      return;
+    // case 'ArrowLeft':
+    //   e.preventDefault()
+    //   rewind()
+    //   return
+    // case 'ArrowRight':
+    //   e.preventDefault()
+    //   forward()
+    //   return
   }
+};
 
-  const toggleFullScreen = (value) => {
-    isFullScreen.value = value
-    emit('fullscreenchange', value)
-  }
-
-  const keyDown = (e) => {
-    const currentElement = document.activeElement.tagName
-    if (currentElement === 'TEXTAREA' || currentElement === 'INPUT') {
-      return
-    }
-    switch (e.code) {
-      case 'Space':
-        e.preventDefault()
-        togglePlay()
-        return
-      // case 'ArrowLeft':
-      //   e.preventDefault()
-      //   rewind()
-      //   return
-      // case 'ArrowRight':
-      //   e.preventDefault()
-      //   forward()
-      //   return
-    }
-  }
-
-  // Mouse and touch events
-  const addVideoInteractions = () => {
-    // Touch events
-    if (window.matchMedia('(any-hover: none)').matches) {
-      videoWrapper.value.addEventListener('touchend', onTouchEnd)
-    }
-    // Hover events
-    else {
-      videoWrapper.value.addEventListener('mouseenter', onMouseEnter)
-      videoWrapper.value.addEventListener('mouseleave', onMouseLeave)
-    }
-  }
-
-  // Hover events
-  const onMouseEnter = () => {
-    showElements.value = true
-    window.addEventListener('mousemove', onMouseMove)
-  }
-
-  const onMouseLeave = () => {
-    clearTimeout(showElementsMouseMoveInterval.value)
-    if (playing.value) {
-      showElements.value = false
-    }
-    window.removeEventListener('mousemove', onMouseMove)
-  }
-
-  const onMouseMove = () => {
-    clearTimeout(showElementsMouseMoveInterval.value)
-    showElements.value = true
-    showElementsMouseMoveInterval.value = setTimeout(() => {
-      if (!playing.value) return
-      showElements.value = false
-    }, props.autoHideDuration)
-  }
-
+// Mouse and touch events
+const addVideoInteractions = () => {
   // Touch events
-  const onTouchEnd = () => {
-    clearTimeout(showElementsMouseMoveInterval.value)
-    showElements.value = true
-    showElementsMouseMoveInterval.value = setTimeout(() => {
-      if (!playing.value) return
-      showElements.value = false
-    }, props.autoHideDuration)
+  if (window.matchMedia("(any-hover: none)").matches) {
+    videoWrapper.value.addEventListener("touchend", onTouchEnd);
   }
+  // Hover events
+  else {
+    videoWrapper.value.addEventListener("mouseenter", onMouseEnter);
+    videoWrapper.value.addEventListener("mouseleave", onMouseLeave);
+  }
+};
 
-  defineExpose({
-    showElements,
-    playing,
-    volume,
-    videoMuted,
-    duration,
-    time,
-    percentagePlayed,
-    playBackRate,
-    isFullScreen,
-    play,
-    pause,
-    togglePlay,
-    toggleMute,
-    seekTo,
-    seekToPercentage,
-    setPlayBackRate,
-    setVolume,
-    convertTimeToDuration,
-    toggleFullScreen,
-    togglePictureInPicture
-  })
+// Hover events
+const onMouseEnter = () => {
+  showElements.value = true;
+  window.addEventListener("mousemove", onMouseMove);
+};
 
-  provide('videodb-player', {
-    showElements,
-    playing,
-    volume,
-    videoMuted,
-    duration,
-    time,
-    percentagePlayed,
-    playBackRate,
-    isFullScreen,
-    play,
-    pause,
-    togglePlay,
-    toggleMute,
-    seekTo,
-    seekToPercentage,
-    setPlayBackRate,
-    setVolume,
-    convertTimeToDuration,
-    toggleFullScreen,
-    togglePictureInPicture
-  })
+const onMouseLeave = () => {
+  clearTimeout(showElementsMouseMoveInterval.value);
+  if (playing.value) {
+    showElements.value = false;
+  }
+  window.removeEventListener("mousemove", onMouseMove);
+};
+const onMouseMove = () => {
+  clearTimeout(showElementsMouseMoveInterval.value);
+  showElements.value = true;
+  showElementsMouseMoveInterval.value = setTimeout(() => {
+    if (!playing.value) return;
+    showElements.value = false;
+  }, props.autoHideDuration);
+};
+
+// Touch events
+const onTouchEnd = () => {
+  clearTimeout(showElementsMouseMoveInterval.value);
+  showElements.value = true;
+  showElementsMouseMoveInterval.value = setTimeout(() => {
+    if (!playing.value) return;
+    showElements.value = false;
+  }, props.autoHideDuration);
+};
+
+defineExpose({
+  showElements,
+  playing,
+  volume,
+  videoMuted,
+  duration,
+  time,
+  percentagePlayed,
+  playBackRate,
+  showSubtitles,
+  subtitlesConfig: props.subtitlesConfig,
+  isFullScreen,
+  play,
+  pause,
+  togglePlay,
+  toggleMute,
+  seekTo,
+  seekToPercentage,
+  setPlayBackRate,
+  setVolume,
+  convertTimeToDuration,
+  toggleFullScreen,
+  toggleSubtitles,
+  togglePictureInPicture,
+});
+
+provide("videodb-player", {
+  showElements,
+  playing,
+  volume,
+  videoMuted,
+  duration,
+  time,
+  percentagePlayed,
+  playBackRate,
+  showSubtitles,
+  subtitlesConfig: props.subtitlesConfig,
+  isFullScreen,
+  play,
+  pause,
+  togglePlay,
+  toggleMute,
+  seekTo,
+  seekToPercentage,
+  setPlayBackRate,
+  setVolume,
+  convertTimeToDuration,
+  toggleFullScreen,
+  togglePictureInPicture,
+  toggleSubtitles,
+});
 </script>
 
 <style scoped>
-  .lg-transparent {
-    background: linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0) 100%
-    );
-  }
+.lg-transparent {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
+}
 
-  .lg-black-40 {
-    background: linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.4) 0%,
-      rgba(0, 0, 0, 0) 100%
-    );
-  }
+.lg-black-40 {
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
 
-  /* Subtitles */
-  /deep/.vjs-text-track-display {
-    position: absolute;
-    bottom: 1rem;
-  }
+/* Subtitles */
+/deep/.vjs-text-track-display {
+  position: absolute;
+  bottom: 1rem;
+}
 
-  .hide-subtitles /deep/.vjs-text-track-display {
-    display: none !important;
-  }
+.hide-subtitles /deep/.vjs-text-track-display {
+  display: none !important;
+}
 
-  /deep/.vjs-text-track-display .vjs-text-track-cue {
-    font-size: 18px !important;
-    height: auto !important;
-    inset: unset !important;
-    position: absolute !important;
-    bottom: 0 !important;
-  }
+/deep/.vjs-text-track-display .vjs-text-track-cue {
+  font-size: 18px !important;
+  height: auto !important;
+  inset: unset !important;
+  position: absolute !important;
+  bottom: 0 !important;
+}
 
-  /deep/.vjs-text-track-display .vjs-text-track-cue div {
-    font-family: inherit !important;
-    background: rgba(0, 0, 0, 0.72) !important;
-    font-weight: 400 !important;
-    color: #fff !important;
-  }
+/deep/.vjs-text-track-display .vjs-text-track-cue div {
+  font-family: inherit !important;
+  background: rgba(0, 0, 0, 0.72) !important;
+  font-weight: 400 !important;
+  color: #fff !important;
+}
 
-  /* Shifting subtitles */
-  .spext-player.show-elements /deep/.vjs-text-track-display,
-  .spext-player.stopped /deep/.vjs-text-track-display {
-    bottom: 5rem !important;
-  }
+/* Shifting subtitles */
+.video-wrapper.show-elements /deep/.vjs-text-track-display,
+.video-wrapper.stopped /deep/.vjs-text-track-display {
+  bottom: 5rem !important;
+}
 
-  .show-playback-rates /deep/.vjs-text-track-display,
-  .show-comment-box /deep/.vjs-text-track-display {
-    display: none !important;
-  }
 
-  /* No selection */
-  .bg-orientation-msg {
-    background: #272727;
-  }
+/* No selection */
+.bg-orientation-msg {
+  background: #272727;
+}
 </style>

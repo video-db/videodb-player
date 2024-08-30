@@ -1,6 +1,6 @@
 <template>
   <svg
-    :className="className"
+    :class="className"
     width="24"
     height="24"
     viewBox="0 0 24 24"
@@ -14,16 +14,13 @@
   </svg>
 </template>
 
-<script>
-export default {
-  name: "ArrowLeft",
-  props: {
-    className: {
-      type: String,
-      default: "",
-    },
+<script setup>
+defineProps({
+  className: {
+    type: String,
+    default: "",
   },
-};
+});
 </script>
 
 <style scoped>
