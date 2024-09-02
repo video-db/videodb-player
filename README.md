@@ -1,12 +1,52 @@
-# VideoDB Player UI Library
+<!-- PROJECT SHIELDS -->
+<!--
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
 
-## Overview
 
-VideoDB Player is a Vue.js-based UI library for creating customizable video players. It provides a set of components and utilities to easily integrate video playback functionality into your Vue applications.
+[![NPM version][npm-shield]][npm-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![Website][website-shield]][website-url]
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://videodb.io/">
+    <img src="https://codaio.imgix.net/docs/_s5lUnUCIU/blobs/bl-RgjcFrrJjj/d3cbc44f8584ecd42f2a97d981a144dce6a66d83ddd5864f723b7808c7d1dfbc25034f2f25e1b2188e78f78f37bcb79d3c34ca937cbb08ca8b3da1526c29da9a897ab38eb39d084fd715028b7cc60eb595c68ecfa6fa0bb125ec2b09da65664a4f172c2f" alt="Logo" width="300" height="">
+  </a>
 
-## Installation
+  <h3 align="center">VideoDB Player</h3>
 
-To install the VideoDB Player library, run the following command in your project directory:
+  <p align="center">
+    AI First Video Player
+    <br />
+    <a href="https://docs.videodb.io"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://stackblitz.com/">View Demo</a>
+    ·
+    <a href="https://github.com/video-db/videodb-python/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/video-db/videodb-python/issues">Request Feature</a>
+  </p>
+</p>
+
+<!-- ABOUT THE PROJECT -->
+# 📺 VideoDB Player
+
+## 🤔 Why ? 
+
+## ✨VideoDB Player
+
+## 🧩 Components
+
+
+## 🚀 Quickstart
+
+### Installation
+
+To add the VideoDB Player library to your project, use the following command in your project's directory:
 
 ```bash
 npm install videodb-player
@@ -28,13 +68,6 @@ To use the VideoDB Player in your Vue.js application, import the necessary compo
       class="player" 
       streamUrl="https://stream.videodb.io/v3/published/manifests/12df6498-e955-4249-84b8-7568aaf72160.m3u8"
     >
-      <template #overlay>
-        <!-- Custom overlay can be added here -->
-      </template>
-
-      <template #controls>
-        <!-- Custom controls can be added here -->
-      </template>
     </VideoDBPlayer>
   </div>
 </template>
@@ -52,73 +85,41 @@ To use the VideoDB Player in your Vue.js application, import the necessary compo
 </style>
 ```
 
-## Components
+## 🧑‍💻 Advanced Usage
 
-### VideoDBPlayer
+### 🔧 Custom Controls
 
-The main component for rendering the video player.
-
-#### Props
-
-- `streamUrl` (String, required): The URL of the video stream.
-- `thumbnailUrl` (String, optional): URL of the video thumbnail.
-- `subtitlesConfig` (Object, optional): Configuration for subtitles.
-  - `src` (String, default: ""): The URL of the subtitles file.
-  - `kind` (String, default: "captions"): The kind of text track.
-  - `lang` (String, default: "en"): The language of the subtitles.
-  - `label` (String, default: "English"): The label for the subtitles.
-- `startAt` (Number, default: 0): Time in seconds to start the video.
-- `autoPlay` (Boolean, default: false): Whether to start playing automatically.
-- `autoHideDuration` (Number, default: 5000): Duration in milliseconds before controls are hidden.
-- `defaultControls` (Boolean, default: true): Whether to use default controls.
-- `defaultOverlay` (Boolean, default: true): Whether to use the default overlay.
-- `defaultPlayBackRate` (Number, default: 1): Default playback rate.
-- `debug` (Boolean, default: false): Enable debug mode.
-
-### Other Components
-
-- `BigCenterButton`: Large play button displayed in the center of the player.
-- `ProgressBar`: Shows the current progress of the video.
-- `PlayPauseButton`: Toggle between play and pause states.
-- `VolumeControlButton`: Control the volume of the video.
-- `TimeCode`: Display the current time and duration of the video.
-- `SpeedControlButton`: Adjust the playback speed.
-- `CaptionButton`: Toggle captions/subtitles.
-- `FullScreenButton`: Toggle fullscreen mode.
-
-## Styling
-
-The library uses Tailwind CSS for styling. Custom styles can be applied by overriding the provided classes.
-
-## Advanced Usage
-
-### Custom Controls
-
-You can create custom controls by using the slot provided in the `VideoDBPlayer` component:
+To create custom controls for the VideoDBPlayer component, you can utilize the provided slot feature. First, you'll need to disable the default controls by setting the `defaultControls` prop to `false`. Here's how you can do it:
 
 ```html
-<VideoDBPlayer streamUrl="https://example.com/video.m3u8">
+<VideoDBPlayer 
+  streamUrl="https://example.com/video.m3u8"
+  :defaultControls="false"
+>
   <template #controls>
     <YourCustomControls />
   </template>
 </VideoDBPlayer>
 ```
 
-### Custom overlay
+### 🔧 Custom overlay
 
-You can create custom controls by using the slot provided in the `VideoDBPlayer` component:
+Similar to disabling the default controls, you can disable the default overlay by setting the `defaultOverlay` prop to `false` within the VideoDBPlayer component:
 
 ```html
-<VideoDBPlayer streamUrl="https://example.com/video.m3u8">
+<VideoDBPlayer 
+  streamUrl="https://example.com/video.m3u8"
+  :defaultOverlay="false"
+>
   <template #overlay>
     <YourCustomOverlay />
   </template>
 </VideoDBPlayer>
 ```
 
-### Accessing Player State
+### 🧑‍💻 Accessing Player State Inside Child Components of `VideoDBPlayer` 
 
-The player state and methods are provided through the Vue composition API. You can access them using the `useVideoDBPlayer` hook:
+The player state and methods are provided through the Vue composition API. You can access them using the `useVideoDBPlayer` hook in Child Components of `VideoDBPlayer`:
 
 ```html
 <script setup>
@@ -135,11 +136,12 @@ The player state and methods are provided through the Vue composition API. You c
   } = useVideoDBPlayer();
 </script>
 ```
-> Checkout [reference](#reference) for more details
+> Checkout [interface](#videodbplayer) for more details
 
-### Accessing Player Instance 
+### 🧑‍💻 Accessing Player Instance 
 
-The VideoDB Player exposes its internal player instance through a ref:
+The VideoDB Player exposes its internal player instance through a ref.
+Its useful for accessing player methods and state from outside the component
 
 ```html
 <template>
@@ -163,10 +165,10 @@ onMounted(() => {
 </script>
 ```
 
-> Checkout [reference](#reference) for more details
+> Checkout [interface](#videodbplayer) for more details
 
 
-### Events
+### 🔔 Events
 
 The VideoDB Player emits several events that you can listen to in the parent component:
 
@@ -192,14 +194,12 @@ Example usage:
     @ended="onEnded"
     @toggleSubtitles="onToggleSubtitles"
     @fullScreenChange="onFullScreenChange"
-    :streamUrl="streamUrl"
+    streamUrl="https://example.com/video.m3u8"
   />
 </template>
 
 <script setup>
 import { VideoDBPlayer } from 'videodb-player';
-
-const streamUrl = "https://example.com/video.m3u8";
 
 const onPlay = () => {
   console.log('Video started playing');
@@ -223,11 +223,30 @@ const onFullScreenChange = (isFullScreen) => {
 </script>
 ```
 
-# Reference
+# 📡 Interface
 
-## Exposed and Injected Variables
+## VideoDBPlayer
 
-The following variables are both exposed (via `defineExpose`) and injected (via `provide`) under the key "videodb-player":
+### Props
+- **streamUrl** (String, required): The URL of the video stream.
+- **thumbnailUrl** (String, optional): URL of the video thumbnail.
+- **subtitlesConfig** (Object, optional): Configuration for subtitles.
+  - **src** (String, default: ""): The URL of the subtitles file.
+  - **kind** (String, default: "captions"): The kind of text track.
+  - **lang** (String, default: "en"): The language of the subtitles.
+  - **label** (String, default: "English"): The label for the subtitles.
+- **startAt** (Number, default: 0): Time in seconds to start the video.
+- **autoPlay** (Boolean, default: false): Whether to start playing automatically.
+- **autoHideDuration** (Number, default: 5000): Duration in milliseconds before controls are hidden.
+- **defaultControls** (Boolean, default: true): Whether to use default controls.
+- **defaultOverlay** (Boolean, default: true): Whether to use the default overlay.
+- **defaultPlayBackRate** (Number, default: 1): Default playback rate.
+- **debug** (Boolean, default: false): Enable debug mode.
+
+
+### Exposed and Injected Variables
+
+Following variables are both exposed (via `defineExpose`) and injected (via `provide`) under the key "videodb-player":
 
 ### State Variables
 
@@ -258,7 +277,20 @@ The following variables are both exposed (via `defineExpose`) and injected (via 
 
 
 
-## Know Issues
--  Optimization for ProgressBar 
--  Search Component improvements 
--  Improve tailwind.config.js; use default values for spacing
+# 🛣️ Roadmap
+- ⚡ Optimization for ProgressBar 
+- 🔍 Search Component Interface improvements 
+- 🎨 Improve tailwind.config.js; use default values for spacing
+- ⚛️ React Conversion
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
+[npm-shield]: https://img.shields.io/npm/v/videodb-player?style=for-the-badge
+[npm-url]: https://www.npmjs.com/package/videodb-player
+[stars-shield]: https://img.shields.io/github/stars/video-db/videodb-player.svg?style=for-the-badge
+[stars-url]: https://github.com/video-db/videodb-player/stargazers
+[issues-shield]: https://img.shields.io/github/issues/video-db/videodb-player.svg?style=for-the-badge
+[issues-url]: https://github.com/video-db/videodb-player/issues
+[website-shield]: https://img.shields.io/website?url=https%3A%2F%2Fvideodb.io%2F&style=for-the-badge&label=videodb.io
+[website-url]: https://videodb.io/
