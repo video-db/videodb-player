@@ -1,10 +1,10 @@
 <template>
   <div
-    class="absolute left-0 top-0 w-full h-48 overflow-visible transition-opacity duration-200 ease-in-out"
+    class="absolute left-0 top-0 h-48 w-full overflow-visible transition-opacity duration-200 ease-in-out"
   >
     <!-- Basic search elements -->
     <div
-      class="spext-player-search w-full h-full"
+      class="spext-player-search h-full w-full"
       :class="{
         'opacity-30': !isActive && !isAutoPilotLoading,
         'opacity-40': wordsLoading,
@@ -15,17 +15,17 @@
         <div
           id="searchInputWrapper"
           :class="[
-            'search-input-wrapper absolute top-20 transform -translate-x-1/2 sm:top-24 h-48 rounded-8',
+            'search-input-wrapper absolute top-20 h-48 -translate-x-1/2 transform rounded-8 sm:top-24',
             autoHide && !showElements && searchContent === ''
               ? 'opacity-0'
               : 'opacity-1',
             {
               'is-focused': isFocused,
-              'left-1/2 bg-black-16 text-white ': isUploadingScreen,
+              'left-1/2 bg-black-16 text-white': isUploadingScreen,
               'left-1/2 bg-steelblue-100 text-kilvish-500':
                 isAutoPilotLoadingScreen,
               'left-1/2 bg-black-32 text-white': isRawScreen,
-              'left-20 sm:left-1/2 bg-black-32 text-white transform-none sm:transform sm:-translate-x-1/2 search-input-wrapper-done':
+              'search-input-wrapper-done left-20 transform-none bg-black-32 text-white sm:left-1/2 sm:-translate-x-1/2 sm:transform':
                 isFinalScreen,
               'search-input-wrapper-done-full mr-20':
                 isFinalScreen && (isFocused || searchContent !== ''),
@@ -35,7 +35,7 @@
           <input
             v-if="!(isAutoPilotLoading || isRaw || wordsLoading)"
             ref="searchInput"
-            class="search-input appearance-none transition w-full h-48 rounded-8 sm:pl-44 pr-44 pl-12 bg-transparent text-left border border-solid border-yellow focus:border-yellow-600"
+            class="search-input h-48 w-full appearance-none rounded-8 border border-solid border-yellow bg-transparent pl-12 pr-44 text-left transition focus:border-yellow-600 sm:pl-44"
             :class="{
               'search-input-uploading':
                 !isActive && !isAutoPilotLoading && !isRaw,
@@ -50,12 +50,12 @@
             :disabled="!isActive || wordsLoading"
             @focus="onSearchFocus"
             @blur="handleInputBlur"
-            @input.prevent="onSearchChange($event.target.value)"
-            @keyup.enter="onSearchSubmit"
+            @input="$emit('searchChange', $event.target.value)"
+            @keyup.enter="$emit('searchSubmit', searchContent)"
           />
           <div
             v-else
-            class="search-input appearance-none transition w-full h-48 rounded-8 px-16 pl-44 bg-transparent my-auto flex justify-start items-center border border-yellow"
+            class="search-input my-auto flex h-48 w-full appearance-none items-center justify-start rounded-8 border border-yellow bg-transparent px-16 pl-44 transition"
             :class="{
               'search-input-wrapper-done-full mr-20':
                 isFinalScreen && (isFocused || searchContent !== ''),
@@ -74,11 +74,11 @@
           <div class="hidden sm:block">
             <SearchIcon
               v-if="!isUploadingScreen"
-              class="w-20 h-20 absolute top-1/2 left-16 transform -translate-y-1/2"
+              class="absolute left-16 top-1/2 h-20 w-20 -translate-y-1/2 transform"
             />
             <CloseIcon
               v-if="searchContent !== ''"
-              class="transition w-20 h-20 absolute top-1/2 right-16 transform -translate-y-1/2 cursor-pointer"
+              class="absolute right-16 top-1/2 h-20 w-20 -translate-y-1/2 transform cursor-pointer transition"
               @click="closeInput()"
             />
           </div>
@@ -86,11 +86,11 @@
           <div class="block sm:hidden">
             <SearchIcon
               v-if="!isUploadingScreen && searchContent == ''"
-              class="w-20 h-20 absolute top-1/2 right-16 transform -translate-y-1/2"
+              class="absolute right-16 top-1/2 h-20 w-20 -translate-y-1/2 transform"
             />
             <CloseIcon
               v-if="!isUploadingScreen && searchContent !== ''"
-              class="transition w-20 h-20 absolute top-1/2 right-16 transform -translate-y-1/2 cursor-pointer"
+              class="absolute right-16 top-1/2 h-20 w-20 -translate-y-1/2 transform cursor-pointer transition"
               @click="closeInput()"
             />
           </div>
@@ -101,12 +101,12 @@
           v-if="showSearchSuggestions && searchSuggestions.length"
           v-show="!wordsLoading"
           :class="[
-            'absolute top-76 left-1/2 transform -translate-x-1/2 rounded-8 px-16 py-8 bg-random-222222 border border-white-24 hidden search-suggestions',
+            'search-suggestions absolute left-1/2 top-76 hidden -translate-x-1/2 transform rounded-8 border border-white-24 bg-random-222222 px-16 py-8',
             autoHide && !showElements ? 'opacity-0' : 'opacity-1',
           ]"
         >
           <div
-            class="uppercase text-others-gray42 leading-24"
+            class="leading-24 uppercase text-others-gray42"
             style="font-size: 0.625rem"
           >
             Popular Topics in this file
@@ -115,7 +115,7 @@
             <div
               v-for="(suggestion, i) in searchSuggestions"
               :key="i"
-              class="font-medium text-white min-h-24 leading-24 py-8 border-b border-others-black181818 search-suggestion cursor-pointer hover:text-kilvish-500"
+              class="leading-24 search-suggestion min-h-24 cursor-pointer border-b border-others-black181818 py-8 font-medium text-white hover:text-kilvish-500"
               style="font-size: 0.75rem"
               @click="() => handleSearchSuggestionClick(suggestion.text)"
             >
@@ -126,33 +126,33 @@
         <div
           v-else-if="showSearchSuggestions && !searchSuggestions.length"
           :class="[
-            'absolute top-76 left-1/2 transform -translate-x-1/2 rounded-8 px-16 py-8 bg-random-222222 border border-white-24 hidden search-suggestions',
+            'search-suggestions absolute left-1/2 top-76 hidden -translate-x-1/2 transform rounded-8 border border-white-24 bg-random-222222 px-16 py-8',
             autoHide && !showElements && searchContent === ''
               ? 'opacity-0'
               : 'opacity-1',
           ]"
         >
           <div
-            class="uppercase text-others-gray42 leading-24"
+            class="leading-24 uppercase text-others-gray42"
             style="font-size: 0.625rem"
           >
             Popular Topics in this file
           </div>
           <div class="search-suggestions-wrapper">
             <div
-              class="h-14 w-full animate-pulse rounded-2 bg-others-suggLoader mb-4"
+              class="mb-4 h-14 w-full animate-pulse rounded-2 bg-others-suggLoader"
             />
             <div
-              class="h-14 w-3/4 animate-pulse rounded-2 bg-others-suggLoader mb-4"
+              class="mb-4 h-14 w-3/4 animate-pulse rounded-2 bg-others-suggLoader"
             />
             <div
-              class="h-14 w-4/6 animate-pulse rounded-2 bg-others-suggLoader mb-4"
+              class="mb-4 h-14 w-4/6 animate-pulse rounded-2 bg-others-suggLoader"
             />
             <div
-              class="h-14 w-1/2 animate-pulse rounded-2 bg-others-suggLoader mb-4"
+              class="mb-4 h-14 w-1/2 animate-pulse rounded-2 bg-others-suggLoader"
             />
             <div
-              class="h-14 w-10/12 animate-pulse rounded-2 bg-others-suggLoader mb-4"
+              class="mb-4 h-14 w-10/12 animate-pulse rounded-2 bg-others-suggLoader"
             />
           </div>
         </div>
@@ -160,7 +160,7 @@
         <div
           v-if="showSearchResults"
           id="searchResultsContainer"
-          class="transition absolute left-8 right-8 top-80 sm:left-16 sm:right-16 md:top-80 rounded-16 border shadow-3 overflow-hidden mx-auto searchResultsContainer"
+          class="searchResultsContainer absolute left-8 right-8 top-80 mx-auto overflow-hidden rounded-16 border shadow-3 transition sm:left-16 sm:right-16 md:top-80"
           :class="{
             'border-white-24 text-white': !isLight,
             'border-kilvish-300 text-gray-900': isLight,
@@ -170,18 +170,18 @@
           }`"
         >
           <div
-            class="p-28 flex justify-center"
-            :class="{ hidden: !searchLoading }"
+            class="flex justify-center p-28"
+            :class="{ hidden: !searchResultsLoading }"
           >
             <loading />
           </div>
           <div
             :class="{
-              hidden: searchLoading,
+              hidden: searchResultsLoading,
             }"
           >
             <search-results
-              v-if="searchResults.hits.hits.length > 0"
+              v-if="searchResults.hits.length > 0"
               bg="34,34,34"
               theme="yellow"
               :search-results="searchResults"
@@ -192,7 +192,7 @@
               :is-light="isLight"
             />
             <div v-else>
-              <p class="text-center px-8 py-32 opacity-80">No results found</p>
+              <p class="px-8 py-32 text-center opacity-80">No results found</p>
             </div>
           </div>
         </div>
@@ -221,50 +221,53 @@ const props = defineProps({
   isActive: { type: Boolean, default: true },
   isRaw: { type: Boolean, default: false },
   isAutoPilotLoading: { type: Boolean, default: false },
-  isIframe: { type: Boolean, default: false },
-  isFullScreen: { type: Boolean, default: false },
-  toggleShareModal: { type: Function, default: () => {} },
   searchContent: { type: String, default: "" },
-  searchLoading: { type: Boolean, default: false },
+  searchResultsLoading: { type: Boolean, default: false },
   searchInputPlaceholder: { type: String, default: "Search or ask a question" },
   wordsLoading: { type: Boolean, default: false },
   showSearchResults: { type: Boolean, default: false },
-  onSearchChange: { type: Function, default: () => {} },
   searchSuggestions: { type: Array, default: () => [] },
   searchResults: { type: Object, default: () => ({}) },
   updateParentIsFocused: { type: Function, default: () => {} },
   highlights: { type: Array, default: () => [] },
-  playPaused: { type: Function, default: () => {} },
-  subtitles: { type: String, default: "" },
-  videoTitle: { type: String, default: "" },
-  subtitleBacked: { type: Boolean, default: false },
-  showSubtitles: { type: Boolean, default: false },
-  toggleSubtiles: { type: Function, default: () => {} },
-  isSummaryVisible: { type: Boolean, default: false },
   isLight: { type: Boolean, default: false },
 });
 
-const { playing, duration, seekTo, showElements } = useVideoDBPlayer();
+const { playing, duration, seekTo, showElements, togglePlay } =
+  useVideoDBPlayer();
 
-const emit = defineEmits(["toggleResults", "inputFocused", "searchSubmit"]);
+const emit = defineEmits([
+  "toggleResults",
+  "inputFocused",
+  "searchSubmit",
+  "searchChange",
+]);
 
 const isFocused = ref(false);
 const searchInput = ref(null);
 const searchTopContainer = ref(null);
 
-const showSearchSuggestions = computed(() => props.searchContent === "");
+const showSearchSuggestions = computed(() => props.searchContent === "" && props.searchSuggestions.length);
 const isUploadingScreen = computed(
-  () => !props.isActive && !props.isAutoPilotLoading && !props.isRaw
+  () => !props.isActive && !props.isAutoPilotLoading && !props.isRaw,
 );
 const isAutoPilotLoadingScreen = computed(
-  () => !props.isActive && props.isAutoPilotLoading && !props.isRaw
+  () => !props.isActive && props.isAutoPilotLoading && !props.isRaw,
 );
 const isRawScreen = computed(
-  () => !props.isActive && !props.isAutoPilotLoading && props.isRaw
+  () => !props.isActive && !props.isAutoPilotLoading && props.isRaw,
 );
 const isFinalScreen = computed(
-  () => props.isActive && !props.isAutoPilotLoading && !props.isRaw
+  () => props.isActive && !props.isAutoPilotLoading && !props.isRaw,
 );
+
+watch(()=>props.searchContent, (val)=>{
+  if(val === ""){
+    emit("toggleResults", false);
+    return;
+  }
+  emit("toggleResults", true);
+})
 
 watch(isFocused, (val) => {
   if (props.searchContent === "") {
@@ -278,7 +281,7 @@ watch(
   () => props.showSearchResults,
   (val, oldVal) => {
     if (!oldVal && val) emit("toggleResults", true);
-  }
+  },
 );
 
 onMounted(() => {
@@ -287,12 +290,14 @@ onMounted(() => {
 
 const handleSearchSuggestionClick = (text) => {
   forceFocus();
-  props.onSearchChange(text);
+  emit("searchChange", text);
 };
 
 const onSlideClick = (value) => {
   seekTo(value);
-  props.playPaused();
+  if (!playing.value) {
+    togglePlay();
+  }
   searchTopContainer.value.blur();
   emit("toggleResults", false);
 };
@@ -309,7 +314,7 @@ const onSearchFocus = () => {
 };
 
 const closeInput = () => {
-  props.onSearchChange("");
+  emit("searchChange", "");
   searchInput.value.focus();
 };
 
@@ -335,11 +340,6 @@ const checkForIdInParentNodes = (elm, id) => {
     element = element.parentNode;
   }
   return false;
-};
-
-const onSearchSubmit = () => {
-  console.log("search submit", props.searchContent);
-  emit("searchSubmit", props.searchContent);
 };
 </script>
 

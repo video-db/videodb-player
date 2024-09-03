@@ -26,9 +26,9 @@
     <br />
     <a href="https://stackblitz.com/">View Demo</a>
     ·
-    <a href="https://github.com/video-db/videodb-python/issues">Report Bug</a>
+    <a href="https://github.com/video-db/videodb-player/issues">Report Bug</a>
     ·
-    <a href="https://github.com/video-db/videodb-python/issues">Request Feature</a>
+    <a href="https://github.com/video-db/videodb-player/issues">Request Feature</a>
   </p>
 </p>
 
@@ -117,6 +117,41 @@ Similar to disabling the default controls, you can disable the default overlay b
 </VideoDBPlayer>
 ```
 
+### 🔎 Using `<SearchInsideMedia/>` Component
+The `<SearchInsideMedia/>` component enables in-video search functionality. To use it:
+
+1. Disable the default overlay in `<VideoDBPlayer>`.
+2. Add the `<SearchInsideMedia/>` component in the `#overlay` slot.
+3. To get the search results from Video you can use [VideoDB](https://videodb.io). Checkout [VideoDB Quickstart Guide](https://docs.videodb.io/quick-start-guide-38) for more details.
+
+
+```html
+<template>
+  <VideoDBPlayer
+    ref="playerRef"
+    streamUrl="https://example.com/video.m3u8"
+    :defaultOverlay="false"
+  >
+    <template #overlay>
+      <BigCenterButton />
+      <SearchInsideMedia 
+        :search-content="searchContent"
+        :search-results="searchResults"
+        :search-results-loading="searchResultsLoading"
+        :show-search-results="showSearchResults"
+        @toggle-results="(e) => (showSearchResults = e)"
+        @search-change="handleSearchChange"
+        @search-submit="handleSearchSubmit"
+      />
+    </template>
+  </VideoDBPlayer>
+</template>
+```
+
+> ℹ️ Checkout [SearchInsideMedia interface](#searchinsidemedia) for more details on props and events
+
+
+
 ### 🧑‍💻 Accessing Player State Inside Child Components of `VideoDBPlayer` 
 
 The player state and methods are provided through the Vue composition API. You can access them using the `useVideoDBPlayer` hook in Child Components of `VideoDBPlayer`:
@@ -136,7 +171,7 @@ The player state and methods are provided through the Vue composition API. You c
   } = useVideoDBPlayer();
 </script>
 ```
-> Checkout [interface](#videodbplayer) for more details
+> ℹ️ Checkout [VideoDBPlayer interface](#videodbplayer) for more details
 
 ### 🧑‍💻 Accessing Player Instance 
 
@@ -165,7 +200,7 @@ onMounted(() => {
 </script>
 ```
 
-> Checkout [interface](#videodbplayer) for more details
+> ℹ️ Checkout [VideoDBPlayer interface](#videodbplayer) for more details
 
 
 ### 🔔 Events
@@ -228,20 +263,20 @@ const onFullScreenChange = (isFullScreen) => {
 ## VideoDBPlayer
 
 ### Props
-- **streamUrl** (String, required): The URL of the video stream.
-- **thumbnailUrl** (String, optional): URL of the video thumbnail.
-- **subtitlesConfig** (Object, optional): Configuration for subtitles.
-  - **src** (String, default: ""): The URL of the subtitles file.
-  - **kind** (String, default: "captions"): The kind of text track.
-  - **lang** (String, default: "en"): The language of the subtitles.
-  - **label** (String, default: "English"): The label for the subtitles.
-- **startAt** (Number, default: 0): Time in seconds to start the video.
-- **autoPlay** (Boolean, default: false): Whether to start playing automatically.
-- **autoHideDuration** (Number, default: 5000): Duration in milliseconds before controls are hidden.
-- **defaultControls** (Boolean, default: true): Whether to use default controls.
-- **defaultOverlay** (Boolean, default: true): Whether to use the default overlay.
-- **defaultPlayBackRate** (Number, default: 1): Default playback rate.
-- **debug** (Boolean, default: false): Enable debug mode.
+- `streamUrl`: (String, required): The URL of the video stream.
+- `thumbnailUrl`: (String, optional): URL of the video thumbnail.
+- `subtitlesConfig`: (Object, optional): Configuration for subtitles.
+  - `src` (String, default: ""): The URL of the subtitles file.
+  - `kind` (String, default: "captions"): The kind of text track.
+  - `lang` (String, default: "en"): The language of the subtitles.
+  - `label` (String, default: "English"): The label for the subtitles.
+- `startAt` (Number, default: 0): Time in seconds to start the video.
+- `autoPlay` (Boolean, default: false): Whether to start playing automatically.
+- `autoHideDuration` (Number, default: 5000): Duration in milliseconds before controls are hidden.
+- `defaultControls` (Boolean, default: true): Whether to use default controls.
+- `defaultOverlay` (Boolean, default: true): Whether to use the default overlay.
+- `defaultPlayBackRate` (Number, default: 1): Default playback rate.
+- `debug` (Boolean, default: false): Enable debug mode.
 
 
 ### Exposed and Injected Variables
@@ -274,6 +309,27 @@ Following variables are both exposed (via `defineExpose`) and injected (via `pro
 - `setVolume(level)`: Set the volume level.
 - `toggleFullScreen(value)`: Toggle fullscreen mode.
 - `toggleSubtitles(value)`: Toggle subtitle display.
+
+## SearchInsideMedia
+
+### Props
+- `searchInputPlaceholder` (String, default: "Search or ask a question"): Placeholder text for the search input.
+- `searchContent` (String, required): The search query.
+- `searchSuggestions` (Array, optional): List of search suggestions. Each suggestion is an object with the format `{ "text": "search suggestion" }`.
+- `searchResultsLoading` (Boolean, required): Whether search results are loading.
+- `showSearchResults` (Boolean, required): Whether to show search results.
+- `searchResults` (Object, optional): Search results object containing:
+  - `hits` (Array, required): Array of match objects, each with the following fields:
+    - `id` (String, required): Unique identifier for the match.
+    - `start` (Number, required): Start time of the match in seconds relative to video start.
+    - `end` (Number, required): End time of the match in seconds relative to video start.
+    - `text` (String, required): Relevant text matching the query.
+    - `type` (String, required): Type of match, either "relevant" or "exact".
+
+### Events
+- `toggle-results`: Emitted when the search results are required to be toggled on or off.
+- `search-change`: Emitted when the search input changes.
+- `search-submit`: Emitted when the search is submitted (enter key pressed )
 
 
 

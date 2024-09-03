@@ -10,7 +10,7 @@
       <!-- Progress bar and bullets -->
       <div class="relative h-12">
         <div
-          class="absolute top-0 left-0 right-0 bottom-0 sr-timeline-bg py-3"
+          class="sr-timeline-bg absolute bottom-0 left-0 right-0 top-0 py-3"
           :class="isLight ? 'light' : ''"
         />
         <!-- HighLights -->
@@ -18,18 +18,18 @@
           v-for="(item, index) in highlights"
           v-show="!isLight"
           :key="`highligt-marker-${item.time}-${index}`"
-          class="flex items-center justify-center h-16 w-6 absolute top-1/2 bg-primary border border-black-64 shadow-1 rounded-full pointer-events-none transform -translate-x-1/2 -translate-y-1/2"
+          class="pointer-events-none absolute top-1/2 flex h-16 w-6 -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full border border-black-64 bg-primary shadow-1"
           :style="{
             left: `${Math.max(Math.min((100 * item.time) / duration, 95), 5)}%`,
           }"
         />
         <!-- Bullets front -->
         <div
-          v-for="(searchResultsItem, index) in searchResults.hits.hits"
-          :key="`searchResults-${searchResultsItem._id}-${index}`"
-          class="absolute top-1/2 h-6 transform -translate-y-1/2 rounded-full sr-dot cursor-pointer"
+          v-for="(searchResultsItem, index) in searchResults.hits"
+          :key="`searchResults-${searchResultsItem.id}-${index}`"
+          class="sr-dot absolute top-1/2 h-6 -translate-y-1/2 transform cursor-pointer rounded-full"
           :style="{
-            left: `${getLeftValue(searchResultsItem._source.s, duration)}%`,
+            left: `${getLeftValue(searchResultsItem.start, duration)}%`,
             width: isRelevant(searchResultsItem)
               ? getSearchResultsItemWidth(searchResultsItem)
               : '',
@@ -40,16 +40,13 @@
               : 'opacity-20 hover:opacity-100'
           } ${
             isRelevant(searchResultsItem)
-              ? 'relevant bg-lime min-w-12 z-10'
-              : 'exact bg-yellow w-8 -translate-x-1/2 z-20'
-          }
-            ${isLight ? 'light' : ''} 
-            ${
-              hoveredSlide && hoveredSlide == searchResultsItem._id
-                ? 'forced-hover'
-                : ''
-            }
-          `"
+              ? 'relevant bg-lime z-10 min-w-12'
+              : 'exact z-20 w-8 -translate-x-1/2 bg-yellow'
+          } ${isLight ? 'light' : ''} ${
+            hoveredSlide && hoveredSlide == searchResultsItem.id
+              ? 'forced-hover'
+              : ''
+          } `"
           @click="goToSlide(index)"
         />
       </div>
@@ -57,9 +54,9 @@
     <!-- Swiper -->
 
     <div
-      class="sr-swiper relative overflow-hidden rounded-b-16 z-0"
+      class="sr-swiper relative z-0 overflow-hidden rounded-b-16"
       :class="{
-        'light px-16 xl:px-24 pb-16 xl:pb-24': isLight,
+        'light px-16 pb-16 xl:px-24 xl:pb-24': isLight,
       }"
       @click="swiperClick"
     >
@@ -88,27 +85,28 @@
         @slideChangeTransitionStart="onSwiperSlideChangeTransitionStart"
       >
         <swiper-slide
-          v-for="(slideContent, index) in searchResults.hits.hits"
+          v-for="(slideContent, index) in searchResults.hits"
           :key="index"
           :virtualIndex="index"
         >
           <SearchResultSlide
             :searchResultItem="slideContent"
             :searchResultItemIndex="index"
+            :searchContent="searchContent"
             :isLight="isLight"
           />
         </swiper-slide>
       </swiper>
       <div
         v-if="!isBeginning"
-        class="block absolute pointer-events-none left-0 bottom-0 top-0 w-40 sm:w-60 z-10"
+        class="pointer-events-none absolute bottom-0 left-0 top-0 z-10 block w-40 sm:w-60"
         :style="{
           background: `linear-gradient(90deg, rgba(${bg},1) 3.12%, rgba(${bg}, 0.838542) 32.92%, rgba(${bg}, 0) 95.39%)`,
         }"
       />
       <button
         v-if="!isBeginning"
-        class="hidden sm:flex transition absolute top-1/2 left-24 transform -translate-y-1/2 bg-white rounded-full h-40 w-40 shadow-3 hover:shadow-4 z-10 items-center justify-center border"
+        class="absolute left-24 top-1/2 z-10 hidden h-40 w-40 -translate-y-1/2 transform items-center justify-center rounded-full border bg-white shadow-3 transition hover:shadow-4 sm:flex"
         :class="`border-${theme}-8`"
         @click="changeSlide('prev')"
       >
@@ -117,14 +115,14 @@
       <!-- Next button -->
       <div
         v-if="!isEnd"
-        class="block absolute pointer-events-none right-0 bottom-0 top-0 w-40 sm:w-600 z-10"
+        class="sm:w-600 pointer-events-none absolute bottom-0 right-0 top-0 z-10 block w-40"
         :style="{
           background: `linear-gradient(270deg, rgba(${bg},1) 3.12%, rgba(${bg}, 0.838542) 32.92%, rgba(${bg}, 0) 95.39%)`,
         }"
       />
       <button
         v-if="!isEnd"
-        class="hidden sm:flex transition absolute top-1/2 right-24 transform -translate-y-1/2 bg-white rounded-full h-40 w-40 border shadow-3 hover:shadow-4 z-10 items-center justify-center"
+        class="absolute right-24 top-1/2 z-10 hidden h-40 w-40 -translate-y-1/2 transform items-center justify-center rounded-full border bg-white shadow-3 transition hover:shadow-4 sm:flex"
         :class="`border-${theme}-8`"
         @click="changeSlide('next')"
       >
@@ -134,8 +132,8 @@
   </div>
 </template>
 <script setup>
-import { ref, computed, watch, onMounted, watchEffect, reactive } from "vue";
-import { Swiper, SwiperSlide, useSwiper, useSwiperSlide } from "swiper/vue";
+import { ref, onMounted, watch } from "vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Mousewheel, Virtual, Manipulation } from "swiper/modules";
 import "swiper/css";
 import SearchResultSlide from "./SearchResultSlide.vue";
@@ -225,7 +223,7 @@ const onSwiperSlideChangeTransitionStart = () => {
   const newActiveBullets = [];
   const activeSlideCount = Math.round(
     swiperRef.value.params.breakpoints[swiperRef.value.currentBreakpoint]
-      .slidesPerView
+      .slidesPerView,
   );
   for (
     let i = swiperRef.value.activeIndex;
@@ -246,7 +244,7 @@ const getLeftValue = (startTime, duration) => {
 const changeSlide = (type) => {
   if (type === "next") {
     const slideToMove = activeBullets.value[activeBullets.value.length - 1] + 1;
-    goToSlide(Math.min(props.searchResults.hits.hits.length - 1, slideToMove));
+    goToSlide(Math.min(props.searchResults.hits.length - 1, slideToMove));
   } else if (type === "prev") {
     const slideToMove = activeBullets.value[0] - 3;
     goToSlide(Math.max(0, slideToMove));
@@ -258,13 +256,13 @@ const goToSlide = (slide) => {
 };
 
 const getSearchResultsItemWidth = (srItem) => {
-  const duration = srItem._source.e - srItem._source.s;
+  const duration = srItem.end - srItem.start;
   const width = `${(duration / props.duration) * 100}%`;
   return width;
 };
 
 const isRelevant = (searchResult) => {
-  return !!searchResult._source.e;
+  return searchResult.type === "relevant";
 };
 
 const swiperClick = (e) => {

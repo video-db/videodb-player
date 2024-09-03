@@ -1,38 +1,40 @@
 <template>
   <div
     class="swiper-slide sr h-full rounded-8 {{ isLight ? 'light' : '' }}"
-    :data-seconds="searchResultsItem._source.s"
+    :data-seconds="searchResultItem.start"
     :data-index="i"
-    :data-id="searchResultsItem._id"
+    :data-id="searchResultItem.id"
     style="min-width: 204px"
   >
     <div
-      class="transition cursor-pointer h-full flex flex-col justify-between"
-      :data-seconds="searchResultsItem._source.s"
+      class="flex h-full cursor-pointer flex-col justify-between transition"
+      :data-seconds="searchResultItem.start"
     >
       <p
         class="mb-8 leading-normal swiper-truncate-overflow {{ isLight ? 'text-gray-950' : 'text-white' }}"
-        :data-seconds="searchResultsItem._source.s"
+        :data-seconds="searchResultItem.start"
       >
-        <span v-html="wrapSpan(searchResultsItem._source.text, type)"></span>
+        <span
+          v-html="wrapSpan(searchResultItem.text, searchResultItem.type)"
+        ></span>
       </p>
-      <div class="flex justify-between items-center w-full">
+      <div class="flex w-full items-center justify-between">
         <div
-          :class="`swiper-time ${type} ${isLight ? 'light' : ''}`"
-          :data-seconds="searchResultsItem._source.s"
+          :class="`swiper-time ${searchResultItem.type} ${isLight ? 'light' : ''}`"
+          :data-seconds="searchResultItem.start"
         >
           <p
-            :class="`text-overline tracking-wider opacity-80 font-medium ${isLight ? 'swiper-time-light-text' : 'text-white-80'}`"
+            :class="`text-overline font-medium tracking-wider opacity-80 ${isLight ? 'swiper-time-light-text' : 'text-white-80'}`"
           >
             {{
-              searchResultsItem._source.s < 3600
+              searchResultItem.start < 3600
                 ? start.substring(14, 19)
                 : start.substring(11, 19)
             }}
             {{ end ? " - " : "" }}
             {{
               end
-                ? searchResultsItem._source.e < 3600
+                ? searchResultItem.end < 3600
                   ? end.substring(14, 19)
                   : end.substring(11, 19)
                 : ""
@@ -40,10 +42,10 @@
           </p>
         </div>
         <p
-          :data-seconds="searchResultsItem._source.s"
-          :class="`capitalize text-kilvish-600 text-caption3 font-medium ${type}-text-br`"
+          :data-seconds="searchResultItem.start"
+          :class="`text-caption3 font-medium capitalize text-kilvish-600 ${searchResultItem.type}-text-br`"
         >
-          {{ type }}
+          {{ searchResultItem.type }}
         </p>
       </div>
     </div>
@@ -56,7 +58,7 @@ import { computed } from "vue";
 const props = defineProps({
   searchContent: {
     type: String,
-    default: "Fir",
+    default: "",
   },
   searchResultItem: {
     type: Object,
@@ -73,28 +75,22 @@ const props = defineProps({
 });
 
 const i = computed(() => props.searchResultItemIndex);
-const searchResultsItem = computed(() => props.searchResultItem);
 
-const type = computed(() =>
-  props.searchResultItem._source.e ? "relevant" : "exact"
-);
 const start = computed(() =>
-  new Date(parseFloat(props.searchResultItem._source.s) * 1000).toISOString()
+  new Date(parseFloat(props.searchResultItem.start) * 1000).toISOString(),
 );
 
 const end = computed(() =>
-  type === "relevant"
-    ? new Date(
-        parseFloat(props.searchResultItem._source.e) * 1000
-      ).toISOString()
-    : null
+  props.searchResultItem.type === "relevant"
+    ? new Date(parseFloat(props.searchResultItem.end) * 1000).toISOString()
+    : null,
 );
 
 const wrapSpan = (strReplace, type) => {
   const searchMask = props.searchContent.trim();
   const regEx = new RegExp(searchMask, "ig");
   const replaceMask = `<span class="text-${
-    type === "relevant" ? "lime" : "yellow"
+    props.searchResultItem.type === "relevant" ? "lime" : "yellow"
   } ${props.isLight ? "light" : ""}">${props.searchContent}</span>`;
 
   return strReplace.replace(regEx, replaceMask);
@@ -184,6 +180,10 @@ const wrapSpan = (strReplace, type) => {
 
 .text-lime.light {
   background-color: #53b745;
+}
+
+.text-yellow {
+  color: rgba(248, 196, 80, 1);
 }
 
 .bg-lime {
