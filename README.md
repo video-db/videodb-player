@@ -35,14 +35,56 @@
 <!-- ABOUT THE PROJECT -->
 # 📺 VideoDB Player
 
-## 🤔 Why ? 
+VideoDB Player is a one-of-a-kind, AI-first video player that changes how we interact with videos.
 
-## ✨VideoDB Player
+### 🤖 AI-Powered Interactive Features
+  * Seamless integration with chat interfaces for interactive experiences.
+  * Intelligent search functionality within video content
+  * Automated chapter generation for easy navigation
+### 🚀 Optimized for [VideoDB](https://videodb.io) Infrastructure
+While it can work with any video source, VideoDB Player is specially optimized to leverage the full potential of VideoDB's advanced video infrastructure provide support
+  * Enhanced compatibility with VideoDB's advanced video infrastructure. 
+  * [videodb-chat](https://github.com/video-db/videodb-chat) provides necessary Chat UI components specially designed for "Chat with Video" interfaces.
+  * [video-agents](https://github.com/video-db/video-agents) connects with LLMs and the Reasoning Engine to serve as a backend for "Chat with Video" interfaces.
+### 🌍 Versatile and User-Friendly Experience
+ - Out-of-the-box speed controls allow users to customize their viewing experience.
+ - Supports all major platforms including Android, iOS, and web browsers, ensuring a consistent experience across devices.
+ - [Designed](https://www.linkedin.com/posts/ashutoshtrivedi_spext-activity-7231616055834505216-UNsw) with both viewers and developers in mind, offering a sleek interface and easy integration.
 
-## 🧩 Components
+<br>
 
+# ✨ Inside Look: VideoDB Player in Action  
+<br>
 
-## 🚀 Quickstart
+https://github.com/user-attachments/assets/5d674179-16cd-4ec3-b3f5-c8c613562fb8
+
+<br>
+
+# 🎨 Well-Designed UI Components
+<br>
+
+![player-components](https://github.com/user-attachments/assets/c57447d3-8c01-4e3c-ac90-d51053488178)
+
+VideoDB Player boasts a meticulously crafted user interface, composed of modular components that ensure both functionality and aesthetic appeal. Let's break down the key elements:
+
+1. Main Components:
+  * `VideoDBPlayer` : Main Video Player Component
+2. Overlays:
+  * `SearchInsideMedia`: Allows users to search within the video content. Includes a UI interface specifically designed to show Video Results ✨.
+  * `Chapters`: Chapters that overlays on a Video.
+  * `BigCenterButton`: Prominent play/pause control for easy interaction
+3. Controls:
+  * `ProgressBar`: Visual indicator of playback progress. With integration of Video Chapter functionality.
+  * `PlayPauseButton`: Toggle between play and pause states
+  * `VolumeControl`: Adjust audio levels
+  * `SpeedControl`: Modify playback speed
+  * `Caption`: Toggle closed captions
+  * `Fullscreen`: Expand to full-screen mode
+
+<br>
+
+# 🚀 Quickstart
+<br>
 
 ### Installation
 
@@ -84,8 +126,21 @@ To use the VideoDB Player in your Vue.js application, import the necessary compo
   }
 </style>
 ```
+<br>
 
-## 🧑‍💻 Advanced Usage
+# 🧑‍💻 Advanced Usage
+
+### 🧩 Slots
+`<VideoDBPlayer/>` has two different [slots](https://vuejs.org/guide/components/slots.html) available to add Custom UI components on top of `VideoDBPlayer`. 
+- `overlay`
+- `controls`
+
+Child Components can access the player state by [injecting](https://vuejs.org/guide/components/provide-inject.html#inject) the state [provided](https://vuejs.org/guide/components/provide-inject.html#provide) under `videodb-player` key. 
+Checkout [Accessing State Inside Child Components of `VideoDBPlayer`](#-accessing-player-state-inside-child-components-of-videodbplayer) Section for more details
+
+![slots](https://github.com/user-attachments/assets/90276518-0a72-4be1-b293-2c6b1309c66a)
+
+<br>
 
 ### 🔧 Custom Controls
 
@@ -102,6 +157,8 @@ To create custom controls for the VideoDBPlayer component, you can utilize the p
 </VideoDBPlayer>
 ```
 
+<br>
+
 ### 🔧 Custom overlay
 
 Similar to disabling the default controls, you can disable the default overlay by setting the `defaultOverlay` prop to `false` within the VideoDBPlayer component:
@@ -117,12 +174,16 @@ Similar to disabling the default controls, you can disable the default overlay b
 </VideoDBPlayer>
 ```
 
+<br>
+
 ### 🔎 Using `<SearchInsideMedia/>` Component
+
 The `<SearchInsideMedia/>` component enables in-video search functionality. To use it:
 
 1. Disable the default overlay in `<VideoDBPlayer>`.
 2. Add the `<SearchInsideMedia/>` component in the `#overlay` slot.
-3. To get the search results from Video you can use [VideoDB](https://videodb.io). Checkout [VideoDB Quickstart Guide](https://docs.videodb.io/quick-start-guide-38) for more details.
+3. To get the search results from Video you can use [VideoDB](https://videodb.io).
+> ℹ️ Checkout [video-agents](https://github.com/video-db/video-agents) for full integration guide which includes backend for video agents & integration with [videodb-chat](https://github.com/video-db/videodb-chat)
 
 
 ```html
@@ -148,9 +209,10 @@ The `<SearchInsideMedia/>` component enables in-video search functionality. To u
 </template>
 ```
 
+
 > ℹ️ Checkout [SearchInsideMedia interface](#searchinsidemedia) for more details on props and events
 
-
+<br>
 
 ### 🧑‍💻 Accessing Player State Inside Child Components of `VideoDBPlayer` 
 
@@ -172,6 +234,8 @@ The player state and methods are provided through the Vue composition API. You c
 </script>
 ```
 > ℹ️ Checkout [VideoDBPlayer interface](#videodbplayer) for more details
+
+<br>
 
 ### 🧑‍💻 Accessing Player Instance 
 
@@ -202,6 +266,7 @@ onMounted(() => {
 
 > ℹ️ Checkout [VideoDBPlayer interface](#videodbplayer) for more details
 
+<br>
 
 ### 🔔 Events
 
@@ -209,16 +274,7 @@ The VideoDB Player emits several events that you can listen to in the parent com
 
 1. `play`: Emitted when the video starts playing.
 2. `pause`: Emitted when the video is paused.
-3. `ended`: Emitted when the video playback ends.
-4. `loadeddata`: Emitted when video data has loaded.
-5. `waiting`: Emitted when the video is waiting for data to continue playback.
-6. `playing`: Emitted when the video starts playing after being paused or stopped for buffering.
-7. `timeupdate`: Emitted continuously as the video plays, providing the current playback time.
-8. `canplay`: Emitted when the browser can start playing the video.
-9. `canplaythrough`: Emitted when the browser estimates it can play through the video without stopping for buffering.
-10. `videoerrror`: Emitted when an error occurs during video playback.
-11. `toggleSubtitles`: Emitted when subtitles are toggled on or off.
-12. `fullScreenChange`: Emitted when entering or exiting fullscreen mode.
+> ℹ️ Checkout [VideoDBPlayer interface](#videodbplayer) for full list of events
 
 Example usage:
 ```html
@@ -226,9 +282,6 @@ Example usage:
   <VideoDBPlayer
     @play="onPlay"
     @pause="onPause"
-    @ended="onEnded"
-    @toggleSubtitles="onToggleSubtitles"
-    @fullScreenChange="onFullScreenChange"
     streamUrl="https://example.com/video.m3u8"
   />
 </template>
@@ -243,20 +296,10 @@ const onPlay = () => {
 const onPause = () => {
   console.log('Video paused');
 };
-
-const onEnded = () => {
-  console.log('Video playback ended');
-};
-
-const onToggleSubtitles = (subtitlesEnabled) => {
-  console.log('Subtitles toggled:', subtitlesEnabled ? 'on' : 'off');
-};
-
-const onFullScreenChange = (isFullScreen) => {
-  console.log('Fullscreen mode:', isFullScreen ? 'entered' : 'exited');
-};
 </script>
 ```
+
+<br>
 
 # 📡 Interface
 
@@ -309,6 +352,21 @@ Following variables are both exposed (via `defineExpose`) and injected (via `pro
 - `setVolume(level)`: Set the volume level.
 - `toggleFullScreen(value)`: Toggle fullscreen mode.
 - `toggleSubtitles(value)`: Toggle subtitle display.
+
+### Events
+
+-  `play`: Emitted when the video starts playing.
+-  `pause`: Emitted when the video is paused.
+-  `ended`: Emitted when the video playback ends.
+-  `loadeddata`: Emitted when video data has loaded.
+-  `waiting`: Emitted when the video is waiting for data to continue playback.
+-  `playing`: Emitted when the video starts playing after being paused or stopped for buffering.
+-  `timeupdate`: Emitted continuously as the video plays, providing the current playback time.
+-  `canplay`: Emitted when the browser can start playing the video.
+-  `canplaythrough`: Emitted when the browser estimates it can play through the video without stopping for buffering.
+-  `videoerrror`: Emitted when an error occurs during video playback.
+-  `toggleSubtitles`: Emitted when subtitles are toggled on or off.
+-  `fullScreenChange`: Emitted when entering or exiting fullscreen mode.
 
 ## SearchInsideMedia
 
