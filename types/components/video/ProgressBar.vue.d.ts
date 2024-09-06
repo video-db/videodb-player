@@ -1,8 +1,8 @@
 declare const _default: import("vue").DefineComponent<{}, {
     $emit: (event: "setActiveChapter" | "hideChapterSummary" | "setPreviewVisibility", ...args: any[]) => void;
+    streamUrl: string;
     isActive: boolean;
     autoHide: boolean;
-    streamUrl: string;
     chaptersList: unknown[];
     persistentChapter: boolean;
     manualSlide: number;
@@ -11,9 +11,9 @@ declare const _default: import("vue").DefineComponent<{}, {
     previewPlayer: string;
     isChapterExpanded: boolean;
     $props: {
+        readonly streamUrl?: string | undefined;
         readonly isActive?: boolean | undefined;
         readonly autoHide?: boolean | undefined;
-        readonly streamUrl?: string | undefined;
         readonly chaptersList?: unknown[] | undefined;
         readonly persistentChapter?: boolean | undefined;
         readonly manualSlide?: number | undefined;

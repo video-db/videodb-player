@@ -1,63 +1,65 @@
 <template>
-  <div class="absolute inset-0 h-full w-full overflow-hidden bg-kilvish-200">
-    <div
-      ref="videoWrapper"
-      class="video-wrapper outline-16 relative h-full select-none outline-kilvish-200"
-      :class="{
-        'show-elements': showElements,
-        'hide-subtitles': !showSubtitles,
-      }"
-    >
-      <!-- Video -->
-      <video
-        ref="videoElement"
-        class="video-js pointer-events-none absolute bottom-0 left-0 right-0 top-0 h-full w-auto"
-        playsinline
+  <div class="relative w-full" :style="{ paddingBottom: aspectRatioPadding }">
+    <div class="absolute inset-0 h-full w-full overflow-hidden bg-kilvish-200">
+      <div
+        ref="videoWrapper"
+        class="video-container outline-16 relative h-full select-none outline-kilvish-200"
+        :class="{
+          'show-elements': showElements,
+          'hide-subtitles': !showSubtitles,
+        }"
       >
-        <track
-          v-if="subtitlesConfig?.src"
-          :kind="subtitlesConfig?.kind || 'captions'"
-          :src="subtitlesConfig?.src"
-          :srclang="subtitlesConfig?.lang || 'en'"
-          :label="subtitlesConfig?.label || 'English'"
-          default
-        />
-      </video>
+        <!-- Video -->
+        <video
+          ref="videoElement"
+          class="video-js pointer-events-none absolute bottom-0 left-0 right-0 top-0 h-full w-auto"
+          playsinline
+        >
+          <track
+            v-if="subtitlesConfig?.src"
+            :kind="subtitlesConfig?.kind || 'captions'"
+            :src="subtitlesConfig?.src"
+            :srclang="subtitlesConfig?.lang || 'en'"
+            :label="subtitlesConfig?.label || 'English'"
+            default
+          />
+        </video>
 
-      <!-- Backlayer -->
-      <div class="absolute left-0 right-0 top-0 h-full w-full">
+        <!-- Backlayer -->
+        <div class="absolute left-0 right-0 top-0 h-full w-full">
+          <div
+            :class="[
+              'duration-400 absolute bottom-0 left-0 right-0 top-0 block cursor-pointer bg-gradient-to-b from-black to-transparent transition-opacity ease-in-out',
+              !playing || showElements ? 'opacity-40' : 'opacity-0',
+            ]"
+            @click="togglePlay"
+          />
+          <slot v-if="!defaultOverlay" name="overlay"></slot>
+          <BigCenterButton v-else class="absolute left-1/2 top-1/2" />
+        </div>
         <div
           :class="[
-            'duration-400 absolute bottom-0 left-0 right-0 top-0 block cursor-pointer bg-gradient-to-b from-black to-transparent transition-opacity ease-in-out',
-            !playing || showElements ? 'opacity-40' : 'opacity-0',
+            'absolute bottom-0 w-full',
+            showElements ? 'lg-black-40' : 'lg-transparent',
           ]"
-          @click="togglePlay"
-        />
-        <slot v-if="!defaultOverlay" name="overlay"></slot>
-        <BigCenterButton v-else class="absolute left-1/2 top-1/2" />
-      </div>
-      <div
-        :class="[
-          'absolute bottom-0 w-full',
-          showElements ? 'lg-black-40' : 'lg-transparent',
-        ]"
-      >
-        <slot v-if="!defaultControls" name="controls"> </slot>
-        <div v-else class="p-20">
-          <div class="mx-28 mb-12 sm:mx-8">
-            <ProgressBar :stream-url="streamUrl" />
-          </div>
-          <div class="flex w-full justify-between">
-            <div class="z-10 ml-0 flex items-center">
-              <PlayPauseButton />
-              <VolumeControlButton />
-              <TimeCode />
+        >
+          <slot v-if="!defaultControls" name="controls"> </slot>
+          <div v-else class="p-20">
+            <div class="mx-28 mb-12 sm:mx-8">
+              <ProgressBar :stream-url="streamUrl" />
             </div>
+            <div class="flex w-full justify-between">
+              <div class="z-10 ml-0 flex items-center">
+                <PlayPauseButton />
+                <VolumeControlButton />
+                <TimeCode />
+              </div>
 
-            <div class="flex w-auto flex-row items-center">
-              <CaptionButton />
-              <SpeedControlButton :speed-options="[1, 1.2, 1.5, 1.8, 2]" />
-              <FullScreenButton />
+              <div class="flex w-auto flex-row items-center">
+                <CaptionButton />
+                <SpeedControlButton :speed-options="[1, 1.2, 1.5, 1.8, 2]" />
+                <FullScreenButton />
+              </div>
             </div>
           </div>
         </div>
@@ -67,7 +69,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, defineExpose, provide } from "vue";
+import {
+  ref,
+  onMounted,
+  onBeforeUnmount,
+  defineExpose,
+  provide,
+  computed,
+} from "vue";
 import { usePlayer } from "../hooks/useVideoJSPlayer.js";
 import BigCenterButton from "../buttons/BigCenterButton.vue";
 import ProgressBar from "./ProgressBar.vue";
@@ -122,10 +131,19 @@ const props = defineProps({
     type: Number,
     default: 1,
   },
+  aspectRatio: {
+    type: String,
+    default: "16:9",
+  },
   debug: {
     type: Boolean,
     default: false,
   },
+});
+
+const aspectRatioPadding = computed(() => {
+  const [width, height] = props.aspectRatio.split(":").map(Number);
+  return `${(height / width) * 100}%`;
 });
 
 const videoWrapper = ref(null);
@@ -173,7 +191,6 @@ const showElementsMouseMoveInterval = ref(null);
 
 const isFullScreen = ref(false);
 const showSubtitles = ref(false);
-
 
 onMounted(() => {
   window.addEventListener("keypress", (e) => {
@@ -367,11 +384,10 @@ provide("videodb-player", {
 }
 
 /* Shifting subtitles */
-.video-wrapper.show-elements /deep/.vjs-text-track-display,
-.video-wrapper.stopped /deep/.vjs-text-track-display {
+.video-container.show-elements /deep/.vjs-text-track-display,
+.video-container.stopped /deep/.vjs-text-track-display {
   bottom: 5rem !important;
 }
-
 
 /* No selection */
 .bg-orientation-msg {

@@ -1,14 +1,14 @@
 declare const _default: import("vue").DefineComponent<{}, {
-    buttonState: string;
     isActive: boolean;
     isPlaying: boolean;
+    buttonState: string;
     showPauseButton: boolean;
     shiftUp: boolean;
     autoHide: boolean;
     $props: {
-        readonly buttonState?: string | undefined;
         readonly isActive?: boolean | undefined;
         readonly isPlaying?: boolean | undefined;
+        readonly buttonState?: string | undefined;
         readonly showPauseButton?: boolean | undefined;
         readonly shiftUp?: boolean | undefined;
         readonly autoHide?: boolean | undefined;

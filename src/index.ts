@@ -1,6 +1,7 @@
 import type { App } from "vue";
 import VideoDBPlayer from "./components/video/VideoDBPlayer.vue";
 import SearchInsideMedia from "./components/search/SearchInsideMedia.vue";
+import SearchResults from "./components/search/SearchResults.vue";
 import ProgressBar from "./components/video/ProgressBar.vue";
 import BigCenterButton from "./components/buttons/BigCenterButton.vue"
 import PlayPauseButton from "./components/buttons/PlayPauseButton.vue";
@@ -36,6 +37,7 @@ export {
   ProgressBar,
   PlayPauseButton,
   VolumeControlButton,
+  SearchResults,
   SpeedControlButton,
   CaptionButton,
   FullScreenButton,

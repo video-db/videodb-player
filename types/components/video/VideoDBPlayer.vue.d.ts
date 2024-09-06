@@ -28,7 +28,7 @@ declare const __VLS_component: import("vue").DefineComponent<{}, {
     toggleFullScreen: (value: any) => void;
     toggleSubtitles: (value: any) => void;
     togglePictureInPicture: () => void;
-    $emit: (event: "playing" | "play" | "pause" | "ended" | "loadeddata" | "waiting" | "timeupdate" | "canplay" | "canplaythrough" | "toggleSubtitles" | "videoerrror" | "fullScreenChange", ...args: any[]) => void;
+    $emit: (event: "play" | "pause" | "ended" | "loadeddata" | "waiting" | "playing" | "timeupdate" | "canplay" | "canplaythrough" | "videoerrror" | "toggleSubtitles" | "fullScreenChange", ...args: any[]) => void;
     streamUrl: string;
     thumbnailUrl: string;
     startAt: number;
@@ -37,17 +37,19 @@ declare const __VLS_component: import("vue").DefineComponent<{}, {
     defaultControls: boolean;
     defaultOverlay: boolean;
     defaultPlayBackRate: number;
+    aspectRatio: string;
     debug: boolean;
     $props: {
         readonly streamUrl?: string | undefined;
-        readonly subtitlesConfig?: Record<string, any> | undefined;
         readonly thumbnailUrl?: string | undefined;
+        readonly subtitlesConfig?: Record<string, any> | undefined;
         readonly startAt?: number | undefined;
         readonly autoPlay?: boolean | undefined;
         readonly autoHideDuration?: number | undefined;
         readonly defaultControls?: boolean | undefined;
         readonly defaultOverlay?: boolean | undefined;
         readonly defaultPlayBackRate?: number | undefined;
+        readonly aspectRatio?: string | undefined;
         readonly debug?: boolean | undefined;
     };
 }, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<{}>>, {}, {}>;
