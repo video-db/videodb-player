@@ -1,14 +1,14 @@
 <template>
   <TransparentButton
     :class="[
-      ' hidden h-40 px-8 ml-8 font-semibold text-white rounded-8 md:flex items-center transition-opacity',
-      autoHide && !showElements ? 'opacity-0' : 'opacity-1',
+      ' vdb-p-hidden vdb-p-h-40 vdb-p-px-8 vdb-p-ml-8 vdb-p-font-semibold vdb-p-text-white vdb-p-rounded-8 md:vdb-p-flex vdb-p-items-center vdb-p-transition-opacity',
+      autoHide && !showElements ? 'vdb-p-opacity-0' : 'vdb-p-opacity-1',
     ]"
-    :default-state-css="'bg-black-16 border border-white-16 backdrop-blur hover:bg-random-313131 hover:border-random-8e6200'"
-    :disabled-state-css="'bg-black-45 opacity-20 backdrop-blur cursor-not-allowed pointer-events-none'"
+    :default-state-css="'vdb-p-bg-black-16 vdb-p-border vdb-p-border-white-16 vdb-p-backdrop-blur hover:vdb-p-bg-random-313131 hover:vdb-p-border-random-8e6200'"
+    :disabled-state-css="'vdb-p-bg-black-45 vdb-p-opacity-20 vdb-p-backdrop-blur vdb-p-cursor-not-allowed vdb-p-pointer-events-none'"
     :button-state="isActive ? 'default' : 'hidden'"
   >
-    <div class="mr-8 flex">
+    <div class="vdb-p-mr-8 vdb-p-flex">
       <WithPopper
         :popper-text="volume === 0 ? 'Unmute' : 'Mute'"
         :is-popper-active="isPopperActive"
@@ -17,26 +17,26 @@
           <button
             id="videoplay"
             slot="reference"
-            class="flex w-20 h-20"
+            class="vdb-p-flex vdb-p-w-20 vdb-p-h-20"
             @click="updateVolume(0, volume === 0 ? 1 : 0)"
           >
-            <VolumeMute v-if="volume == 0" class="h-20 w-20" />
-            <Volume v-else class="h-20 w-20" />
+            <VolumeMute v-if="volume == 0" class="vdb-p-h-20 vdb-p-w-20" />
+            <Volume v-else class="vdb-p-h-20 vdb-p-w-20" />
           </button>
         </template>
       </WithPopper>
     </div>
     <div
-      class="block w-32 h-4 overflow-hidden rounded-full cursor-pointer volumeBar"
+      class="vdb-p-block vdb-p-w-32 vdb-p-h-4 vdb-p-overflow-hidden vdb-p-rounded-full vdb-p-cursor-pointer volumeBar"
       :class="{
-        'opacity-50': !isActive,
+        'vdb-p-opacity-50': !isActive,
       }"
       @mousedown="onMouseDown"
     >
-      <div class="absolute w-32 h-4 rounded-full bg-white-40" />
+      <div class="vdb-p-absolute vdb-p-w-32 vdb-p-h-4 vdb-p-rounded-full vdb-p-bg-white-40" />
       <div
         ref="volumeRef"
-        class="absolute w-32 h-4 bg-white rounded-full"
+        class="vdb-p-absolute vdb-p-w-32 vdb-p-h-4 vdb-p-bg-white vdb-p-rounded-full"
       ></div>
     </div>
   </TransparentButton>

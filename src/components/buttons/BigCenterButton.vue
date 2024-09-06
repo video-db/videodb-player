@@ -1,17 +1,17 @@
 <template>
   <TransparentButton
     :class="[
-      'h-72 w-72 rounded-full',
-      autoHide && !showElements ? 'opacity-0' : 'opacity-1',
+      'vdb-p-h-72 vdb-p-w-72 vdb-p-rounded-full',
+      autoHide && !showElements ? 'vdb-p-opacity-0' : 'vdb-p-opacity-1',
     ]"
     :style="buttonStyle"
-    :default-state-css="'bg-black-16 border border-white-16 backdrop-blur hover:bg-random-313131 hover:border-random-8e6200'"
-    :disabled-state-css="'bg-black-45 opacity-20 backdrop-blur cursor-not-allowed pointer-events-none'"
+    :default-state-css="'vdb-p-bg-black-16 vdb-p-border vdb-p-border-white-16 vdb-p-backdrop-blur hover:vdb-p-bg-random-313131 hover:vdb-p-border-random-8e6200'"
+    :disabled-state-css="'vdb-p-bg-black-45 vdb-p-opacity-20 vdb-p-backdrop-blur vdb-p-cursor-not-allowed vdb-p-pointer-events-none'"
     :button-state="isActive ? 'default' : 'hidden'"
     @click="togglePlay"
   >
-    <PauseButton v-if="playing" class="h-28 w-28" />
-    <PlayButton v-else class="h-28 w-28" />
+    <PauseButton v-if="playing" class="vdb-p-w-[38.89%] vdb-p-h-[38.89%]" />
+    <PlayButton v-else class="vdb-p-w-[38.89%] vdb-p-h-[38.89%]" />
   </TransparentButton>
 </template>
 

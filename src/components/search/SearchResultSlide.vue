@@ -1,30 +1,30 @@
 <template>
   <div
-    class="swiper-slide sr h-full rounded-8 {{ isLight ? 'light' : '' }}"
+    class="swiper-slide sr vdb-p-h-full vdb-p-rounded-8 {{ isLight ? 'light' : '' }}"
     :data-seconds="searchResultItem.start"
     :data-index="i"
     :data-id="searchResultItem.id"
     style="min-width: 204px"
   >
     <div
-      class="flex h-full cursor-pointer flex-col justify-between transition"
+      class="vdb-p-flex vdb-p-h-full vdb-p-cursor-pointer vdb-p-flex-col vdb-p-justify-between vdb-p-transition"
       :data-seconds="searchResultItem.start"
     >
       <p
-        class="mb-8 leading-normal swiper-truncate-overflow {{ isLight ? 'text-gray-950' : 'text-white' }}"
+        class="vdb-p-mb-8 vdb-p-leading-normal swiper-truncate-overflow {{ isLight ? 'vdb-p-text-gray-950' : 'vdb-p-text-white' }}"
         :data-seconds="searchResultItem.start"
       >
         <span
           v-html="wrapSpan(searchResultItem.text, searchResultItem.type)"
         ></span>
       </p>
-      <div class="flex w-full items-center justify-between">
+      <div class="vdb-p-flex vdb-p-w-full vdb-p-items-center vdb-p-justify-between">
         <div
           :class="`swiper-time ${searchResultItem.type} ${isLight ? 'light' : ''}`"
           :data-seconds="searchResultItem.start"
         >
           <p
-            :class="`text-overline font-medium tracking-wider opacity-80 ${isLight ? 'swiper-time-light-text' : 'text-white-80'}`"
+            :class="`vdb-p-text-overline vdb-p-font-medium vdb-p-tracking-wider vdb-p-opacity-80 ${isLight ? 'swiper-time-light-text' : 'vdb-p-text-white-80'}`"
           >
             {{
               searchResultItem.start < 3600
@@ -43,7 +43,7 @@
         </div>
         <p
           :data-seconds="searchResultItem.start"
-          :class="`text-caption3 font-medium capitalize text-kilvish-600 ${searchResultItem.type}-text-br`"
+          :class="`vdb-p-text-caption3 vdb-p-font-medium vdb-p-capitalize vdb-p-text-kilvish-600 ${searchResultItem.type}-text-br`"
         >
           {{ searchResultItem.type }}
         </p>
@@ -98,7 +98,6 @@ const wrapSpan = (strReplace, type) => {
 </script>
 
 <style>
-/* Swiper */
 .sr-swiper .swiper-container {
   padding: 2rem;
 }

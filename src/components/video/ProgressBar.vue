@@ -1,21 +1,21 @@
 <template>
-  <div class="w-full">
+  <div class="vdb-p-w-full">
     <div
       v-show="isActive"
       ref="progressBar"
       :class="[
-        'progress-bar relative flex h-8 items-center transition-opacity',
+        'progress-bar vdb-p-relative vdb-p-flex vdb-p-h-8 vdb-p-items-center vdb-p-transition-opacity',
         (autoHide && !showElements) || duration === 0
-          ? 'opacity-0'
-          : 'opacity-1',
+          ? 'vdb-p-opacity-0'
+          : 'vdb-p-opacity-1',
       ]"
     >
       <!-- Video feedback popover -->
       <div
         ref="videoPreview"
-        class="pointer-events-none absolute bottom-28 left-0 w-2/12 min-w-112 -translate-x-1/2 transform rounded-b-8 pb-2 sm:bottom-16 sm:pb-4"
+        class="vdb-p-pointer-events-none vdb-p-absolute vdb-p-bottom-28 vdb-p-left-0 vdb-p-w-2/12 vdb-p-min-w-112 vdb-p--translate-x-1/2 vdb-p-transform vdb-p-rounded-b-8 vdb-p-pb-2 sm:vdb-p-bottom-16 sm:vdb-p-pb-4"
         :class="{
-          'opacity-0': shouldNotShowVideoPopover,
+          'vdb-p-opacity-0': shouldNotShowVideoPopover,
         }"
         :style="{
           left: `${
@@ -27,14 +27,14 @@
           zIndex: 29,
         }"
       >
-        <div class="relative w-full">
+        <div class="vdb-p-relative vdb-p-w-full">
           <div
-            class="relative mb-4 w-full sm:mb-4"
+            class="vdb-p-relative vdb-p-mb-4 vdb-p-w-full sm:vdb-p-mb-4"
             style="padding-bottom: 56.25%"
           >
             <video
               ref="videoFeedbackPlayer"
-              class="video-js bottom-0 left-0 h-full w-full rounded-4 border-2 border-white"
+              class="video-js vdb-p-bottom-0 vdb-p-left-0 vdb-p-h-full vdb-p-w-full vdb-p-rounded-4 vdb-p-border-2 vdb-p-border-white"
               style="position: absolute"
               playsinline
               preload
@@ -43,16 +43,16 @@
         </div>
         <div
           v-if="showChapters"
-          class="chapter-title-cont relative flex items-center justify-center transition-all"
+          class="chapter-title-cont vdb-p-relative vdb-p-flex vdb-p-items-center vdb-p-justify-center vdb-p-transition-all"
         >
           <p
-            class="three-line-ellipses title-blur h-auto max-h-full w-full rounded-8 p-8 text-center font-primary text-lg capitalize text-white"
+            class="three-line-ellipses title-blur vdb-p-h-auto vdb-p-max-h-full vdb-p-w-full vdb-p-rounded-8 vdb-p-p-8 vdb-p-text-center vdb-p-font-primary vdb-p-text-lg vdb-p-capitalize vdb-p-text-white"
           >
             {{ activeChapter + 1 }}. {{ getActiveChapterTitle() }}
           </p>
         </div>
         <p
-          class="text-shadow w-full whitespace-nowrap text-center text-xs font-medium text-white"
+          class="text-shadow vdb-p-w-full vdb-p-whitespace-nowrap vdb-p-text-center vdb-p-text-xs vdb-p-font-medium vdb-p-text-white"
         >
           <span>
             {{ new Date(videoDateVal || 0).toISOString().substring(11, 19) }}
@@ -60,16 +60,16 @@
         </p>
       </div>
       <!-- Main timelines -->
-      <div class="main-timeline absolute left-0 top-2 w-full">
+      <div class="main-timeline vdb-p-absolute vdb-p-left-0 vdb-p-top-2 vdb-p-w-full">
         <!-- If no chapters -->
         <div
           v-if="chaptersList.length === 0"
-          class="chapter w-full backdrop-blur-lg"
+          class="chapter vdb-p-w-full vdb-p-backdrop-blur-lg"
           :class="{ active: activeChapter }"
         >
           <!-- Seekbar -->
           <div
-            class="absolute left-0 top-0 h-full bg-white shadow-2"
+            class="vdb-p-absolute vdb-p-left-0 vdb-p-top-0 vdb-p-h-full vdb-p-bg-white vdb-p-shadow-2"
             :style="{
               width: videoDrag
                 ? `${100 * seekGoToPoint.ratio}%`
@@ -78,15 +78,15 @@
           />
           <!-- Hover fade bar -->
           <div
-            class="pointer-events-none absolute left-0 top-0 h-full bg-white shadow-2"
-            :class="activeChapter !== null ? 'opacity-40' : 'opacity-0'"
+            class="vdb-p-pointer-events-none vdb-p-absolute vdb-p-left-0 vdb-p-top-0 vdb-p-h-full vdb-p-bg-white vdb-p-shadow-2"
+            :class="activeChapter !== null ? 'vdb-p-opacity-40' : 'vdb-p-opacity-0'"
             :style="{
               width: `${100 * moveToRatio}%`,
             }"
           />
         </div>
         <!-- If chapters -->
-        <div v-else class="chaptersCont flex items-center gap-2">
+        <div v-else class="chaptersCont vdb-p-flex vdb-p-items-center vdb-p-gap-2">
           <div
             v-for="(chapter, key) in chaptersList"
             :key="`${chapter.id || String(chapter.end)}`"
@@ -108,7 +108,7 @@
           >
             <!-- Hover faded bar -->
             <div
-              class="pointer-events-none absolute left-0 top-0 hidden h-full bg-white shadow-2 md:block"
+              class="vdb-p-pointer-events-none vdb-p-absolute vdb-p-left-0 vdb-p-top-0 vdb-p-hidden vdb-p-h-full vdb-p-bg-white vdb-p-shadow-2 md:vdb-p-block"
               :style="{
                 width: `${
                   100 *
@@ -124,7 +124,7 @@
             />
             <!-- Seekbar -->
             <div
-              class="absolute left-0 top-0 h-full bg-primary"
+              class="vdb-p-absolute vdb-p-left-0 vdb-p-top-0 vdb-p-h-full vdb-p-bg-primary"
               :style="{
                 width: videoDrag
                   ? `${
@@ -153,21 +153,21 @@
       <!-- Hover Interations div & head -->
       <div
         ref="progressBarInteract"
-        class="absolute -bottom-2 left-0 right-0 top-4 cursor-pointer sm:-bottom-3 sm:top-3"
+        class="vdb-p-absolute vdb-p--bottom-2 vdb-p-left-0 vdb-p-right-0 vdb-p-top-4 vdb-p-cursor-pointer sm:vdb-p--bottom-3 sm:vdb-p-top-3"
         @mousemove="onMouseMove"
         @mouseleave="onMouseLeave"
         @click="onProgressClick"
       >
         <div
           ref="head"
-          class="head align-center absolute top-0 z-10 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 transform cursor-pointer overflow-visible rounded-full border-2 border-outline-light bg-primary shadow-3 transition sm:h-14 sm:w-14 sm:-translate-y-1/4"
+          class="head vdb-p-align-center vdb-p-absolute vdb-p-top-0 vdb-p-z-10 vdb-p-flex vdb-p-h-10 vdb-p-w-10 vdb-p--translate-x-1/2 vdb-p--translate-y-1/2 vdb-p-transform vdb-p-cursor-pointer vdb-p-overflow-visible vdb-p-rounded-full vdb-p-border-2 vdb-p-border-outline-light vdb-p-bg-primary vdb-p-shadow-3 vdb-p-transition sm:vdb-p-h-14 sm:vdb-p-w-14 sm:vdb-p--translate-y-1/4"
           :class="{
-            'justify-start': seekGoToPoint.timePosition / duration <= 0.1,
-            'justify-center': !(
+            'vdb-p-justify-start': seekGoToPoint.timePosition / duration <= 0.1,
+            'vdb-p-justify-center': !(
               seekGoToPoint.timePosition / duration <= 0.1 ||
               seekGoToPoint.timePosition / duration >= 0.9
             ),
-            'justify-end': seekGoToPoint.timePosition / duration >= 0.9,
+            'vdb-p-justify-end': seekGoToPoint.timePosition / duration >= 0.9,
           }"
           :style="{
             left: videoDrag
@@ -176,16 +176,16 @@
           }"
         >
           <span
-            class="pointer-events-none absolute flex -translate-y-20 transform text-caption2 opacity-0 transition-opacity sm:hidden"
+            class="vdb-p-pointer-events-none vdb-p-absolute vdb-p-flex vdb-p--translate-y-20 vdb-p-transform vdb-p-text-caption2 vdb-p-opacity-0 vdb-p-transition-opacity sm:vdb-p-hidden"
             :class="{
-              'opacity-100': isActive && !persistentChapter && !videoDrag,
+              'vdb-p-opacity-100': isActive && !persistentChapter && !videoDrag,
             }"
           >
-            <span class="text-white">
+            <span class="vdb-p-text-white">
               {{ new Date(time * 1000).toISOString().substring(11, 19) }}
             </span>
 
-            <span class="text-kilvish-500">
+            <span class="vdb-p-text-kilvish-500">
               &nbsp;/&nbsp;{{
                 new Date(parseFloat(duration * 1000))
                   .toISOString()
@@ -198,7 +198,7 @@
     </div>
     <div
       v-show="!isActive"
-      class="progress-bar mb-12 h-4 w-full bg-black-16 opacity-0"
+      class="progress-bar vdb-p-mb-12 vdb-p-h-4 vdb-p-w-full vdb-p-bg-black-16 vdb-p-opacity-0"
     ></div>
   </div>
 </template>

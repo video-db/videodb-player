@@ -1,8 +1,8 @@
 <template>
   <p
     :class="[
-      'inline text-white font-medium ml-12 transition',
-      autoHide && !showElements ? 'opacity-0' : 'opacity-1',
+      'vdb-p-inline vdb-p-text-white vdb-p-font-medium vdb-p-ml-12 vdb-p-transition',
+      autoHide && !showElements ? 'vdb-p-opacity-0' : 'vdb-p-opacity-1',
     ]"
   >
     <span>

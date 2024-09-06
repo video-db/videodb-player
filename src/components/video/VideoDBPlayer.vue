@@ -1,9 +1,9 @@
 <template>
-  <div class="relative w-full" :style="{ paddingBottom: aspectRatioPadding }">
-    <div class="absolute inset-0 h-full w-full overflow-hidden bg-kilvish-200">
+  <div class="vdb-p-relative vdb-p-w-full" :style="{ paddingBottom: aspectRatioPadding }">
+    <div class="vdb-p-absolute vdb-p-inset-0 vdb-p-h-full vdb-p-w-full vdb-p-overflow-hidden vdb-p-bg-kilvish-200">
       <div
         ref="videoWrapper"
-        class="video-container outline-16 relative h-full select-none outline-kilvish-200"
+        class="video-container vdb-p-outline-16 vdb-p-relative vdb-p-h-full vdb-p-select-none vdb-p-outline-kilvish-200"
         :class="{
           'show-elements': showElements,
           'hide-subtitles': !showSubtitles,
@@ -12,7 +12,7 @@
         <!-- Video -->
         <video
           ref="videoElement"
-          class="video-js pointer-events-none absolute bottom-0 left-0 right-0 top-0 h-full w-auto"
+          class="video-js vdb-p-pointer-events-none vdb-p-absolute vdb-p-bottom-0 vdb-p-left-0 vdb-p-right-0 vdb-p-top-0 vdb-p-h-full vdb-p-w-auto"
           playsinline
         >
           <track
@@ -26,36 +26,36 @@
         </video>
 
         <!-- Backlayer -->
-        <div class="absolute left-0 right-0 top-0 h-full w-full">
+        <div class="vdb-p-absolute vdb-p-left-0 vdb-p-right-0 vdb-p-top-0 vdb-p-h-full vdb-p-w-full">
           <div
             :class="[
-              'duration-400 absolute bottom-0 left-0 right-0 top-0 block cursor-pointer bg-gradient-to-b from-black to-transparent transition-opacity ease-in-out',
-              !playing || showElements ? 'opacity-40' : 'opacity-0',
+              'vdb-p-duration-400 vdb-p-absolute vdb-p-bottom-0 vdb-p-left-0 vdb-p-right-0 vdb-p-top-0 vdb-p-block vdb-p-cursor-pointer vdb-p-bg-gradient-to-b vdb-p-from-black vdb-p-to-transparent vdb-p-transition-opacity vdb-p-ease-in-out',
+              !playing || showElements ? 'vdb-p-opacity-40' : 'vdb-p-opacity-0',
             ]"
             @click="togglePlay"
           />
           <slot v-if="!defaultOverlay" name="overlay"></slot>
-          <BigCenterButton v-else class="absolute left-1/2 top-1/2" />
+          <BigCenterButton v-else class="vdb-p-absolute vdb-p-left-1/2 vdb-p-top-1/2" />
         </div>
         <div
           :class="[
-            'absolute bottom-0 w-full',
+            'vdb-p-absolute vdb-p-bottom-0 vdb-p-w-full',
             showElements ? 'lg-black-40' : 'lg-transparent',
           ]"
         >
           <slot v-if="!defaultControls" name="controls"> </slot>
-          <div v-else class="p-20">
-            <div class="mx-28 mb-12 sm:mx-8">
+          <div v-else class="vdb-p-p-20">
+            <div class="vdb-p-mx-28 vdb-p-mb-12 sm:vdb-p-mx-8">
               <ProgressBar :stream-url="streamUrl" />
             </div>
-            <div class="flex w-full justify-between">
-              <div class="z-10 ml-0 flex items-center">
+            <div class="vdb-p-flex vdb-p-w-full vdb-p-justify-between">
+              <div class="vdb-p-z-10 vdb-p-ml-0 vdb-p-flex vdb-p-items-center">
                 <PlayPauseButton />
                 <VolumeControlButton />
                 <TimeCode />
               </div>
 
-              <div class="flex w-auto flex-row items-center">
+              <div class="vdb-p-flex vdb-p-w-auto vdb-p-flex-row vdb-p-items-center">
                 <CaptionButton />
                 <SpeedControlButton :speed-options="[1, 1.2, 1.5, 1.8, 2]" />
                 <FullScreenButton />

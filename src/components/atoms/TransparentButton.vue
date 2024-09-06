@@ -1,12 +1,13 @@
 <template>
   <button
     :class="`
-      flex
-      justify-center
-      items-center
-      font-semibold
-      text-white
-      rounded-8
+      vdb-p-flex
+      vdb-p-justify-center
+      vdb-p-items-center
+      vdb-p-font-semibold
+      vdb-p-text-white
+      vdb-p-rounded-8
+      focus:vdb-p-outline-none
       ${customCss}
     `"
     @click="$emit('clickAction')"
@@ -26,16 +27,16 @@ const props = defineProps({
   defaultStateCss: {
     type: String,
     default:
-      'bg-black-45 border border-yellow backdrop-blur hover:bg-random-313131 hover:border-random-8e6200',
+      'vdb-p-bg-black-45 vdb-p-border vdb-p-border-yellow vdb-p-backdrop-blur hover:vdb-p-bg-random-313131 hover:vdb-p-border-random-8e6200',
   },
   activeStateCss: {
     type: String,
-    default: 'chapter-button-active-lg border border-yellow pale-yellow',
+    default: 'chapter-button-active-lg vdb-p-border vdb-p-border-yellow pale-yellow',
   },
   disabledStateCss: {
     type: String,
     default:
-      'bg-black-45 opacity-20 border border-yellow backdrop-blur cursor-not-allowed pointer-events-none',
+      'vdb-p-bg-black-45 vdb-p-opacity-20 vdb-p-border vdb-p-border-yellow vdb-p-backdrop-blur vdb-p-cursor-not-allowed vdb-p-pointer-events-none',
   },
 });
 
@@ -46,7 +47,7 @@ const customCss = computed(() => {
     case 'disabled':
       return props.disabledStateCss;
     case 'hidden':
-      return 'hidden';
+      return 'vdb-p-hidden';
     default:
       return props.defaultStateCss;
   }
@@ -73,7 +74,7 @@ defineEmits(['clickAction']);
 .pale-yellow {
   color: #8e6200;
 }
-.backdrop-blur {
+.vdb-p-backdrop-blur {
   backdrop-filter: blur(8px);
 }
 </style>

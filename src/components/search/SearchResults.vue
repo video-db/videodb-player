@@ -1,16 +1,16 @@
 <template>
   <div>
     <div
-      class="relative z-10"
+      class="vdb-p-relative vdb-p-z-10"
       :class="{
-        'px-16 pt-16 md:px-24 md:pt-24 xl:px-32 xl:pt-32': isLight,
-        'px-32 pt-40': !isLight,
+        'vdb-p-px-16 vdb-p-pt-16 md:vdb-p-px-24 md:vdb-p-pt-24 xl:vdb-p-px-32 xl:vdb-p-pt-32': isLight,
+        'vdb-p-px-32 vdb-p-pt-40': !isLight,
       }"
     >
       <!-- Progress bar and bullets -->
-      <div class="relative h-12">
+      <div class="vdb-p-relative vdb-p-h-12">
         <div
-          class="sr-timeline-bg absolute bottom-0 left-0 right-0 top-0 py-3"
+          class="sr-timeline-bg vdb-p-absolute vdb-p-bottom-0 vdb-p-left-0 vdb-p-right-0 vdb-p-top-0 vdb-p-py-3"
           :class="isLight ? 'light' : ''"
         />
         <!-- HighLights -->
@@ -18,7 +18,7 @@
           v-for="(item, index) in highlights"
           v-show="!isLight"
           :key="`highligt-marker-${item.time}-${index}`"
-          class="pointer-events-none absolute top-1/2 flex h-16 w-6 -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full border border-black-64 bg-primary shadow-1"
+          class="vdb-p-pointer-events-none vdb-p-absolute vdb-p-top-1/2 vdb-p-flex vdb-p-h-16 vdb-p-w-6 vdb-p--translate-x-1/2 vdb-p--translate-y-1/2 vdb-p-transform vdb-p-items-center vdb-p-justify-center vdb-p-rounded-full vdb-p-border vdb-p-border-black-64 vdb-p-bg-primary vdb-p-shadow-1"
           :style="{
             left: `${Math.max(Math.min((100 * item.time) / duration, 95), 5)}%`,
           }"
@@ -27,7 +27,7 @@
         <div
           v-for="(searchResultsItem, index) in searchResults.hits"
           :key="`searchResults-${searchResultsItem.id}-${index}`"
-          class="sr-dot absolute top-1/2 h-6 -translate-y-1/2 transform cursor-pointer rounded-full"
+          class="sr-dot vdb-p-absolute vdb-p-top-1/2 vdb-p-h-6 vdb-p--translate-y-1/2 vdb-p-transform vdb-p-cursor-pointer vdb-p-rounded-full"
           :style="{
             left: `${getLeftValue(searchResultsItem.start, duration)}%`,
             width: isRelevant(searchResultsItem)
@@ -36,12 +36,12 @@
           }"
           :class="`${
             activeBullets.includes(index)
-              ? 'active opacity-100'
-              : 'opacity-20 hover:opacity-100'
+              ? 'active vdb-p-opacity-100'
+              : 'vdb-p-opacity-20 hover:vdb-p-opacity-100'
           } ${
             isRelevant(searchResultsItem)
-              ? 'relevant bg-lime z-10 min-w-12'
-              : 'exact z-20 w-8 -translate-x-1/2 bg-yellow'
+              ? 'relevant bg-lime vdb-p-z-10 vdb-p-min-w-12'
+              : 'exact vdb-p-z-20 vdb-p-w-8 vdb-p--translate-x-1/2 vdb-p-bg-yellow'
           } ${isLight ? 'light' : ''} ${
             hoveredSlide && hoveredSlide == searchResultsItem.id
               ? 'forced-hover'
@@ -54,16 +54,16 @@
     <!-- Swiper -->
 
     <div
-      class="sr-swiper relative z-0 overflow-hidden rounded-b-16"
+      class="sr-swiper vdb-p-relative vdb-p-z-0 vdb-p-overflow-hidden vdb-p-rounded-b-16"
       :class="{
-        'light px-16 pb-16 xl:px-24 xl:pb-24': isLight,
+        'light vdb-p-px-16 vdb-p-pb-16 xl:vdb-p-px-24 xl:vdb-p-pb-24': isLight,
       }"
       @click="swiperClick"
     >
       <swiper
         :modules="swiperModules"
-        :slides-per-view="3.2"
-        :space-between="10"
+        :slides-per-view="1.3"
+        :space-between="24"
         :mousewheel="{
           forceToAxis: true,
           invert: false,
@@ -73,7 +73,11 @@
             slidesPerView: 1.3,
             spaceBetween: 24,
           },
-          480: {
+          460: {
+            slidesPerView: 2.2,
+            spaceBetween: 24,
+          },
+          680: {
             slidesPerView: 3.2,
             spaceBetween: 10,
           },
@@ -99,34 +103,34 @@
       </swiper>
       <div
         v-if="!isBeginning"
-        class="pointer-events-none absolute bottom-0 left-0 top-0 z-10 block w-40 sm:w-60"
+        class="vdb-p-pointer-events-none vdb-p-absolute vdb-p-bottom-0 vdb-p-left-0 vdb-p-top-0 vdb-p-z-10 vdb-p-block vdb-p-w-40 sm:vdb-p-w-60"
         :style="{
           background: `linear-gradient(90deg, rgba(${bg},1) 3.12%, rgba(${bg}, 0.838542) 32.92%, rgba(${bg}, 0) 95.39%)`,
         }"
       />
       <button
         v-if="!isBeginning"
-        class="absolute left-24 top-1/2 z-10 hidden h-40 w-40 -translate-y-1/2 transform items-center justify-center rounded-full border bg-white shadow-3 transition hover:shadow-4 sm:flex"
-        :class="`border-${theme}-8`"
+        class="vdb-p-absolute vdb-p-left-24 vdb-p-top-1/2 vdb-p-z-10 vdb-p-hidden vdb-p-h-40 vdb-p-w-40 vdb-p--translate-y-1/2 vdb-p-transform vdb-p-items-center vdb-p-justify-center vdb-p-rounded-full vdb-p-border vdb-p-bg-white vdb-p-shadow-3 vdb-p-transition hover:vdb-p-shadow-4 sm:vdb-p-flex"
+        :class="`vdb-p-border-${theme}-8`"
         @click="changeSlide('prev')"
       >
-        <ArrowLeftIcon class="text-black" />
+        <ArrowLeftIcon class="vdb-p-text-black" />
       </button>
       <!-- Next button -->
       <div
         v-if="!isEnd"
-        class="sm:w-600 pointer-events-none absolute bottom-0 right-0 top-0 z-10 block w-40"
+        class="sm:vdb-p-w-600 vdb-p-pointer-events-none vdb-p-absolute vdb-p-bottom-0 vdb-p-right-0 vdb-p-top-0 vdb-p-z-10 vdb-p-block vdb-p-w-40"
         :style="{
           background: `linear-gradient(270deg, rgba(${bg},1) 3.12%, rgba(${bg}, 0.838542) 32.92%, rgba(${bg}, 0) 95.39%)`,
         }"
       />
       <button
         v-if="!isEnd"
-        class="absolute right-24 top-1/2 z-10 hidden h-40 w-40 -translate-y-1/2 transform items-center justify-center rounded-full border bg-white shadow-3 transition hover:shadow-4 sm:flex"
-        :class="`border-${theme}-8`"
+        class="vdb-p-absolute vdb-p-right-24 vdb-p-top-1/2 vdb-p-z-10 vdb-p-hidden vdb-p-h-40 vdb-p-w-40 vdb-p--translate-y-1/2 vdb-p-transform vdb-p-items-center vdb-p-justify-center vdb-p-rounded-full vdb-p-border vdb-p-bg-white vdb-p-shadow-3 vdb-p-transition hover:vdb-p-shadow-4 sm:vdb-p-flex"
+        :class="`vdb-p-border-${theme}-8`"
         @click="changeSlide('next')"
       >
-        <ArrowRightIcon class="text-black" />
+        <ArrowRightIcon class="vdb-p-text-black" />
       </button>
     </div>
   </div>

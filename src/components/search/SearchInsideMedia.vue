@@ -1,13 +1,13 @@
 <template>
   <div
-    class="absolute left-0 top-0 h-48 w-full overflow-visible transition-opacity duration-200 ease-in-out"
+    class="vdb-p-absolute vdb-p-left-0 vdb-p-top-0 vdb-p-h-48 vdb-p-w-full vdb-p-overflow-visible vdb-p-transition-opacity vdb-p-duration-200 vdb-p-ease-in-out"
   >
     <!-- Basic search elements -->
     <div
-      class="spext-player-search h-full w-full"
+      class="spext-player-search vdb-p-h-full vdb-p-w-full"
       :class="{
-        'opacity-30': !isActive && !isAutoPilotLoading,
-        'opacity-40': wordsLoading,
+        'vdb-p-opacity-30': !isActive && !isAutoPilotLoading,
+        'vdb-p-opacity-40': wordsLoading,
       }"
     >
       <div ref="searchTopContainer" class="searchTopContainer" tabindex="0">
@@ -15,34 +15,36 @@
         <div
           id="searchInputWrapper"
           :class="[
-            'search-input-wrapper absolute top-20 h-48 -translate-x-1/2 transform rounded-8 sm:top-24',
+            'search-input-wrapper vdb-p-absolute vdb-p-top-20 vdb-p-h-48 vdb-p--translate-x-1/2 vdb-p-transform vdb-p-rounded-8 sm:vdb-p-top-24',
             autoHide && !showElements && searchContent === ''
-              ? 'opacity-0'
-              : 'opacity-1',
+              ? 'vdb-p-opacity-0'
+              : 'vdb-p-opacity-1',
             {
               'is-focused': isFocused,
-              'left-1/2 bg-black-16 text-white': isUploadingScreen,
-              'left-1/2 bg-steelblue-100 text-kilvish-500':
+              'vdb-p-left-1/2 vdb-p-bg-black-16 vdb-p-text-white':
+                isUploadingScreen,
+              'vdb-p-left-1/2 vdb-p-bg-steelblue-100 vdb-p-text-kilvish-500':
                 isAutoPilotLoadingScreen,
-              'left-1/2 bg-black-32 text-white': isRawScreen,
-              'search-input-wrapper-done left-20 transform-none bg-black-32 text-white sm:left-1/2 sm:-translate-x-1/2 sm:transform':
+              'vdb-p-left-1/2 vdb-p-bg-black-32 vdb-p-text-white': isRawScreen,
+              'search-input-wrapper-done vdb-p-left-20 vdb-p-transform-none vdb-p-bg-black-32 vdb-p-text-white sm:vdb-p-left-1/2 sm:vdb-p--translate-x-1/2 sm:vdb-p-transform':
                 isFinalScreen,
-              'search-input-wrapper-done-full mr-20':
+              'search-input-wrapper-done-full vdb-p-mr-20':
                 isFinalScreen && (isFocused || searchContent !== ''),
             },
           ]"
         >
           <input
             v-if="!(isAutoPilotLoading || isRaw || wordsLoading)"
+            u
             ref="searchInput"
-            class="search-input h-48 w-full appearance-none rounded-8 border border-solid border-yellow bg-transparent pl-12 pr-44 text-left transition focus:border-yellow-600 sm:pl-44"
+            class="search-input vdb-p-h-48 vdb-p-w-full vdb-p-appearance-none vdb-p-rounded-8 vdb-p-border vdb-p-border-solid vdb-p-border-yellow vdb-p-bg-transparent vdb-p-pl-12 vdb-p-pr-44 vdb-p-text-left vdb-p-transition focus:vdb-p-border-yellow-600 focus:vdb-p-outline-none sm:vdb-p-pl-44"
             :class="{
               'search-input-uploading':
                 !isActive && !isAutoPilotLoading && !isRaw,
               'search-input-raw': !isActive && isRaw,
-              'text-left': !isUploadingScreen,
-              'text-left': isUploadingScreen,
-              'border-0 border-none': wordsLoading,
+              'vdb-p-text-left': !isUploadingScreen,
+              'vdb-p-text-left': isUploadingScreen,
+              'vdb-p-border-0 vdb-p-border-none': wordsLoading,
             }"
             :value="searchContent"
             type="text"
@@ -55,11 +57,11 @@
           />
           <div
             v-else
-            class="search-input my-auto flex h-48 w-full appearance-none items-center justify-start rounded-8 border border-yellow bg-transparent px-16 pl-44 transition"
+            class="search-input vdb-p-my-auto vdb-p-flex vdb-p-h-48 vdb-p-w-full vdb-p-appearance-none vdb-p-items-center vdb-p-justify-start vdb-p-rounded-8 vdb-p-border vdb-p-border-yellow vdb-p-bg-transparent vdb-p-px-16 vdb-p-pl-44 vdb-p-transition"
             :class="{
-              'search-input-wrapper-done-full mr-20':
+              'search-input-wrapper-done-full vdb-p-mr-20':
                 isFinalScreen && (isFocused || searchContent !== ''),
-              'border-0 border-none': wordsLoading,
+              'vdb-p-border-0 vdb-p-border-none': wordsLoading,
             }"
           >
             <ellipses-loading v-if="wordsLoading">
@@ -71,26 +73,26 @@
               {{ searchInputPlaceholder }}
             </span>
           </div>
-          <div class="hidden sm:block">
+          <div class="vdb-p-hidden sm:vdb-p-block">
             <SearchIcon
               v-if="!isUploadingScreen"
-              class="absolute left-16 top-1/2 h-20 w-20 -translate-y-1/2 transform"
+              class="vdb-p-absolute vdb-p-left-16 vdb-p-top-1/2 vdb-p-h-20 vdb-p-w-20 vdb-p--translate-y-1/2 vdb-p-transform"
             />
             <CloseIcon
               v-if="searchContent !== ''"
-              class="absolute right-16 top-1/2 h-20 w-20 -translate-y-1/2 transform cursor-pointer transition"
+              class="vdb-p-absolute vdb-p-right-16 vdb-p-top-1/2 vdb-p-h-20 vdb-p-w-20 vdb-p--translate-y-1/2 vdb-p-transform vdb-p-cursor-pointer vdb-p-transition"
               @click="closeInput()"
             />
           </div>
 
-          <div class="block sm:hidden">
+          <div class="vdb-p-block sm:vdb-p-hidden">
             <SearchIcon
               v-if="!isUploadingScreen && searchContent == ''"
-              class="absolute right-16 top-1/2 h-20 w-20 -translate-y-1/2 transform"
+              class="vdb-p-absolute vdb-p-right-16 vdb-p-top-1/2 vdb-p-h-20 vdb-p-w-20 vdb-p--translate-y-1/2 vdb-p-transform"
             />
             <CloseIcon
               v-if="!isUploadingScreen && searchContent !== ''"
-              class="absolute right-16 top-1/2 h-20 w-20 -translate-y-1/2 transform cursor-pointer transition"
+              class="vdb-p-absolute vdb-p-right-16 vdb-p-top-1/2 vdb-p-h-20 vdb-p-w-20 vdb-p--translate-y-1/2 vdb-p-transform vdb-p-cursor-pointer vdb-p-transition"
               @click="closeInput()"
             />
           </div>
@@ -101,12 +103,12 @@
           v-if="showSearchSuggestions && searchSuggestions.length"
           v-show="!wordsLoading"
           :class="[
-            'search-suggestions absolute left-1/2 top-76 hidden -translate-x-1/2 transform rounded-8 border border-white-24 bg-random-222222 px-16 py-8',
-            autoHide && !showElements ? 'opacity-0' : 'opacity-1',
+            'search-suggestions vdb-p-absolute vdb-p-left-1/2 vdb-p-top-76 vdb-p-hidden vdb-p--translate-x-1/2 vdb-p-transform vdb-p-rounded-8 vdb-p-border vdb-p-border-white-24 vdb-p-bg-random-222222 vdb-p-px-16 vdb-p-py-8',
+            autoHide && !showElements ? 'vdb-p-opacity-0' : 'vdb-p-opacity-1',
           ]"
         >
           <div
-            class="leading-24 uppercase text-others-gray42"
+            class="vdb-p-leading-24 vdb-p-uppercase vdb-p-text-others-gray42"
             style="font-size: 0.625rem"
           >
             Popular Topics in this file
@@ -115,7 +117,7 @@
             <div
               v-for="(suggestion, i) in searchSuggestions"
               :key="i"
-              class="leading-24 search-suggestion min-h-24 cursor-pointer border-b border-others-black181818 py-8 font-medium text-white hover:text-kilvish-500"
+              class="vdb-p-leading-24 search-suggestion vdb-p-min-h-24 vdb-p-cursor-pointer vdb-p-border-b vdb-p-border-others-black181818 vdb-p-py-8 vdb-p-font-medium vdb-p-text-white hover:vdb-p-text-kilvish-500"
               style="font-size: 0.75rem"
               @click="() => handleSearchSuggestionClick(suggestion.text)"
             >
@@ -126,33 +128,33 @@
         <div
           v-else-if="showSearchSuggestions && !searchSuggestions.length"
           :class="[
-            'search-suggestions absolute left-1/2 top-76 hidden -translate-x-1/2 transform rounded-8 border border-white-24 bg-random-222222 px-16 py-8',
+            'search-suggestions vdb-p-absolute vdb-p-left-1/2 vdb-p-top-76 vdb-p-hidden vdb-p--translate-x-1/2 vdb-p-transform vdb-p-rounded-8 vdb-p-border vdb-p-border-white-24 vdb-p-bg-random-222222 vdb-p-px-16 vdb-p-py-8',
             autoHide && !showElements && searchContent === ''
-              ? 'opacity-0'
-              : 'opacity-1',
+              ? 'vdb-p-opacity-0'
+              : 'vdb-p-opacity-1',
           ]"
         >
           <div
-            class="leading-24 uppercase text-others-gray42"
+            class="vdb-p-leading-24 vdb-p-uppercase vdb-p-text-others-gray42"
             style="font-size: 0.625rem"
           >
             Popular Topics in this file
           </div>
           <div class="search-suggestions-wrapper">
             <div
-              class="mb-4 h-14 w-full animate-pulse rounded-2 bg-others-suggLoader"
+              class="vdb-p-mb-4 vdb-p-h-14 vdb-p-w-full vdb-p-animate-pulse vdb-p-rounded-2 vdb-p-bg-others-suggLoader"
             />
             <div
-              class="mb-4 h-14 w-3/4 animate-pulse rounded-2 bg-others-suggLoader"
+              class="vdb-p-mb-4 vdb-p-h-14 vdb-p-w-3/4 vdb-p-animate-pulse vdb-p-rounded-2 vdb-p-bg-others-suggLoader"
             />
             <div
-              class="mb-4 h-14 w-4/6 animate-pulse rounded-2 bg-others-suggLoader"
+              class="vdb-p-mb-4 vdb-p-h-14 vdb-p-w-4/6 vdb-p-animate-pulse vdb-p-rounded-2 vdb-p-bg-others-suggLoader"
             />
             <div
-              class="mb-4 h-14 w-1/2 animate-pulse rounded-2 bg-others-suggLoader"
+              class="vdb-p-mb-4 vdb-p-h-14 vdb-p-w-1/2 vdb-p-animate-pulse vdb-p-rounded-2 vdb-p-bg-others-suggLoader"
             />
             <div
-              class="mb-4 h-14 w-10/12 animate-pulse rounded-2 bg-others-suggLoader"
+              class="vdb-p-mb-4 vdb-p-h-14 vdb-p-w-10/12 vdb-p-animate-pulse vdb-p-rounded-2 vdb-p-bg-others-suggLoader"
             />
           </div>
         </div>
@@ -160,24 +162,24 @@
         <div
           v-if="showSearchResults"
           id="searchResultsContainer"
-          class="searchResultsContainer absolute left-8 right-8 top-80 mx-auto overflow-hidden rounded-16 border shadow-3 transition sm:left-16 sm:right-16 md:top-80"
+          class="searchResultsContainer vdb-p-absolute vdb-p-left-8 vdb-p-right-8 vdb-p-top-80 vdb-p-mx-auto vdb-p-overflow-hidden vdb-p-rounded-16 vdb-p-border vdb-p-shadow-3 vdb-p-transition sm:vdb-p-left-16 sm:vdb-p-right-16 md:vdb-p-top-80"
           :class="{
-            'border-white-24 text-white': !isLight,
-            'border-kilvish-300 text-gray-900': isLight,
+            'vdb-p-border-white-24 vdb-p-text-white': !isLight,
+            'vdb-p-border-kilvish-300 vdb-p-text-gray-900': isLight,
           }"
           :style="`max-width: 820px; background: ${
             isLight ? '#F9FAFB' : '#222222'
           }`"
         >
           <div
-            class="flex justify-center p-28"
-            :class="{ hidden: !searchResultsLoading }"
+            class="vdb-p-flex vdb-p-justify-center vdb-p-p-28"
+            :class="{ 'vdb-p-hidden': !searchResultsLoading }"
           >
             <loading />
           </div>
           <div
             :class="{
-              hidden: searchResultsLoading,
+              'vdb-p-hidden': searchResultsLoading,
             }"
           >
             <search-results
@@ -192,7 +194,11 @@
               :is-light="isLight"
             />
             <div v-else>
-              <p class="px-8 py-32 text-center opacity-80">No results found</p>
+              <p
+                class="vdb-p-px-8 vdb-p-py-32 vdb-p-text-center vdb-p-opacity-80"
+              >
+                No results found
+              </p>
             </div>
           </div>
         </div>
@@ -247,7 +253,9 @@ const isFocused = ref(false);
 const searchInput = ref(null);
 const searchTopContainer = ref(null);
 
-const showSearchSuggestions = computed(() => props.searchContent === "" && props.searchSuggestions.length);
+const showSearchSuggestions = computed(
+  () => props.searchContent === "" && props.searchSuggestions.length,
+);
 const isUploadingScreen = computed(
   () => !props.isActive && !props.isAutoPilotLoading && !props.isRaw,
 );
@@ -261,13 +269,16 @@ const isFinalScreen = computed(
   () => props.isActive && !props.isAutoPilotLoading && !props.isRaw,
 );
 
-watch(()=>props.searchContent, (val)=>{
-  if(val === ""){
-    emit("toggleResults", false);
-    return;
-  }
-  emit("toggleResults", true);
-})
+watch(
+  () => props.searchContent,
+  (val) => {
+    if (val === "") {
+      emit("toggleResults", false);
+      return;
+    }
+    emit("toggleResults", true);
+  },
+);
 
 watch(isFocused, (val) => {
   if (props.searchContent === "") {

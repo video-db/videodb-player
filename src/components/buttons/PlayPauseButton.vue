@@ -3,20 +3,20 @@
     :popper-text="playing ? 'Pause' : 'Play'"
     :is-popper-active="isPopperActive"
     :class="[
-      'transition-opacity',
-      autoHide && !showElements ? 'opacity-0' : 'opacity-1',
+      'vdb-p-transition-opacity',
+      autoHide && !showElements ? 'vdb-p-opacity-0' : 'vdb-p-opacity-1',
     ]"
   >
     <template #button>
       <TransparentButton
-        class="w-56 h-40"
-        :default-state-css="'bg-black-16 border border-white-16 backdrop-blur hover:bg-random-313131 hover:border-random-8e6200'"
-        :disabled-state-css="'bg-black-45 opacity-20 backdrop-blur cursor-not-allowed pointer-events-none'"
+        class="vdb-p-w-56 vdb-p-h-40"
+        :default-state-css="'vdb-p-bg-black-16 vdb-p-border vdb-p-border-white-16 vdb-p-backdrop-blur hover:vdb-p-bg-random-313131 hover:vdb-p-border-random-8e6200'"
+        :disabled-state-css="'vdb-p-bg-black-45 vdb-p-opacity-20 vdb-p-backdrop-blur vdb-p-cursor-not-allowed vdb-p-pointer-events-none'"
         :button-state="isActive ? 'default' : 'hidden'"
         @click="togglePlay"
       >
-        <PauseButton v-if="playing" class="h-20 w-20" />
-        <PlayButton v-else class="h-20 w-20" />
+        <PauseButton v-if="playing" class="vdb-p-h-20 vdb-p-w-20" />
+        <PlayButton v-else class="vdb-p-h-20 vdb-p-w-20" />
       </TransparentButton>
     </template>
   </WithPopper>
@@ -24,7 +24,6 @@
 
 <script setup>
 import { ref } from "vue";
-import Popper from "vue3-popper";
 import PlayButton from "../icons/play.vue";
 import PauseButton from "../icons/pause.vue";
 import TransparentButton from "../atoms/TransparentButton.vue";

@@ -28,7 +28,7 @@ declare const __VLS_component: import("vue").DefineComponent<{}, {
     toggleFullScreen: (value: any) => void;
     toggleSubtitles: (value: any) => void;
     togglePictureInPicture: () => void;
-    $emit: (event: "play" | "pause" | "ended" | "loadeddata" | "waiting" | "playing" | "timeupdate" | "canplay" | "canplaythrough" | "videoerrror" | "toggleSubtitles" | "fullScreenChange", ...args: any[]) => void;
+    $emit: (event: "playing" | "canplay" | "canplaythrough" | "ended" | "loadeddata" | "pause" | "play" | "timeupdate" | "waiting" | "toggleSubtitles" | "videoerrror" | "fullScreenChange", ...args: any[]) => void;
     streamUrl: string;
     thumbnailUrl: string;
     startAt: number;
@@ -41,8 +41,8 @@ declare const __VLS_component: import("vue").DefineComponent<{}, {
     debug: boolean;
     $props: {
         readonly streamUrl?: string | undefined;
-        readonly thumbnailUrl?: string | undefined;
         readonly subtitlesConfig?: Record<string, any> | undefined;
+        readonly thumbnailUrl?: string | undefined;
         readonly startAt?: number | undefined;
         readonly autoPlay?: boolean | undefined;
         readonly autoHideDuration?: number | undefined;

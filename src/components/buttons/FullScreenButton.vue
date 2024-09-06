@@ -2,22 +2,22 @@
   <WithPopper
     :popper-text="isFullScreen ? 'Exit Full Screen' : 'Full Screen'"
     :class="[
-      'absolute -top-60 right-16 transition-opacity sm:static',
-      autoHide && !showElements ? 'opacity-0' : 'opacity-1',
+      'vdb-p-absolute vdb-p--top-60 vdb-p-right-16 vdb-p-transition-opacity sm:vdb-p-static',
+      autoHide && !showElements ? 'vdb-p-opacity-0' : 'vdb-p-opacity-1',
     ]"
   >
     <template #button>
       <TransparentButton
-        class="flex h-40 w-48 rounded-8 font-semibold text-white sm:ml-8"
-        :default-state-css="'bg-black-16 border border-white-16 backdrop-blur hover:bg-random-313131 hover:border-random-8e6200'"
-        :disabled-state-css="'bg-black-45 opacity-20 backdrop-blur cursor-not-allowed pointer-events-none'"
+        class="vdb-p-flex vdb-p-h-40 vdb-p-w-48 vdb-p-rounded-8 vdb-p-font-semibold vdb-p-text-white sm:vdb-p-ml-8"
+        :default-state-css="'vdb-p-bg-black-16 vdb-p-border vdb-p-border-white-16 vdb-p-backdrop-blur hover:vdb-p-bg-random-313131 hover:vdb-p-border-random-8e6200'"
+        :disabled-state-css="'vdb-p-bg-black-45 vdb-p-opacity-20 vdb-p-backdrop-blur vdb-p-cursor-not-allowed vdb-p-pointer-events-none'"
         :button-state="isActive ? 'default' : 'hidden'"
         @click-action="isFullScreen ? toggleFullScreen(false) : toggleFullScreen(true)"
       >
         <!-- Full Screen button icons -->
         <div>
-          <FullScreenExit v-if="isFullScreen" class="h-20 w-20" />
-          <FullScreen v-else class="flex h-20 w-20 group-hover:hidden" />
+          <FullScreenExit v-if="isFullScreen" class="vdb-p-h-20 vdb-p-w-20" />
+          <FullScreen v-else class="vdb-p-flex vdb-p-h-20 vdb-p-w-20 group-hover:vdb-p-hidden" />
         </div>
       </TransparentButton>
     </template>

@@ -9,8 +9,8 @@
   >
     <template
       #content
-      class="popper hidden sm:block"
-      :class="!isPopperActive ? 'invisible' : ''"
+      class="popper vdb-p-hidden sm:vdb-p-block"
+      :class="!isPopperActive ? 'vdb-p-invisible' : ''"
     >
       {{ popperText }}
     </template>

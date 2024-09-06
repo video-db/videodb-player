@@ -161,6 +161,10 @@ export function usePlayer(emit, props) {
                 break;
               case "play":
                 playerState.playing = true;
+                break;
+              case "ended":
+                togglePlay()
+                break;
             }
             emit(customEvent, { event });
           });
