@@ -1,6 +1,9 @@
 <template>
   <div
-    class="swiper-slide sr vdb-p-h-full vdb-p-rounded-8 {{ isLight ? 'light' : '' }}"
+    :class="[
+      'swiper-slide sr vdb-p-h-full vdb-p-rounded-8',
+      isLight ? 'light' : '',
+    ]"
     :data-seconds="searchResultItem.start"
     :data-index="i"
     :data-id="searchResultItem.id"
@@ -18,11 +21,22 @@
           v-html="wrapSpan(searchResultItem.text, searchResultItem.type)"
         ></span>
       </p>
-      <div class="vdb-p-flex vdb-p-w-full vdb-p-items-center vdb-p-justify-between">
+      <div
+        class="vdb-p-flex vdb-p-w-full vdb-p-items-center vdb-p-justify-between"
+      >
         <div
           :class="`swiper-time ${searchResultItem.type} ${isLight ? 'light' : ''}`"
           :data-seconds="searchResultItem.start"
         >
+          <PlayIcon
+            :class="`${
+              searchResultItem.type === 'relevant'
+                ? isLight
+                  ? 'vdb-p-text-[#53B745]'
+                  : 'vdb-p-text-[#B4C236]'
+                : 'vdb-p-text-[#F8C450]'
+            }`"
+          />
           <p
             :class="`vdb-p-text-overline vdb-p-font-medium vdb-p-tracking-wider vdb-p-opacity-80 ${isLight ? 'swiper-time-light-text' : 'vdb-p-text-white-80'}`"
           >
@@ -54,6 +68,7 @@
 
 <script setup>
 import { computed } from "vue";
+import PlayIcon from "../icons/play.vue";
 
 const props = defineProps({
   searchContent: {
@@ -167,7 +182,7 @@ const wrapSpan = (strReplace, type) => {
   background-color: #eceff3;
 }
 
-.swiper-time > img {
+.swiper-time > svg {
   width: 14px;
   height: auto;
   margin-right: 4px;
