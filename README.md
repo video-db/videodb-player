@@ -34,31 +34,32 @@
 
 # 📺 VideoDB Player
 
-VideoDB Player is a one-of-a-kind, AI-first video player that changes how we interact with videos.
+VideoDB Player is an AI-first video player that enhances how we interact with videos.
 
 ### 🤖 AI-Powered Interactive Features
 
+- Intelligent search bar and navigation in the video using search results.
+- Automated chapter UI for easy consumpation and navigation.
 - Seamless integration with chat interfaces for interactive experiences.
-- Intelligent search functionality within video content
-- Automated chapter generation for easy navigation
 
-### 🚀 Optimized for [VideoDB](https://videodb.io) Infrastructure
-
-While it can work with any video source, VideoDB Player is specially optimized to leverage the full potential of VideoDB's advanced video infrastructure provide support
-
-- Enhanced compatibility with VideoDB's advanced video infrastructure.
-- [videodb-chat](https://github.com/video-db/videodb-chat) provides necessary Chat UI components specially designed for "Chat with Video" interfaces.
-- [video-agents](https://github.com/video-db/video-agents) connects with LLMs and the Reasoning Engine to serve as a backend for "Chat with Video" interfaces.
 
 ### 🌍 Versatile and User-Friendly Experience
 
+- Cross platform support (Web, Android, iOS), features perfectly adjust on mobile devices.
 - Out-of-the-box speed controls allow users to customize their viewing experience.
-- Supports all major platforms including Android, iOS, and web browsers, ensuring a consistent experience across devices.
 - [Designed](https://www.linkedin.com/posts/ashutoshtrivedi_spext-activity-7231616055834505216-UNsw) with both viewers and developers in mind, offering a sleek interface and easy integration.
+
+### 🚀 Optimized for [VideoDB](https://videodb.io) Infra
+
+While it can work with any video source, VideoDB Player is specially optimized to leverage the full potential of VideoDB's advanced video infrastructure.
+
+- Enhanced compatibility with VideoDB's advanced video search feature.
+- *(upcoming)* [videodb-chat](https://github.com/video-db/videodb-chat) provides necessary Chat UI components specially designed for "Chat with Video" interfaces.
+
 
 <br>
 
-# ✨ Inside Look: VideoDB Player in Action
+# ✨ See it in Action
 
 <br>
 
@@ -66,13 +67,13 @@ https://github.com/user-attachments/assets/5d674179-16cd-4ec3-b3f5-c8c613562fb8
 
 <br>
 
-# 🎨 Well-Designed UI Components
+## 🎨 Well-Designed UI Components
 
 <br>
 
 ![player-components](https://github.com/user-attachments/assets/c57447d3-8c01-4e3c-ac90-d51053488178)
 
-VideoDB Player boasts a meticulously crafted user interface, composed of modular components that ensure both functionality and aesthetic appeal. Let's break down the key elements:
+VideoDB Player offers a well crafted UI, composed of modular components that ensure both functionality and aesthetic appeal. Let's break down the key elements:
 
 1. Main Components:
 
@@ -94,14 +95,15 @@ VideoDB Player boasts a meticulously crafted user interface, composed of modular
 - `Fullscreen`: Expand to full-screen mode
 
 <br>
+<br>
 
 # 🚀 Quickstart
 
-<br>
+
 
 ### Installation
 
-To add the VideoDB Player library to your project, use the following command in your project's directory:
+ Clone this repo or use the following command in your project's directory:
 
 ```bash
 npm install videodb-player
@@ -109,7 +111,7 @@ npm install videodb-player
 
 ### Usage
 
-To use the VideoDB Player in your Vue.js application, import the necessary components and styles:
+ Import the necessary components and styles. ( *Currently supports Vue.js only* )
 
 ```html
 <script setup>
@@ -191,7 +193,6 @@ The `<SearchInsideMedia/>` component enables in-video search functionality. To u
 1. Disable the default overlay in `<VideoDBPlayer>`.
 2. Add the `<SearchInsideMedia/>` component in the `#overlay` slot.
 3. To get the search results from Video you can use [VideoDB](https://videodb.io).
-   > ℹ️ Checkout [video-agents](https://github.com/video-db/video-agents) for full integration guide which includes backend for video agents & integration with [videodb-chat](https://github.com/video-db/videodb-chat)
 
 ```html
 <template>
@@ -254,8 +255,8 @@ The player state and methods are provided through the Vue composition API. You c
 
 ### 🧑‍💻 Accessing Player Instance
 
-The VideoDB Player exposes its internal player instance through a ref.
-Its useful for accessing player methods and state from outside the component
+Internal player instance are exposed through a `ref`.
+Useful for accessing player methods and state from outside the component.
 
 ```html
 <template>
@@ -282,7 +283,7 @@ Its useful for accessing player methods and state from outside the component
 
 ### 🔔 Events
 
-The VideoDB Player emits several events that you can listen to in the parent component:
+Emits several events that you can listen to, in the parent component:
 
 1. `play`: Emitted when the video starts playing.
 2. `pause`: Emitted when the video is paused.
@@ -320,19 +321,19 @@ Example usage:
 
 ### Props
 
-- `streamUrl`: (String, required): The URL of the video stream.
+- `streamUrl`: (String, required): URL of the video stream.
 - `thumbnailUrl`: (String, optional): URL of the video thumbnail.
 - `aspectRatio`: (String, default: "16:9"): Aspect ratio of the video. (ratio, seperated by ":")
 - `subtitlesConfig`: (Object, optional): Configuration for subtitles.
-  - `src` (String, default: ""): The URL of the subtitles file.
-  - `kind` (String, default: "captions"): The kind of text track.
-  - `lang` (String, default: "en"): The language of the subtitles.
-  - `label` (String, default: "English"): The label for the subtitles.
+  - `src` (String, default: ""): URL of the subtitles file.
+  - `kind` (String, default: "captions"): text track type.
+  - `lang` (String, default: "en"): Language of the subtitles.
+  - `label` (String, default: "English"): Label for the subtitles.
 - `startAt` (Number, default: 0): Time in seconds to start the video.
-- `autoPlay` (Boolean, default: false): Whether to start playing automatically.
+- `autoPlay` (Boolean, default: false): Toggle to start playing automatically.
 - `autoHideDuration` (Number, default: 5000): Duration in milliseconds before controls are hidden.
-- `defaultControls` (Boolean, default: true): Whether to use default controls.
-- `defaultOverlay` (Boolean, default: true): Whether to use the default overlay.
+- `defaultControls` (Boolean, default: true): Toggle to use default controls.
+- `defaultOverlay` (Boolean, default: true): Toggle to use the default overlay.
 - `defaultPlayBackRate` (Number, default: 1): Default playback rate.
 - `debug` (Boolean, default: false): Enable debug mode.
 
@@ -405,12 +406,25 @@ Following variables are both exposed (via `defineExpose`) and injected (via `pro
 - `search-change`: Emitted when the search input changes.
 - `search-submit`: Emitted when the search is submitted (enter key pressed )
 
-# 🛣️ Roadmap
+## 🛣️ Roadmap
 
+- Integration with upcoming VideoDB chat and agents projects.
 - ⚡ Optimization for ProgressBar
 - 🔍 Search Component Interface improvements
 - 🎨 Improve tailwind.config.js; use default values for spacing
 - ⚛️ React Conversion
+
+<!-- CONTRIBUTING -->
+
+## Contribute
+
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
