@@ -107,7 +107,7 @@ VideoDB Player offers a well crafted UI, composed of modular components that ens
  Clone this repo or use the following command in your project's directory:
 
 ```bash
-npm install videodb-player
+npm install @videodb-ui/player-vue
 ```
 
 ### Usage
@@ -116,8 +116,8 @@ npm install videodb-player
 
 ```html
 <script setup>
-  import { VideoDBPlayer } from "videodb-player";
-  import "videodb-player/dist/style.css";
+  import { VideoDBPlayer } from "@videodb-ui/player-vue";
+  import "@videodb-ui/player-vue/dist/style.css";
 </script>
 
 <template>
@@ -236,7 +236,7 @@ The player state and methods are provided through the Vue composition API. You c
 
 ```html
 <script setup>
-  import { useVideoDBPlayer } from "videodb-player";
+  import { useVideoDBPlayer } from "@videodb-ui/player-vue";
   const {
     playing,
     volume,
@@ -266,7 +266,7 @@ Useful for accessing player methods and state from outside the component.
 
 <script setup>
   import { ref, onMounted } from "vue";
-  import { VideoDBPlayer } from "videodb-player";
+  import { VideoDBPlayer } from "@videodb-ui/player-vue";
 
   const playerRef = ref(null);
 
@@ -302,7 +302,7 @@ Example usage:
 </template>
 
 <script setup>
-  import { VideoDBPlayer } from "videodb-player";
+  import { VideoDBPlayer } from "@videodb-ui/player-vue";
 
   const onPlay = () => {
     console.log("Video started playing");

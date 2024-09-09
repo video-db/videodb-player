@@ -1,5 +1,5 @@
 {
-  "name": "videodb-player",
+  "name": "@videodb-ui/player-vue",
   "version": "0.0.1",
   "description": "VideoDB Player is an AI-first video player that enhances how we interact with videos.",
   "author": "VideoDB",
