@@ -12,12 +12,17 @@
         :default-state-css="'vdb-p-bg-black-16 vdb-p-border vdb-p-border-white-16 vdb-p-backdrop-blur hover:vdb-p-bg-random-313131 hover:vdb-p-border-random-8e6200'"
         :disabled-state-css="'vdb-p-bg-black-45 vdb-p-opacity-20 vdb-p-backdrop-blur vdb-p-cursor-not-allowed vdb-p-pointer-events-none'"
         :button-state="isActive ? 'default' : 'hidden'"
-        @click-action="isFullScreen ? toggleFullScreen(false) : toggleFullScreen(true)"
+        @click-action="
+          isFullScreen ? toggleFullScreen(false) : toggleFullScreen(true)
+        "
       >
         <!-- Full Screen button icons -->
         <div>
           <FullScreenExit v-if="isFullScreen" class="vdb-p-h-20 vdb-p-w-20" />
-          <FullScreen v-else class="vdb-p-flex vdb-p-h-20 vdb-p-w-20 group-hover:vdb-p-hidden" />
+          <FullScreen
+            v-else
+            class="vdb-p-flex vdb-p-h-20 vdb-p-w-20 group-hover:vdb-p-hidden"
+          />
         </div>
       </TransparentButton>
     </template>
@@ -44,8 +49,7 @@ const props = defineProps({
 });
 
 const isPopperActive = ref(true);
-const { showElements, isFullScreen, toggleFullScreen } =
-  useVideoDBPlayer();
+const { showElements, isFullScreen, toggleFullScreen } = useVideoDBPlayer();
 </script>
 
 <style scoped></style>

@@ -8,6 +8,7 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![Website][website-shield]][website-url]
+[![Discord][discord-shield]][discord-url]
 
 <!-- PROJECT LOGO -->
 <br />
@@ -21,9 +22,8 @@
   <p align="center">
     AI First Video Player
     <br />
+    <a href="https://stackblitz.com/edit/videodb-player-demo-pxy8k7?file=src%2FApp.vue"><strong>View Demo »</strong></a>
     <br />
-    <a href="https://stackblitz.com/">View Demo</a>
-    ·
     <a href="https://github.com/video-db/videodb-player/issues">Report Bug</a>
     ·
     <a href="https://github.com/video-db/videodb-player/issues">Request Feature</a>
@@ -431,6 +431,8 @@ Contributions are what make the open source community such an amazing place to b
 
 [npm-shield]: https://img.shields.io/npm/v/videodb-player?style=for-the-badge
 [npm-url]: https://www.npmjs.com/package/videodb-player
+[discord-shield]: https://img.shields.io/badge/dynamic/json?suffix=total&style=for-the-badge&url=https://discord.com/api/invites/py9P639jGz?with_counts=true&query=$.approximate_member_count&logo=discord&logoColor=blue&color=green&label=discord
+[discord-url]: https://discord.gg/videodb
 [stars-shield]: https://img.shields.io/github/stars/video-db/videodb-player.svg?style=for-the-badge
 [stars-url]: https://github.com/video-db/videodb-player/stargazers
 [issues-shield]: https://img.shields.io/github/issues/video-db/videodb-player.svg?style=for-the-badge

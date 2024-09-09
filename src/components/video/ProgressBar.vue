@@ -60,7 +60,9 @@
         </p>
       </div>
       <!-- Main timelines -->
-      <div class="main-timeline vdb-p-absolute vdb-p-left-0 vdb-p-top-2 vdb-p-w-full">
+      <div
+        class="main-timeline vdb-p-absolute vdb-p-left-0 vdb-p-top-2 vdb-p-w-full"
+      >
         <!-- If no chapters -->
         <div
           v-if="chaptersList.length === 0"
@@ -79,14 +81,19 @@
           <!-- Hover fade bar -->
           <div
             class="vdb-p-pointer-events-none vdb-p-absolute vdb-p-left-0 vdb-p-top-0 vdb-p-h-full vdb-p-bg-white vdb-p-shadow-2"
-            :class="activeChapter !== null ? 'vdb-p-opacity-40' : 'vdb-p-opacity-0'"
+            :class="
+              activeChapter !== null ? 'vdb-p-opacity-40' : 'vdb-p-opacity-0'
+            "
             :style="{
               width: `${100 * moveToRatio}%`,
             }"
           />
         </div>
         <!-- If chapters -->
-        <div v-else class="chaptersCont vdb-p-flex vdb-p-items-center vdb-p-gap-2">
+        <div
+          v-else
+          class="chaptersCont vdb-p-flex vdb-p-items-center vdb-p-gap-2"
+        >
           <div
             v-for="(chapter, key) in chaptersList"
             :key="`${chapter.id || String(chapter.end)}`"
@@ -162,12 +169,11 @@
           ref="head"
           class="head vdb-p-align-center vdb-p-absolute vdb-p-top-0 vdb-p-z-10 vdb-p-flex vdb-p-h-10 vdb-p-w-10 vdb-p--translate-x-1/2 vdb-p--translate-y-1/2 vdb-p-transform vdb-p-cursor-pointer vdb-p-overflow-visible vdb-p-rounded-full vdb-p-border-2 vdb-p-border-outline-light vdb-p-bg-primary vdb-p-shadow-3 vdb-p-transition sm:vdb-p-h-14 sm:vdb-p-w-14 sm:vdb-p--translate-y-1/4"
           :class="{
-            'vdb-p-justify-start': seekGoToPoint.timePosition / duration <= 0.1,
+            'vdb-p-justify-start': time / duration <= 0.1,
             'vdb-p-justify-center': !(
-              seekGoToPoint.timePosition / duration <= 0.1 ||
-              seekGoToPoint.timePosition / duration >= 0.9
+              time / duration <= 0.1 || time / duration >= 0.9
             ),
-            'vdb-p-justify-end': seekGoToPoint.timePosition / duration >= 0.9,
+            'vdb-p-justify-end': time / duration >= 0.9,
           }"
           :style="{
             left: videoDrag
@@ -347,6 +353,21 @@ watch(moveToRatio, (val) => {
   emit("setPreviewVisibility", val > 0);
 });
 
+watch(
+  seekGoToPoint,
+  (newVal) => {
+    console.log("seekGoToPoint changed:");
+    console.log("seekGoToPoint.ratio:", newVal.ratio);
+    console.log("seekGoToPoint.timePosition:", newVal.timePosition);
+    console.log("duration:", duration.value);
+    console.log(
+      "seekGoToPoint.timePosition / duration:",
+      newVal.timePosition / duration.value,
+    );
+  },
+  { deep: true },
+);
+
 onMounted(() => {
   const getSource = () => {
     let src = props.streamUrl;
@@ -486,6 +507,7 @@ const onTouchMoveOnScreen = (e) => {
 };
 
 const seekVideoTime = (x) => {
+  console.log("seek video time called");
   if (!x) return;
   if (!progressBar.value) {
     return;
@@ -507,18 +529,21 @@ const seekVideoTime = (x) => {
 };
 
 const onSeekHeadMouseDown = (e) => {
+  console.log("onSeekHeadMouseDown called");
   videoDrag.value = true;
   seekVideoTime(e.pageX);
   window.addEventListener("mouseup", onSeekHeadMouseUp);
 };
 
 const onSeekHeadTouchStart = (e) => {
+  console.log("onSeekHeadTouchStart called");
   videoDrag.value = true;
   seekVideoTime(e.pageX);
   window.addEventListener("touchend", onSeekHeadTouchEnd);
 };
 
 const onSeekHeadMouseUp = () => {
+  console.log("onSeekHeadMouseUp called");
   if (videoDrag.value) {
     videoDrag.value = false;
     seekTo(seekGoToPoint.timePosition);

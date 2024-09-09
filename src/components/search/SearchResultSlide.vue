@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      'swiper-slide sr vdb-p-h-full vdb-p-rounded-8',
+      'swiper-slide sr vdb-p-h-full vdb-p-rounded-8 vdb-p-text-left',
       isLight ? 'light' : '',
     ]"
     :data-seconds="searchResultItem.start"

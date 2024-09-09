@@ -51,7 +51,8 @@ const props = defineProps({
 });
 
 const isPopperActive = ref(true);
-const { showElements, showSubtitles, toggleSubtitles, subtitlesConfig } = useVideoDBPlayer();
+const { showElements, showSubtitles, toggleSubtitles, subtitlesConfig } =
+  useVideoDBPlayer();
 
 const captionButtonState = computed(() => {
   if (!subtitlesConfig.src) return "disabled";

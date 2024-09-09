@@ -10,8 +10,8 @@
     :button-state="isActive ? 'default' : 'hidden'"
     @click="togglePlay"
   >
-    <PauseButton v-if="playing" class="vdb-p-w-[38.89%] vdb-p-h-[38.89%]" />
-    <PlayButton v-else class="vdb-p-w-[38.89%] vdb-p-h-[38.89%]" />
+    <PauseButton v-if="playing" class="vdb-p-h-[38.89%] vdb-p-w-[38.89%]" />
+    <PlayButton v-else class="vdb-p-h-[38.89%] vdb-p-w-[38.89%]" />
   </TransparentButton>
 </template>
 
@@ -52,6 +52,6 @@ const props = defineProps({
 const { playing, togglePlay, showElements } = useVideoDBPlayer();
 
 const buttonStyle = computed(() => {
-  return `transform: translate(-50%, ${props.shiftUp ? '-350%' : '-50%'})`;
+  return `transform: translate(-50%, ${props.shiftUp ? "-350%" : "-50%"})`;
 });
 </script>

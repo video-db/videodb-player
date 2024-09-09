@@ -3,7 +3,8 @@
     <div
       class="vdb-p-relative vdb-p-z-10"
       :class="{
-        'vdb-p-px-16 vdb-p-pt-16 md:vdb-p-px-24 md:vdb-p-pt-24 xl:vdb-p-px-32 xl:vdb-p-pt-32': isLight,
+        'vdb-p-px-16 vdb-p-pt-16 md:vdb-p-px-24 md:vdb-p-pt-24 xl:vdb-p-px-32 xl:vdb-p-pt-32':
+          isLight,
         'vdb-p-px-32 vdb-p-pt-40': !isLight,
       }"
     >

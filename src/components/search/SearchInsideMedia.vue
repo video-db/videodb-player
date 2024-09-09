@@ -28,8 +28,7 @@
               'vdb-p-left-1/2 vdb-p-bg-black-32 vdb-p-text-white': isRawScreen,
               'search-input-wrapper-done vdb-p-left-20 vdb-p-transform-none vdb-p-bg-black-32 vdb-p-text-white sm:vdb-p-left-1/2 sm:vdb-p--translate-x-1/2 sm:vdb-p-transform':
                 isFinalScreen,
-              'search-input-wrapper-done-full vdb-p-mr-20':
-                isFinalScreen && (isFocused || searchContent !== ''),
+              'search-input-wrapper-done-full vdb-p-mr-20': isFinalScreen,
             },
           ]"
         >
@@ -108,7 +107,7 @@
           ]"
         >
           <div
-            class="vdb-p-leading-24 vdb-p-uppercase vdb-p-text-others-gray42"
+            class="vdb-p-leading-24 vdb-p-uppercase vdb-p-text-others-gray42 vdb-p-text-left"
             style="font-size: 0.625rem"
           >
             Popular Topics in this file
@@ -117,7 +116,7 @@
             <div
               v-for="(suggestion, i) in searchSuggestions"
               :key="i"
-              class="vdb-p-leading-24 search-suggestion vdb-p-min-h-24 vdb-p-cursor-pointer vdb-p-border-b vdb-p-border-others-black181818 vdb-p-py-8 vdb-p-font-medium vdb-p-text-white hover:vdb-p-text-kilvish-500"
+              class="vdb-p-leading-24 search-suggestion vdb-p-min-h-24 vdb-p-cursor-pointer vdb-p-border-b vdb-p-border-others-black181818 vdb-p-py-8 vdb-p-font-medium vdb-p-text-white hover:vdb-p-text-kilvish-500 vdb-p-text-left"
               style="font-size: 0.75rem"
               @click="() => handleSearchSuggestionClick(suggestion.text)"
             >
@@ -135,7 +134,7 @@
           ]"
         >
           <div
-            class="vdb-p-leading-24 vdb-p-uppercase vdb-p-text-others-gray42"
+            class="vdb-p-leading-24 vdb-p-uppercase vdb-p-text-others-gray42 vdb-p-text-left"
             style="font-size: 0.625rem"
           >
             Popular Topics in this file
