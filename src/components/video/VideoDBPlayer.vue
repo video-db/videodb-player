@@ -1,6 +1,11 @@
 <template>
-  <div class="vdb-p-relative vdb-p-w-full" :style="{ paddingBottom: aspectRatioPadding }">
-    <div class="vdb-p-absolute vdb-p-inset-0 vdb-p-h-full vdb-p-w-full vdb-p-overflow-hidden vdb-p-bg-kilvish-200">
+  <div
+    class="vdb-p-relative vdb-p-w-full"
+    :style="{ paddingBottom: aspectRatioPadding }"
+  >
+    <div
+      class="vdb-p-absolute vdb-p-inset-0 vdb-p-h-full vdb-p-w-full vdb-p-overflow-hidden vdb-p-bg-kilvish-200"
+    >
       <div
         ref="videoWrapper"
         class="video-container vdb-p-outline-16 vdb-p-relative vdb-p-h-full vdb-p-select-none vdb-p-outline-kilvish-200"
@@ -26,7 +31,9 @@
         </video>
 
         <!-- Backlayer -->
-        <div class="vdb-p-absolute vdb-p-left-0 vdb-p-right-0 vdb-p-top-0 vdb-p-h-full vdb-p-w-full">
+        <div
+          class="vdb-p-absolute vdb-p-left-0 vdb-p-right-0 vdb-p-top-0 vdb-p-h-full vdb-p-w-full"
+        >
           <div
             :class="[
               'vdb-p-duration-400 vdb-p-absolute vdb-p-bottom-0 vdb-p-left-0 vdb-p-right-0 vdb-p-top-0 vdb-p-block vdb-p-cursor-pointer vdb-p-bg-gradient-to-b vdb-p-from-black vdb-p-to-transparent vdb-p-transition-opacity vdb-p-ease-in-out',
@@ -35,7 +42,10 @@
             @click="togglePlay"
           />
           <slot v-if="!defaultOverlay" name="overlay"></slot>
-          <BigCenterButton v-else class="vdb-p-absolute vdb-p-left-1/2 vdb-p-top-1/2" />
+          <BigCenterButton
+            v-else
+            class="vdb-p-absolute vdb-p-left-1/2 vdb-p-top-1/2"
+          />
         </div>
         <div
           :class="[
@@ -44,8 +54,8 @@
           ]"
         >
           <slot v-if="!defaultControls" name="controls"> </slot>
-          <div v-else class="vdb-p-p-20">
-            <div class="vdb-p-mx-28 vdb-p-mb-12 sm:vdb-p-mx-8">
+          <div v-else class="vdb-p-p-20 vdb-p-pt-0">
+            <div class="vdb-p-mb-12 sm:vdb-p-mx-8">
               <ProgressBar :stream-url="streamUrl" />
             </div>
             <div class="vdb-p-flex vdb-p-w-full vdb-p-justify-between">
@@ -55,7 +65,9 @@
                 <TimeCode />
               </div>
 
-              <div class="vdb-p-flex vdb-p-w-auto vdb-p-flex-row vdb-p-items-center">
+              <div
+                class="vdb-p-flex vdb-p-w-auto vdb-p-flex-row vdb-p-items-center"
+              >
                 <CaptionButton />
                 <SpeedControlButton :speed-options="[1, 1.2, 1.5, 1.8, 2]" />
                 <FullScreenButton />

@@ -1,7 +1,7 @@
 <template>
   <p
     :class="[
-      'vdb-p-inline vdb-p-text-white vdb-p-font-medium vdb-p-ml-12 vdb-p-transition',
+      'vdb-p-ml-12 vdb-p-inline vdb-p-hidden vdb-p-font-medium vdb-p-text-white vdb-p-transition sm:vdb-p-block',
       autoHide && !showElements ? 'vdb-p-opacity-0' : 'vdb-p-opacity-1',
     ]"
   >

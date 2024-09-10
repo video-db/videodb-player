@@ -9,7 +9,7 @@
   >
     <template #button>
       <TransparentButton
-        class="vdb-p-w-56 vdb-p-h-40"
+        class="vdb-p-h-40 vdb-p-w-56"
         :default-state-css="'vdb-p-bg-black-16 vdb-p-border vdb-p-border-white-16 vdb-p-backdrop-blur hover:vdb-p-bg-random-313131 hover:vdb-p-border-random-8e6200'"
         :disabled-state-css="'vdb-p-bg-black-45 vdb-p-opacity-20 vdb-p-backdrop-blur vdb-p-cursor-not-allowed vdb-p-pointer-events-none'"
         :button-state="isActive ? 'default' : 'hidden'"

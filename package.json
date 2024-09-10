@@ -1,67 +1,82 @@
 {
-	"name": "videodb-player",
-	"description": "",
-	"version": "0.0.1",
-	"private": false,
-	"author": "",
-	"homepage": "",
-	"license": "MIT",
-	"type": "module",
-	"main": "dist/index.cjs",
-	"module": "dist/index.mjs",
-	"exports": {
-		".": {
-			"types": "./types/index.d.ts",
-			"import": "./dist/index.mjs",
-			"require": "./dist/index.cjs"
-		},
-		"./*": "./*"
-	},
-	"typings": "types/index.d.ts",
-	"files": [
-		"dist",
-		"types",
-		"README.md"
-	],
-	"scripts": {
-		"dev-server": "vite",
-		"dev-types": "vue-tsc  --noEmit -p tsconfig.app.json --watch",
-		"build": "npm run build-lib && npm run build-types",
-		"build-lib": "vite build",
-		"build-types": "vue-tsc --emitDeclarationOnly --declaration -p tsconfig.app.json",
-		"lint": "eslint 'src/**/*.{ts,vue}'",
-		"test": "vitest",
-		"test-ci": "vitest --run"
-	},
-	"peerDependencies": {
-		"vue": "^3.0.4"
-	},
-	"devDependencies": {
-		"@tsconfig/node20": "^20.1.2",
-		"@types/node": "20.8.10",
-		"@vitejs/plugin-vue": "^4.4.0",
-		"@vue/compiler-dom": "^3.3.8",
-		"@vue/test-utils": "^2.4.1",
-		"@vue/tsconfig": "^0.4.0",
-		"autoprefixer": "^10.4.20",
-		"eslint": "^8.53.0",
-		"jsdom": "^22.1.0",
-		"lint-staged": "^15.0.2",
-		"postcss": "^8.4.41",
-		"prettier": "^3.3.3",
-		"prettier-plugin-tailwindcss": "^0.6.6",
-		"run-p": "^0.0.0",
-		"tailwindcss": "^3.4.10",
-		"typescript": "^5.2.2",
-		"vite": "^4.5.0",
-		"vitest": "^0.34.6",
-		"vue": "^3.4.38",
-		"vue-tsc": "^2.0.29"
-	},
-	"dependencies": {
-		"lodash.debounce": "^4.0.8",
-		"swiper": "^11.1.10",
-		"video.js": "^8.17.3",
-		"vue3-popper": "^1.5.0"
-	}
+  "name": "@videodb-ui/player-vue",
+  "version": "0.0.1",
+  "description": "VideoDB Player is an AI-first video player that enhances how we interact with videos.",
+  "author": "VideoDB",
+  "license": "Apache-2.0",
+  "homepage": "https://videodb.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/video-db/videodb-player.git"
+  },
+  "private": false,
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "style": "dist/style.css",
+  "types": "types/index.d.ts",
+  "files": [
+    "dist",
+    "types",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./*": "./*"
+  },
+  "scripts": {
+    "dev-server": "vite",
+    "dev-types": "vue-tsc  --noEmit -p tsconfig.app.json --watch",
+    "build": "npm run build-lib && npm run build-types",
+    "build-lib": "vite build",
+    "build-types": "vue-tsc --emitDeclarationOnly --declaration -p tsconfig.app.json",
+    "lint": "eslint 'src/**/*.{ts,vue}'",
+    "test": "vitest",
+    "test-ci": "vitest --run"
+  },
+  "dependencies": {
+    "lodash.debounce": "^4.0.8",
+    "swiper": "^11.1.10",
+    "video.js": "^8.17.3",
+    "vue3-popper": "^1.5.0"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.2",
+    "@types/node": "20.8.10",
+    "@vitejs/plugin-vue": "^4.4.0",
+    "@vue/compiler-dom": "^3.3.8",
+    "@vue/test-utils": "^2.4.1",
+    "@vue/tsconfig": "^0.4.0",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8.53.0",
+    "jsdom": "^22.1.0",
+    "lint-staged": "^15.0.2",
+    "postcss": "^8.4.41",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.6",
+    "run-p": "^0.0.0",
+    "tailwindcss": "^3.4.10",
+    "typescript": "^5.2.2",
+    "vite": "^4.5.0",
+    "vitest": "^0.34.6",
+    "vue": "^3.4.38",
+    "vue-tsc": "^2.0.29"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.4"
+  },
+  "keywords": [
+    "video",
+    "player",
+    "videodb",
+    "video-db",
+    "video_db",
+    "videodb-player",
+    "video-player",
+    "video-player-component"
+  ]
 }

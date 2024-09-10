@@ -8,6 +8,7 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![Website][website-shield]][website-url]
+[![Discord][discord-shield]][discord-url]
 
 <!-- PROJECT LOGO -->
 <br />
@@ -21,9 +22,9 @@
   <p align="center">
     AI First Video Player
     <br />
+    <a href="https://stackblitz.com/edit/videodb-player-demo-pxy8k7?file=src%2FApp.vue"><strong>View Demo »</strong></a>
     <br />
-    <a href="https://stackblitz.com/">View Demo</a>
-    ·
+    <br />
     <a href="https://github.com/video-db/videodb-player/issues">Report Bug</a>
     ·
     <a href="https://github.com/video-db/videodb-player/issues">Request Feature</a>
@@ -106,7 +107,7 @@ VideoDB Player offers a well crafted UI, composed of modular components that ens
  Clone this repo or use the following command in your project's directory:
 
 ```bash
-npm install videodb-player
+npm install @videodb-ui/player-vue
 ```
 
 ### Usage
@@ -115,8 +116,8 @@ npm install videodb-player
 
 ```html
 <script setup>
-  import { VideoDBPlayer } from "videodb-player";
-  import "videodb-player/dist/style.css";
+  import { VideoDBPlayer } from "@videodb-ui/player-vue";
+  import "@videodb-ui/player-vue/dist/style.css";
 </script>
 
 <template>
@@ -235,7 +236,7 @@ The player state and methods are provided through the Vue composition API. You c
 
 ```html
 <script setup>
-  import { useVideoDBPlayer } from "videodb-player";
+  import { useVideoDBPlayer } from "@videodb-ui/player-vue";
   const {
     playing,
     volume,
@@ -265,7 +266,7 @@ Useful for accessing player methods and state from outside the component.
 
 <script setup>
   import { ref, onMounted } from "vue";
-  import { VideoDBPlayer } from "videodb-player";
+  import { VideoDBPlayer } from "@videodb-ui/player-vue";
 
   const playerRef = ref(null);
 
@@ -301,7 +302,7 @@ Example usage:
 </template>
 
 <script setup>
-  import { VideoDBPlayer } from "videodb-player";
+  import { VideoDBPlayer } from "@videodb-ui/player-vue";
 
   const onPlay = () => {
     console.log("Video started playing");
@@ -431,6 +432,8 @@ Contributions are what make the open source community such an amazing place to b
 
 [npm-shield]: https://img.shields.io/npm/v/videodb-player?style=for-the-badge
 [npm-url]: https://www.npmjs.com/package/videodb-player
+[discord-shield]: https://img.shields.io/badge/dynamic/json?style=for-the-badge&url=https://discord.com/api/invites/py9P639jGz?with_counts=true&query=$.approximate_member_count&logo=discord&logoColor=blue&color=green&label=discord
+[discord-url]: https://discord.com/invite/py9P639jGz
 [stars-shield]: https://img.shields.io/github/stars/video-db/videodb-player.svg?style=for-the-badge
 [stars-url]: https://github.com/video-db/videodb-player/stargazers
 [issues-shield]: https://img.shields.io/github/issues/video-db/videodb-player.svg?style=for-the-badge
