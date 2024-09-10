@@ -1,5 +1,5 @@
 {
-  "name": "@videodb-ui/player-vue",
+  "name": "@videodb/player-vue",
   "version": "0.0.1",
   "description": "VideoDB Player is an AI-first video player that enhances how we interact with videos.",
   "author": "VideoDB",
@@ -20,6 +20,9 @@
     "types",
     "README.md"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
     ".": {
       "types": "./types/index.d.ts",
