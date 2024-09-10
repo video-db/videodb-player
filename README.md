@@ -107,7 +107,7 @@ VideoDB Player offers a well crafted UI, composed of modular components that ens
  Clone this repo or use the following command in your project's directory:
 
 ```bash
-npm install @videodb-ui/player-vue
+npm install @videodb/player-vue
 ```
 
 ### Usage
@@ -116,8 +116,8 @@ npm install @videodb-ui/player-vue
 
 ```html
 <script setup>
-  import { VideoDBPlayer } from "@videodb-ui/player-vue";
-  import "@videodb-ui/player-vue/dist/style.css";
+  import { VideoDBPlayer } from "@videodb/player-vue";
+  import "@videodb/player-vue/dist/style.css";
 </script>
 
 <template>
@@ -236,7 +236,7 @@ The player state and methods are provided through the Vue composition API. You c
 
 ```html
 <script setup>
-  import { useVideoDBPlayer } from "@videodb-ui/player-vue";
+  import { useVideoDBPlayer } from "@videodb/player-vue";
   const {
     playing,
     volume,
@@ -266,7 +266,7 @@ Useful for accessing player methods and state from outside the component.
 
 <script setup>
   import { ref, onMounted } from "vue";
-  import { VideoDBPlayer } from "@videodb-ui/player-vue";
+  import { VideoDBPlayer } from "@videodb/player-vue";
 
   const playerRef = ref(null);
 
@@ -302,7 +302,7 @@ Example usage:
 </template>
 
 <script setup>
-  import { VideoDBPlayer } from "@videodb-ui/player-vue";
+  import { VideoDBPlayer } from "@videodb/player-vue";
 
   const onPlay = () => {
     console.log("Video started playing");
@@ -431,7 +431,7 @@ Contributions are what make the open source community such an amazing place to b
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
 [npm-shield]: https://img.shields.io/npm/v/videodb-player?style=for-the-badge
-[npm-url]: https://www.npmjs.com/package/videodb-player
+[npm-url]: https://www.npmjs.com/package/@videodb/player-vue
 [discord-shield]: https://img.shields.io/badge/dynamic/json?style=for-the-badge&url=https://discord.com/api/invites/py9P639jGz?with_counts=true&query=$.approximate_member_count&logo=discord&logoColor=blue&color=green&label=discord
 [discord-url]: https://discord.com/invite/py9P639jGz
 [stars-shield]: https://img.shields.io/github/stars/video-db/videodb-player.svg?style=for-the-badge
