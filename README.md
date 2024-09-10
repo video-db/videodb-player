@@ -431,7 +431,7 @@ Contributions are what make the open source community such an amazing place to b
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
 [npm-shield]: https://img.shields.io/npm/v/videodb-player?style=for-the-badge
-[npm-url]: https://www.npmjs.com/package/videodb-player
+[npm-url]: https://www.npmjs.com/package/@videodb-ui/player-vue
 [discord-shield]: https://img.shields.io/badge/dynamic/json?style=for-the-badge&url=https://discord.com/api/invites/py9P639jGz?with_counts=true&query=$.approximate_member_count&logo=discord&logoColor=blue&color=green&label=discord
 [discord-url]: https://discord.com/invite/py9P639jGz
 [stars-shield]: https://img.shields.io/github/stars/video-db/videodb-player.svg?style=for-the-badge
