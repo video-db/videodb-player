@@ -35,8 +35,10 @@
     "build-lib": "vite build",
     "build-types": "vue-tsc --emitDeclarationOnly --declaration -p tsconfig.app.json",
     "lint": "eslint 'src/**/*.{ts,vue}'",
+    "format": "prettier --write 'src/**/*.{ts,vue}'",
     "test": "vitest",
-    "test-ci": "vitest --run"
+    "test-ci": "vitest --run",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "lodash.debounce": "^4.0.8",
@@ -46,7 +48,7 @@
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.2",
-    "@types/node": "20.8.10",
+    "@types/node": "^20.8.10",
     "@vitejs/plugin-vue": "^4.4.0",
     "@vue/compiler-dom": "^3.3.8",
     "@vue/test-utils": "^2.4.1",
@@ -77,6 +79,8 @@
     "video_db",
     "videodb-player",
     "video-player",
-    "video-player-component"
+    "video-player-component",
+    "ai-video-player",
+    "vue"
   ]
 }
