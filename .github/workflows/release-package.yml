@@ -63,6 +63,6 @@ jobs:
           body: |
             ${{ steps.extract-release-notes.outputs.release_notes }}
       - run: npm ci
-      - run: npm publish --tag ${{ steps.npm-tag.outputs.tag }}
+      - run: npm publish --access public --tag ${{ steps.npm-tag.outputs.tag }}
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
