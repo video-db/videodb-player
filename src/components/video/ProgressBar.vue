@@ -353,21 +353,6 @@ watch(moveToRatio, (val) => {
   emit("setPreviewVisibility", val > 0);
 });
 
-watch(
-  seekGoToPoint,
-  (newVal) => {
-    console.log("seekGoToPoint changed:");
-    console.log("seekGoToPoint.ratio:", newVal.ratio);
-    console.log("seekGoToPoint.timePosition:", newVal.timePosition);
-    console.log("duration:", duration.value);
-    console.log(
-      "seekGoToPoint.timePosition / duration:",
-      newVal.timePosition / duration.value,
-    );
-  },
-  { deep: true },
-);
-
 onMounted(() => {
   const getSource = () => {
     let src = props.streamUrl;
@@ -507,7 +492,6 @@ const onTouchMoveOnScreen = (e) => {
 };
 
 const seekVideoTime = (x) => {
-  console.log("seek video time called");
   if (!x) return;
   if (!progressBar.value) {
     return;
@@ -529,21 +513,18 @@ const seekVideoTime = (x) => {
 };
 
 const onSeekHeadMouseDown = (e) => {
-  console.log("onSeekHeadMouseDown called");
   videoDrag.value = true;
   seekVideoTime(e.pageX);
   window.addEventListener("mouseup", onSeekHeadMouseUp);
 };
 
 const onSeekHeadTouchStart = (e) => {
-  console.log("onSeekHeadTouchStart called");
   videoDrag.value = true;
   seekVideoTime(e.pageX);
   window.addEventListener("touchend", onSeekHeadTouchEnd);
 };
 
 const onSeekHeadMouseUp = () => {
-  console.log("onSeekHeadMouseUp called");
   if (videoDrag.value) {
     videoDrag.value = false;
     seekTo(seekGoToPoint.timePosition);
