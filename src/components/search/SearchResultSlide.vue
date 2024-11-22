@@ -57,7 +57,7 @@
         </div>
         <p
           :data-seconds="searchResultItem.start"
-          :class="`vdb-p-text-caption3 vdb-p-font-medium vdb-p-capitalize vdb-p-text-kilvish-600 ${searchResultItem.type}-text-br`"
+          :class="`vdb-p-hidden md:vdb-p-block vdb-p-text-caption3 vdb-p-font-medium vdb-p-capitalize vdb-p-text-kilvish-600 ${searchResultItem.type}-text-br`"
         >
           {{ searchResultItem.type }}
         </p>

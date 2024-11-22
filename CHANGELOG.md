@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.3]() - 2024-11-22
+
+### Changed
+- Upload `FullScreenButton` to not be absolute
+- Search `SearchResultSlide` to hide type text on mobile
+
 ## [0.0.2]() - 2024-09-10
 
 ### Changed

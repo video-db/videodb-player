@@ -2,7 +2,7 @@
   <WithPopper
     :popper-text="isFullScreen ? 'Exit Full Screen' : 'Full Screen'"
     :class="[
-      'vdb-p-absolute vdb-p--top-60 vdb-p-right-16 vdb-p-transition-opacity sm:vdb-p-static',
+      'vdb-p-transition-opacity',
       autoHide && !showElements ? 'vdb-p-opacity-0' : 'vdb-p-opacity-1',
     ]"
   >
