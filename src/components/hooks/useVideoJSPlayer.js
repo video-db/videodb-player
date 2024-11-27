@@ -15,12 +15,8 @@ export function usePlayer(emit, props) {
   const player = ref(null);
 
   const getSource = () => {
-    let src = props.streamUrl;
-    let type = "video/mp4";
-
-    if (src.endsWith("m3u8")) {
-      type = "application/x-mpegURL";
-    }
+    const src = props.streamUrl;
+    const type = "application/x-mpegURL";
 
     return { src, type };
   };
@@ -163,7 +159,7 @@ export function usePlayer(emit, props) {
                 playerState.playing = true;
                 break;
               case "ended":
-                togglePlay()
+                togglePlay();
                 break;
             }
             emit(customEvent, { event });
