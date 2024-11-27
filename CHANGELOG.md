@@ -1,14 +1,22 @@
 # Changelog
 
+## [0.0.4]() - 2024-11-27
+
+### Added
+
+- Fix: Remove endswith check on m3u8 to support urls with query params
+
 ## [0.0.3]() - 2024-11-22
 
 ### Changed
+
 - Upload `FullScreenButton` to not be absolute
 - Search `SearchResultSlide` to hide type text on mobile
 
 ## [0.0.2]() - 2024-09-10
 
 ### Changed
+
 - Updated `README.md` to reflect the package name `@videodb/player-vue`
 
 ## [0.0.1]() - 2024-09-09
