@@ -1,0 +1,147 @@
+.sr-swiper .swiper-container {
+    padding: 2rem;
+}
+
+.sr-swiper.light .swiper-container {
+    padding: 0.5rem;
+}
+
+.swiper-truncate-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+}
+
+.sr-timeline-bg {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 30px;
+}
+
+.sr-timeline-bg.light {
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-radius: 30px;
+}
+
+.swiper-slide.sr {
+    height: 128px;
+    padding: 10px;
+    background-color: transparent;
+    border-radius: 8px;
+}
+
+.swiper-slide.sr:hover {
+    background: rgba(12, 12, 12, 0.4);
+}
+
+.swiper-slide.sr.light:hover {
+    background: #eceff3;
+}
+
+.swiper-slide.sr:hover .relevant-text-br {
+    color: #cde210;
+}
+
+.swiper-slide.sr.light:hover .relevant-text-br {
+    color: #53b745;
+}
+
+.swiper-slide.sr:hover .exact-text-br {
+    color: #f8c450;
+}
+
+.swiper-slide.sr:hover .swiper-time.light {
+    background-color: #fff;
+}
+
+
+.swiper-time {
+    width: fit-content;
+    background-color: #323232;
+    border-radius: 4px;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+}
+
+.swiper-time.light {
+    background-color: #eceff3;
+}
+
+.swiper-time>svg {
+    width: 14px;
+    height: auto;
+    margin-right: 4px;
+    flex-shrink: 0;
+}
+
+.text-lime {
+    color: #cde210;
+    background-color: transparent;
+}
+
+.text-lime.light {
+    color: initial;
+    background-color: #53b745;
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+.text-yellow {
+    color: rgba(248, 196, 80, 1);
+    background-color: transparent;
+}
+
+.text-yellow.light {
+    color: initial;
+    background-color: rgba(248, 196, 80, 0.3);
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+
+.bg-lime {
+    background-color: #cde210;
+}
+
+.bg-lime.light {
+    background-color: #53b745;
+}
+
+.sr-dot {
+    box-sizing: content-box;
+}
+
+.sr-dot.active:not(.light) {
+    outline: 1px solid rgba(0, 0, 0, 0.35);
+}
+
+.sr-dot.light {
+    outline: 1px solid rgba(255, 255, 255, 1);
+}
+
+.sr-dot.relevant:not(.light):hover,
+.sr-dot.forced-hover.relevant:not(.light) {
+    outline: 7px solid rgba(180, 194, 54, 0.35);
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.53);
+}
+
+.sr-dot.exact:not(.light):hover,
+.sr-dot.forced-hover.exact:not(.light) {
+    outline: 7px solid rgba(248, 196, 80, 0.35);
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.53);
+}
+
+.sr-dot.light.relevant:hover,
+.sr-dot.forced-hover.light.relevant {
+    outline: 7px solid rgba(83, 183, 69, 0.35);
+    box-shadow: 0px 1px 4px rgba(255, 255, 255, 0.53);
+}
+
+.swiper-time-light-text {
+    color: #374151;
+}

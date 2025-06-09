@@ -1,0 +1,91 @@
+{
+  "name": "@videodb/player-react",
+  "version": "0.1.0",
+  "description": "VideoDB Player is an AI-first video player that enhances how we interact with videos.",
+  "author": "VideoDB",
+  "license": "Apache-2.0",
+  "homepage": "https://videodb.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/video-db/videodb-player.git"
+  },
+  "private": false,
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "style": "dist/tailwind.css",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./*": "./*"
+  },
+  "scripts": {
+    "dev-types": "tsc --noEmit --watch",
+    "build-dev": "npm run build-lib -- --watch && npm run build-types -- --watch",
+    "build-lib": "vite build",
+    "build": "npm run build-lib && npm run build-types",
+    "build-types": "tsc --emitDeclarationOnly --project tsconfig.app.json",
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "format": "prettier --write 'src/**/*.{ts,tsx}'",
+    "test": "vitest",
+    "test-ci": "vitest run",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@floating-ui/react": "^0.27.8",
+    "lodash.debounce": "^4.0.8",
+    "rollup-plugin-postcss": "^4.0.2",
+    "swiper": "^11.2.6",
+    "video.js": "^8.22.0"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.2",
+    "@types/lodash.debounce": "^4.0.9",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.4.1",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.22.0",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "jsdom": "^26.1.0",
+    "lint-staged": "^15.0.2",
+    "postcss": "^8.5.3",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "run-p": "^0.0.0",
+    "tailwindcss": "^3.4.17",
+    "typescript": "~5.7.2",
+    "vite": "^6.3.4",
+    "vite-plugin-css-injected-by-js": "^3.5.2",
+    "vitest": "^3.1.2"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "keywords": [
+    "video",
+    "player",
+    "videodb",
+    "video-db",
+    "video_db",
+    "videodb-player",
+    "video-player",
+    "video-player-component",
+    "ai-video-player",
+    "react"
+  ]
+}
