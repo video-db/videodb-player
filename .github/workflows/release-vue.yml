@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-        working-directory: ./player-vue
+        working-directory: ./packages/player-vue
 
   publish-gpr:
     if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.merged == true && github.event.pull_request.head.label == 'video-db:release')
@@ -36,7 +36,7 @@ jobs:
         id: package-version
         uses: martinbeentjes/npm-get-version-action@main
         with:
-          path: ./player-vue
+          path: ./packages/player-vue
       - name: Check Version for Tag
         id: npm-tag
         run: |
@@ -66,6 +66,6 @@ jobs:
           body: |
             ${{ steps.extract-release-notes.outputs.release_notes }}
       - run: npm publish --access public --tag ${{ steps.npm-tag.outputs.tag }}
-        working-directory: ./player-vue
+        working-directory: ./packages/player-vue
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
