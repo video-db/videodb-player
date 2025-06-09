@@ -106,14 +106,21 @@ VideoDB Player offers a well crafted UI, composed of modular components that ens
 
  Clone this repo or use the following command in your project's directory:
 
+**For VueJS applications**
 ```bash
 npm install @videodb/player-vue
+```
+
+**For ReactJS applications**
+```bash
+npm install @videodb/player-react
 ```
 
 ### Usage
 
  Import the necessary components and styles. ( *Currently supports Vue.js only* )
 
+**For VueJS**
 ```html
 <script setup>
   import { VideoDBPlayer } from "@videodb/player-vue";
@@ -135,277 +142,19 @@ npm install @videodb/player-vue
 </style>
 ```
 
-<br>
+**For ReactJS**
+```jsx
+import { VideoDBPlayer } from "@videodb/player-vue";
 
-# 🧑‍💻 Advanced Usage
+export default function Player() {
+    return (
+        <VideoDBPlayer
+            streamUrl="https://stream.videodb.io/v3/published/manifests/12df6498-e955-4249-84b8-7568aaf72160.m3u8"
+        />
+    )
+}
 
-### 🧩 Slots
-
-`<VideoDBPlayer/>` has two different [slots](https://vuejs.org/guide/components/slots.html) available to add Custom UI components on top of `VideoDBPlayer`.
-
-- `overlay`
-- `controls`
-
-Child Components can access the player state by [injecting](https://vuejs.org/guide/components/provide-inject.html#inject) the state [provided](https://vuejs.org/guide/components/provide-inject.html#provide) under `videodb-player` key.
-Checkout [Accessing State Inside Child Components of `VideoDBPlayer`](#-accessing-player-state-inside-child-components-of-videodbplayer) Section for more details
-
-![slots](https://github.com/user-attachments/assets/90276518-0a72-4be1-b293-2c6b1309c66a)
-
-<br>
-
-### 🔧 Custom Controls
-
-To create custom controls for the VideoDBPlayer component, you can utilize the provided slot feature. First, you'll need to disable the default controls by setting the `defaultControls` prop to `false`. Here's how you can do it:
-
-```html
-<VideoDBPlayer
-  streamUrl="https://example.com/video.m3u8"
-  :defaultControls="false"
->
-  <template #controls>
-    <YourCustomControls />
-  </template>
-</VideoDBPlayer>
 ```
-
-<br>
-
-### 🔧 Custom overlay
-
-Similar to disabling the default controls, you can disable the default overlay by setting the `defaultOverlay` prop to `false` within the VideoDBPlayer component:
-
-```html
-<VideoDBPlayer
-  streamUrl="https://example.com/video.m3u8"
-  :defaultOverlay="false"
->
-  <template #overlay>
-    <YourCustomOverlay />
-  </template>
-</VideoDBPlayer>
-```
-
-<br>
-
-### 🔎 Using `<SearchInsideMedia/>` Component
-
-The `<SearchInsideMedia/>` component enables in-video search functionality. To use it:
-
-1. Disable the default overlay in `<VideoDBPlayer>`.
-2. Add the `<SearchInsideMedia/>` component in the `#overlay` slot.
-3. To get the search results from Video you can use [VideoDB](https://videodb.io).
-
-```html
-<template>
-  <VideoDBPlayer
-    ref="playerRef"
-    streamUrl="https://example.com/video.m3u8"
-    :defaultOverlay="false"
-  >
-    <template #overlay>
-      <BigCenterButton class="center-button" />
-      <SearchInsideMedia
-        :search-content="searchContent"
-        :search-results="searchResults"
-        :search-results-loading="searchResultsLoading"
-        :show-search-results="showSearchResults"
-        @toggle-results="showSearchResults = $event"
-        @search-change="handleSearchChange"
-        @search-submit="handleSearchSubmit"
-      />
-    </template>
-  </VideoDBPlayer>
-</template>
-
-<style scoped>
-  .center-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-  }
-</style>
-```
-
-> ℹ️ Checkout [SearchInsideMedia interface](#searchinsidemedia) for more details on props and events
-
-<br>
-
-### 🧑‍💻 Accessing Player State Inside Child Components of `VideoDBPlayer`
-
-The player state and methods are provided through the Vue composition API. You can access them using the `useVideoDBPlayer` hook in Child Components of `VideoDBPlayer`:
-
-```html
-<script setup>
-  import { useVideoDBPlayer } from "@videodb/player-vue";
-  const {
-    playing,
-    volume,
-    duration,
-    time,
-    togglePlay,
-    setVolume,
-    // ... other properties and methods
-    // checkout reference for more details
-  } = useVideoDBPlayer();
-</script>
-```
-
-> ℹ️ Checkout [VideoDBPlayer interface](#videodbplayer) for more details
-
-<br>
-
-### 🧑‍💻 Accessing Player Instance
-
-Internal player instance are exposed through a `ref`.
-Useful for accessing player methods and state from outside the component.
-
-```html
-<template>
-  <VideoDBPlayer ref="playerRef" streamUrl="https://example.com/video.m3u8" />
-</template>
-
-<script setup>
-  import { ref, onMounted } from "vue";
-  import { VideoDBPlayer } from "@videodb/player-vue";
-
-  const playerRef = ref(null);
-
-  onMounted(() => {
-    playerRef.value.togglePlay();
-    // ... other exposed methods & variable
-    // checkout reference for more details
-  });
-</script>
-```
-
-> ℹ️ Checkout [VideoDBPlayer interface](#videodbplayer) for more details
-
-<br>
-
-### 🔔 Events
-
-Emits several events that you can listen to, in the parent component:
-
-1. `play`: Emitted when the video starts playing.
-2. `pause`: Emitted when the video is paused.
-   > ℹ️ Checkout [VideoDBPlayer interface](#videodbplayer) for full list of events
-
-Example usage:
-
-```html
-<template>
-  <VideoDBPlayer
-    @play="onPlay"
-    @pause="onPause"
-    streamUrl="https://example.com/video.m3u8"
-  />
-</template>
-
-<script setup>
-  import { VideoDBPlayer } from "@videodb/player-vue";
-
-  const onPlay = () => {
-    console.log("Video started playing");
-  };
-
-  const onPause = () => {
-    console.log("Video paused");
-  };
-</script>
-```
-
-<br>
-
-# 📡 Interface
-
-## VideoDBPlayer
-
-### Props
-
-- `streamUrl`: (String, required): URL of the video stream.
-- `thumbnailUrl`: (String, optional): URL of the video thumbnail.
-- `aspectRatio`: (String, default: "16:9"): Aspect ratio of the video. (ratio, seperated by ":")
-- `subtitlesConfig`: (Object, optional): Configuration for subtitles.
-  - `src` (String, default: ""): URL of the subtitles file.
-  - `kind` (String, default: "captions"): text track type.
-  - `lang` (String, default: "en"): Language of the subtitles.
-  - `label` (String, default: "English"): Label for the subtitles.
-- `startAt` (Number, default: 0): Time in seconds to start the video.
-- `autoPlay` (Boolean, default: false): Toggle to start playing automatically.
-- `autoHideDuration` (Number, default: 5000): Duration in milliseconds before controls are hidden.
-- `defaultControls` (Boolean, default: true): Toggle to use default controls.
-- `defaultOverlay` (Boolean, default: true): Toggle to use the default overlay.
-- `defaultPlayBackRate` (Number, default: 1): Default playback rate.
-- `debug` (Boolean, default: false): Enable debug mode.
-
-### Exposed and Injected Variables
-
-Following variables are both exposed (via `defineExpose`) and injected (via `provide`) under the key "videodb-player":
-
-### State Variables
-
-- `showElements`: Boolean indicating whether control elements are visible.
-- `playing`: Boolean indicating if the video is currently playing.
-- `volume`: Number representing the current volume level.
-- `videoMuted`: Boolean indicating if the video is muted.
-- `duration`: Number representing the total duration of the video.
-- `time`: Number representing the current playback time.
-- `percentagePlayed`: Number representing the percentage of the video that has been played.
-- `playBackRate`: Number representing the current playback speed.
-- `showSubtitles`: Boolean indicating if subtitles are currently displayed.
-- `subtitlesConfig`: Object containing subtitle configuration (src, kind, lang, label).
-- `isFullScreen`: Boolean indicating if the player is in fullscreen mode.
-
-### Methods
-
-- `play()`: Start playing the video.
-- `pause()`: Pause the video.
-- `togglePlay()`: Toggle between play and pause.
-- `toggleMute()`: Toggle audio mute.
-- `seekTo(time)`: Seek to a specific time in the video.
-- `seekToPercentage(percentage)`: Seek to a specific percentage of the video.
-- `setPlayBackRate(rate)`: Set the playback speed.
-- `setVolume(level)`: Set the volume level.
-- `toggleFullScreen(value)`: Toggle fullscreen mode.
-- `toggleSubtitles(value)`: Toggle subtitle display.
-
-### Events
-
-- `play`: Emitted when the video starts playing.
-- `pause`: Emitted when the video is paused.
-- `ended`: Emitted when the video playback ends.
-- `loadeddata`: Emitted when video data has loaded.
-- `waiting`: Emitted when the video is waiting for data to continue playback.
-- `playing`: Emitted when the video starts playing after being paused or stopped for buffering.
-- `timeupdate`: Emitted continuously as the video plays, providing the current playback time.
-- `canplay`: Emitted when the browser can start playing the video.
-- `canplaythrough`: Emitted when the browser estimates it can play through the video without stopping for buffering.
-- `videoerrror`: Emitted when an error occurs during video playback.
-- `toggleSubtitles`: Emitted when subtitles are toggled on or off.
-- `fullScreenChange`: Emitted when entering or exiting fullscreen mode.
-
-## SearchInsideMedia
-
-### Props
-
-- `searchInputPlaceholder` (String, default: "Search or ask a question"): Placeholder text for the search input.
-- `searchContent` (String, required): The search query.
-- `searchSuggestions` (Array, optional): List of search suggestions. Each suggestion is an object with the format `{ "text": "search suggestion" }`.
-- `searchResultsLoading` (Boolean, required): Whether search results are loading.
-- `showSearchResults` (Boolean, required): Whether to show search results.
-- `searchResults` (Object, optional): Search results object containing:
-  - `hits` (Array, required): Array of match objects, each with the following fields:
-    - `id` (String, required): Unique identifier for the match.
-    - `start` (Number, required): Start time of the match in seconds relative to video start.
-    - `end` (Number, required): End time of the match in seconds relative to video start.
-    - `text` (String, required): Relevant text matching the query.
-    - `type` (String, required): Type of match, either "relevant" or "exact".
-
-### Events
-
-- `toggle-results`: Emitted when the search results are required to be toggled on or off.
-- `search-change`: Emitted when the search input changes.
-- `search-submit`: Emitted when the search is submitted (enter key pressed )
 
 ## 🛣️ Roadmap
 
