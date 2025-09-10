@@ -57,6 +57,13 @@ export function usePlayer(emit, props) {
     }
   };
 
+  const disposePlayer = () => {
+    if (player.value) {
+      player.value.dispose();
+      player.value = null;
+    }
+  };
+
   const play = () => {
     player.value.play();
     playerState.playing = true;
@@ -184,5 +191,6 @@ export function usePlayer(emit, props) {
     togglePictureInPicture,
     bindEvents,
     initializePlayer,
+    disposePlayer,
   };
 }
