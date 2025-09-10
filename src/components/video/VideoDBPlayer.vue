@@ -196,6 +196,7 @@ const {
   convertTimeToDuration,
   togglePictureInPicture,
   initializePlayer,
+  disposePlayer,
 } = usePlayer(emit, props);
 
 const showElements = ref(true);
@@ -218,6 +219,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   removeKeyboardKeyFunctions();
+  disposePlayer();
 });
 
 const addKeyboardKeyFunctions = () => {
