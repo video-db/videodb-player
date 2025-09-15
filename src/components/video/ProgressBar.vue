@@ -210,7 +210,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, watch, onMounted, nextTick } from "vue";
+import { ref, reactive, computed, watch, onMounted, onBeforeUnmount, nextTick } from "vue";
 import { useVideoDBPlayer } from "../../context.js";
 import videojs from "video.js";
 import debounce from "lodash.debounce";
@@ -401,6 +401,23 @@ onMounted(() => {
       preload: true,
       sources: [source],
     });
+  }
+});
+
+onBeforeUnmount(() => {
+  // Dispose of the feedback player (video preview) 
+  if (feedbackPlayer.value) {
+    feedbackPlayer.value.dispose();
+    feedbackPlayer.value = null;
+  }
+  
+  // Remove event listeners
+  window.removeEventListener("mousemove", onMouseMoveOnScreen);
+  window.removeEventListener("touchmove", onTouchMoveOnScreen);
+  
+  // Clear any pending timeouts
+  if (chapterSetterTimeout.value) {
+    clearTimeout(chapterSetterTimeout.value);
   }
 });
 
